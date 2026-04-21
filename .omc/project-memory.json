@@ -1,0 +1,113 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776738978738,
+  "projectRoot": "/Users/helder/harness-engineering-workflow",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "examples"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1776738978714,
+      "keyFiles": []
+    },
+    "examples": {
+      "path": "examples",
+      "purpose": "Example code",
+      "fileCount": 0,
+      "lastAccessed": 1776738978714,
+      "keyFiles": []
+    },
+    "installer": {
+      "path": "installer",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1776738978715,
+      "keyFiles": [
+        "doctor.sh",
+        "install.sh",
+        "list-targets.sh",
+        "status.sh",
+        "uninstall.sh"
+      ]
+    },
+    "memory": {
+      "path": "memory",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776738978716,
+      "keyFiles": []
+    },
+    "schemas": {
+      "path": "schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 2,
+      "lastAccessed": 1776738978717,
+      "keyFiles": [
+        "run-history.schema.json",
+        "state.schema.json"
+      ]
+    },
+    "skills": {
+      "path": "skills",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776738978719,
+      "keyFiles": []
+    },
+    "templates": {
+      "path": "templates",
+      "purpose": null,
+      "fileCount": 12,
+      "lastAccessed": 1776738978720,
+      "keyFiles": [
+        "codebase-reader-report.md",
+        "delegation.md",
+        "design.md",
+        "eval.md",
+        "report.md"
+      ]
+    },
+    "installer/lib": {
+      "path": "installer/lib",
+      "purpose": "Library code",
+      "fileCount": 4,
+      "lastAccessed": 1776738978721,
+      "keyFiles": [
+        "detect.sh",
+        "manifest.sh",
+        "render.sh"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

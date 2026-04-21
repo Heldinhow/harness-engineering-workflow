@@ -25,10 +25,10 @@ TARGETS="
 claude-code|Claude Code|full|official
 codex|OpenAI Codex|adapted|official
 copilot-cli|GitHub Copilot CLI|adapted|official
+pi-agent|Pi Agent|full|official
 opencode|Sourcegraph OpenCode|fallback|experimental
 forgecode|ForgeCode|fallback|experimental
-"
-
+:"
 # Assets to install per capability mode
 ASSETS_FULL="
 skills/

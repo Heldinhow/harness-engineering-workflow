@@ -150,6 +150,23 @@ detect_forgecode() {
     return 1
 }
 
+detect_pi_agent() {
+    # Check for Pi Agent - skills are stored in ~/.pi/agent/skills/
+    if [ -d "${HOME}/.pi/agent/skills" ]; then
+        echo "detected"
+        return 0
+    fi
+
+    # Also check if pi command exists
+    if command -v pi &>/dev/null; then
+        echo "detected"
+        return 0
+    fi
+
+    echo "not_detected"
+    return 1
+}
+
 # Main detection dispatcher
 detect_target() {
     local target_id="$1"
@@ -157,6 +174,7 @@ detect_target() {
         claude-code) detect_claude_code ;;
         codex) detect_codex ;;
         copilot-cli) detect_copilot_cli ;;
+        pi-agent) detect_pi_agent ;;
         opencode) detect_opencode ;;
         forgecode) detect_forgecode ;;
         *) echo "unknown_target" ;;
@@ -165,7 +183,7 @@ detect_target() {
 
 # Detect all targets and return a summary
 detect_all_targets() {
-    local targets="claude-code codex copilot-cli opencode forgecode"
+    local targets="claude-code codex copilot-cli pi-agent opencode forgecode"
     local detected=""
     local not_detected=""
 
