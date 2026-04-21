@@ -71,16 +71,29 @@
   - 1 mismatch → score 0.5
   - ≥2 mismatches → score 0.0
 
+### EVAL-007: CI Pre-commit Hook
+- Type: capability
+- Maps to: REQ-010
+- Description: The harness should include a pre-commit hook that runs score_workflow.sh on staged feature artifacts automatically.
+- Evidence method: Check that scripts/pre-commit-quality-check.sh exists and is executable.
+- Rerun triggers: Any edit to the installer or scripts directory.
+- Thresholds:
+  - Hook exists and executable → score 1.0
+  - Hook exists but not executable → score 0.5
+  - Hook missing → score 0.0
+
 ## Composite Quality Score
 The composite quality_score = weighted average:
-- artifact_coverage × 0.20
-- schema_compliance × 0.20
-- state_alignment × 0.20
+- artifact_coverage × 0.15
+- schema_compliance × 0.15
+- state_alignment × 0.15
 - state_drift × 0.10
 - phase_coverage × 0.10
-- evidence_quality × 0.20
+- evidence_quality × 0.15
+- ci_hook × 0.20
 
 ## Notes
 - Scoring script is defined in the experiment harness and is read-only.
 - Scores are logged to autoresearch.jsonl for tracking across iterations.
 - This eval is inspection-based: no runtime execution of the workflow is performed.
+- EVAL-007 added after ci_hook improvement iteration.
