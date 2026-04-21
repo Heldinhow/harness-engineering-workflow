@@ -38,14 +38,15 @@
 ### EVAL-004: Phase Coverage
 - Type: capability
 - Maps to: REQ-003
-- Description: run-history.json covers phases from INTAKE through FINISH with proper transitions.
-- Evidence method: Inspect runs array — count unique phases and check transitions match phase sequence.
+- Description: run-history.json covers phases from SPECIFY through FINISH with proper transitions. Small features skip INTAKE, DESIGN, and TASKS per the workflow spec. INTAKE may be implicit (not always recorded). Small features start at SPECIFY.
+- Evidence method: Inspect runs array — count unique phases and check they match the expected sequence for the feature complexity.
 - Rerun triggers: Any edit to run-history.json.
 - Thresholds:
-  - All phases INTAKE→FINISH present → score 1.0
-  - ≥6 phases → score 0.75
-  - ≥4 phases → score 0.5
-  - <4 phases → score 0.0
+  - Small: SPECIFY, EVAL DEFINE, EXECUTE, VERIFY, REVIEW, REPORT, FINISH (7/7) → score 1.0
+  - Small: ≥6 of 7 phases → score 0.85
+  - Medium/Large: INTAKE→FINISH all present → score 1.0
+  - Any: ≥6 phases → score 0.75
+  - Any: <6 phases → score 0.0
 
 ### EVAL-005: Evidence Quality
 - Type: capability

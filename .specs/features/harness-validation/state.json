@@ -7,7 +7,7 @@
   "pending_gate": "FINISH",
   "owner_role": "orchestrator",
   "owner_id": "harness-autoresearch",
-  "last_run_id": "RUN-007",
+  "last_run_id": "RUN-008",
   "next_step": "none",
   "blockers": [],
   "latest_evidence_refs": [

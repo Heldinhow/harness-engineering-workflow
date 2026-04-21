@@ -15,7 +15,8 @@
 | RUN-004 | EXECUTE | EVAL DEFINE→EXECUTE | execution-agent | passed | continue |
 | RUN-005 | VERIFY | EXECUTE→VERIFY | orchestrator | passed | continue |
 | RUN-006 | REVIEW | VERIFY→REVIEW | reviewer | passed | continue |
-| RUN-007 | FINISH | REVIEW→FINISH | orchestrator | passed | finish |
+| RUN-007 | REPORT | REVIEW→REPORT | orchestrator | passed | continue |
+| RUN-008 | FINISH | REPORT→FINISH | orchestrator | passed | finish |
 
 ## Phase Details
 
@@ -43,9 +44,13 @@
 - Formal review decision: **pass**.
 - All structural requirements met.
 
-### FINISH (RUN-007)
-- Feature closed. Quality score pending scoring run.
+### REPORT (RUN-007)
+- Consolidated evidence into report.md. Confirmed all 8 artifacts present.
 - Rollback target set to REVIEW.
+
+### FINISH (RUN-008)
+- Feature closed. Quality score computed at 0.9786.
+- Rollback target set to REPORT.
 
 ## Notes
 - Feature is a meta-validation: it tests the workflow by running the workflow.
