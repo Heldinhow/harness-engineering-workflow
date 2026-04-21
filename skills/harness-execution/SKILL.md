@@ -7,7 +7,7 @@ description: Use when a planned feature is ready to be implemented with discipli
 
 This skill owns the execution layer.
 
-It preserves the best operational discipline from Superpowers while staying compact.
+It keeps execution disciplined while staying compact.
 
 ## Execution Rules
 

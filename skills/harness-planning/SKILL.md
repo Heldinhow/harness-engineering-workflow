@@ -7,7 +7,7 @@ description: Use when the workflow needs minimal but explicit planning artifacts
 
 This skill owns the planning layer.
 
-It keeps the workflow lightweight while preserving the best TLC patterns:
+It keeps the workflow lightweight while preserving:
 - explicit feature artifacts
 - requirement IDs
 - adaptive depth by complexity

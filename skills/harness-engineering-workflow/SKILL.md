@@ -5,10 +5,7 @@ description: Use when a task needs a unified harness engineering workflow with m
 
 # Harness Engineering Workflow
 
-A compact workflow that merges:
-- TLC Spec-Driven for planning and feature memory
-- Superpowers for disciplined execution and verification
-- eval-harness for capability and regression evidence
+A compact workflow for harness engineering with minimal planning artifacts, disciplined execution, explicit rework loops, and eval-based evidence before final completion.
 
 Use this as the primary workflow skill. It decides the path and hands off to the planning, execution, and eval skills.
 

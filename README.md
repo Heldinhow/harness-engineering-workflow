@@ -1,15 +1,8 @@
 # Harness Engineering Workflow
 
-A compact skill package for harness engineering that consolidates ideas from three source workflows into one practical package:
+A compact skill package for harness engineering built around one practical workflow with four reusable skills and a small template set.
 
-- **TLC Spec-Driven** as the planning model for scoping, feature artifacts, and adaptive depth
-- **Superpowers** as the execution discipline model for TDD, verification, review, and finish behavior
-- **eval-harness** as the evidence model for capability and regression checks
-
-These source workflows are **not required as separate dependencies in this repository**.
-This repository ships its own consolidated skills that absorb the relevant behavior in a smaller package.
-
-This repository packages the consolidated workflow as four reusable skills plus a small template set.
+This repository packages the workflow as four reusable skills plus a small template set.
 
 ---
 
@@ -76,8 +69,6 @@ Responsibilities:
 - maintain `state.md`
 - keep requirements traceable with IDs
 
-This is where the TLC influence is strongest.
-
 ### 3. `harness-execution`
 The execution layer.
 
@@ -87,8 +78,6 @@ Responsibilities:
 - require fresh verification before completion claims
 - loop back instead of improvising missing scope
 
-This is where the Superpowers influence is strongest.
-
 ### 4. `harness-evals`
 The evidence layer.
 
@@ -97,8 +86,6 @@ Responsibilities:
 - define regression evals
 - scale eval rigor by complexity
 - contribute final evidence to the report
-
-This is where the eval-harness influence is strongest.
 
 ---
 
@@ -230,10 +217,6 @@ Execution rules:
 - follow tasks when present
 - do not improvise scope
 - use TDD for feature work, bugfixes, and behavior changes
-
-Superpowers influence here:
-- strict implementation discipline
-- avoid undisciplined coding
 - prefer isolation on Medium+ work when practical
 
 ---
@@ -250,8 +233,6 @@ Verification means:
 - run that command now
 - inspect the actual output
 - report the result based on evidence
-
-This phase directly carries the `verification-before-completion` philosophy.
 
 ---
 
