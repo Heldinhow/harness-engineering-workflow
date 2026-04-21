@@ -1,0 +1,73 @@
+# Eval Definition: harness-validation
+
+## Evals
+
+### EVAL-001: Artifact Coverage
+- Type: regression
+- Maps to: REQ-001, REQ-003, REQ-004, REQ-007, REQ-008
+- Description: All 8 required artifacts are present (spec.md, eval.md, state.md, state.json, run-history.md, run-history.json, review.md, report.md) and non-empty.
+- Evidence method: File existence check + non-empty check for each artifact.
+- Rerun triggers: Any edit to artifact set.
+- Thresholds:
+  - 8/8 artifacts present and non-empty → score 1.0
+  - 7/8 → score 0.875
+  - <7/8 → score 0.0
+
+### EVAL-002: Schema Compliance
+- Type: regression
+- Maps to: REQ-003, REQ-004
+- Description: run-history.json and state.json pass JSON schema validation.
+- Evidence method: Validate each JSON file against its schema using a scoring script.
+- Rerun triggers: Any edit to run-history.json or state.json.
+- Thresholds:
+  - Both pass → score 1.0
+  - One passes → score 0.5
+  - Both fail → score 0.0
+
+### EVAL-003: State Alignment
+- Type: regression
+- Maps to: REQ-004, REQ-005
+- Description: state.md and state.json agree on current_phase, status, and last_run_id.
+- Evidence method: Parse state.md for current_phase / status / last_run_id, compare with state.json.
+- Rerun triggers: Any edit to state.md or state.json.
+- Thresholds:
+  - All 3 fields match → score 1.0
+  - 2/3 match → score 0.66
+  - <2/3 match → score 0.0
+
+### EVAL-004: Phase Coverage
+- Type: capability
+- Maps to: REQ-003
+- Description: run-history.json covers phases from INTAKE through FINISH with proper transitions.
+- Evidence method: Inspect runs array — count unique phases and check transitions match phase sequence.
+- Rerun triggers: Any edit to run-history.json.
+- Thresholds:
+  - All phases INTAKE→FINISH present → score 1.0
+  - ≥6 phases → score 0.75
+  - ≥4 phases → score 0.5
+  - <4 phases → score 0.0
+
+### EVAL-005: Evidence Quality
+- Type: capability
+- Maps to: REQ-003, REQ-005, REQ-006, REQ-007, REQ-008
+- Description: Each run entry has evidence_refs pointing to valid files, rollback_target is defined at each gate, review.md has a decision field, and report.md has a rollback target section.
+- Evidence method: Inspect each run's evidence_refs for file existence; check review.md for decision field; check report.md for rollback section.
+- Rerun triggers: Any edit to artifacts.
+- Thresholds:
+  - ≥80% evidence refs valid + review has decision + report has rollback → score 1.0
+  - ≥60% → score 0.75
+  - ≥40% → score 0.5
+  - <40% → score 0.0
+
+## Composite Quality Score
+The composite quality_score = weighted average:
+- artifact_coverage × 0.20
+- schema_compliance × 0.20
+- state_alignment × 0.20
+- phase_coverage × 0.15
+- evidence_quality × 0.25
+
+## Notes
+- Scoring script is defined in the experiment harness and is read-only.
+- Scores are logged to autoresearch.jsonl for tracking across iterations.
+- This eval is inspection-based: no runtime execution of the workflow is performed.
