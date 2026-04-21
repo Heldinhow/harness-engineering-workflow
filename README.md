@@ -1,10 +1,13 @@
 # Harness Engineering Workflow
 
-A compact skill package for harness engineering that unifies three layers into one practical workflow:
+A compact skill package for harness engineering that consolidates ideas from three source workflows into one practical package:
 
-- **TLC Spec-Driven** for planning, scoping, feature artifacts, and adaptive depth
-- **Superpowers** for disciplined execution, TDD, verification, review, and finish behavior
-- **eval-harness** for capability and regression evidence
+- **TLC Spec-Driven** as the planning model for scoping, feature artifacts, and adaptive depth
+- **Superpowers** as the execution discipline model for TDD, verification, review, and finish behavior
+- **eval-harness** as the evidence model for capability and regression checks
+
+These source workflows are **not required as separate dependencies in this repository**.
+This repository ships its own consolidated skills that absorb the relevant behavior in a smaller package.
 
 This repository packages the consolidated workflow as four reusable skills plus a small template set.
 
