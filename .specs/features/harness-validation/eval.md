@@ -60,13 +60,25 @@
   - ≥40% → score 0.5
   - <40% → score 0.0
 
+### EVAL-006: State Drift Detection
+- Type: regression
+- Maps to: REQ-004
+- Description: state.md and state.json must stay in sync. Any drift between them is a quality regression.
+- Evidence method: Compare all shared fields between state.md and state.json. Any mismatch = drift detected.
+- Rerun triggers: Any edit to state.md or state.json.
+- Thresholds:
+  - 0 mismatches → score 1.0
+  - 1 mismatch → score 0.5
+  - ≥2 mismatches → score 0.0
+
 ## Composite Quality Score
 The composite quality_score = weighted average:
 - artifact_coverage × 0.20
 - schema_compliance × 0.20
 - state_alignment × 0.20
-- phase_coverage × 0.15
-- evidence_quality × 0.25
+- state_drift × 0.10
+- phase_coverage × 0.10
+- evidence_quality × 0.20
 
 ## Notes
 - Scoring script is defined in the experiment harness and is read-only.
