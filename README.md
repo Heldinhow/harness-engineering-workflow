@@ -54,6 +54,23 @@ INTAKE
 ```text
 README.md
 AGENTS.md
+installer/
+  install.sh
+  uninstall.sh
+  update.sh
+  doctor.sh
+  list-targets.sh
+  status.sh
+  lib/
+    manifest.sh
+    detect.sh
+    state.sh
+    render.sh
+  targets/
+    claude-code.sh
+    codex.sh
+    copilot-cli.sh
+    fallback.sh
 docs/
   workflow/
     overview.md
@@ -108,10 +125,69 @@ Runs implementation through task-scoped work, controlled delegation, and verific
 Defines capability and regression evals, evidence policy, and rerun triggers.
 
 ### `harness-review`
-Runs the formal review gate and decides `pass`, `rework`, or `escalate`.
+### `harness-review`
+:Runs the formal review gate and decides `pass`, `rework`, or `escalate`.
+
+## Installation
+
+This package includes a universal installer that detects and installs the workflow for multiple coding agents.
+
+### Quick Install
+
+Clone this repository and run the installer:
+
+```bash
+git clone https://github.com/your-org/harness-engineering-workflow.git
+cd harness-engineering-workflow
+installer/install.sh --all
+```
+
+### Supported Targets
+
+| Target | Mode | Description |
+| --- | --- | --- |
+| Claude Code | full | Native skill installation |
+| Codex | adapted | Adapted prompt conventions |
+| Copilot CLI | adapted | Adapted workflow files |
+| OpenCode | fallback | Essential files only |
+| ForgeCode | fallback | Essential files only |
+| fallback | fallback | Generic fallback for any agent |
+
+### Installer Commands
+
+```bash
+# Install for all detected agents
+installer/install.sh --all
+
+# Install for specific targets
+installer/install.sh --target claude-code --target codex
+
+# Preview what would be installed (dry-run)
+installer/install.sh --dry-run --all
+
+# Check installation status
+installer/status.sh
+
+# Verify installation health
+installer/doctor.sh
+
+# Update installed targets
+installer/update.sh
+
+# Uninstall
+installer/uninstall.sh --all
+
+# List supported targets
+installer/list-targets.sh
+```
+
+### Modes Explained
+
+- **full**: The agent supports native skills. All assets (skills, templates, schemas, AGENTS.md) are installed.
+- **adapted**: The agent has limited skill support. Templates, schemas, and AGENTS.md are installed with adaptations.
+- **fallback**: The agent has no skill support. Only essential files (AGENTS.md, templates) are installed.
 
 ## Artifact Model
-
 Each feature should have a working set under `.specs/features/<feature>/`:
 
 ```text

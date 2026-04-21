@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../schemas/state.schema.json",
+  "feature_id": "multi-agent-installer",
+  "complexity": "medium",
+  "current_phase": "FINISH",
+  "status": "done",
+  "pending_gate": "finish_complete",
+  "owner_role": "orchestrator",
+  "owner_id": "main-session",
+  "last_run_id": "RUN-001",
+  "next_step": "Feature complete. The universal installer is ready for use.",
+  "blockers": [],
+  "latest_evidence_refs": [
+    "installer/install.sh",
+    "installer/doctor.sh",
+    "installer/uninstall.sh",
+    "installer/update.sh",
+    "installer/list-targets.sh",
+    "installer/status.sh",
+    "installer/lib/manifest.sh",
+    "installer/lib/detect.sh",
+    "installer/lib/state.sh",
+    "installer/lib/render.sh",
+    "installer/targets/claude-code.sh",
+    "installer/targets/codex.sh",
+    "installer/targets/copilot-cli.sh",
+    "installer/targets/fallback.sh"
+  ],
+  "stale_evidence_refs": [],
+  "rollback_target": "VERIFY",
+  "updated_at": "2026-04-20T23:35:00Z"
+}
