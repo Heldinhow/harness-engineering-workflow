@@ -1,0 +1,539 @@
+{
+  "$schema": "../../../schemas/run-history.schema.json",
+  "feature_id": "operational-sdd-harness-workflow",
+  "runs": [
+    {
+      "run_id": "RUN-001",
+      "started_at": "2026-04-20T09:00:00Z",
+      "ended_at": "2026-04-20T09:20:00Z",
+      "phase": "SPECIFY",
+      "transition": "INTAKE->SPECIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-010"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/spec.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": null,
+      "decision": "continue",
+      "notes": "Captured the repository evolution scope, complexity, and requirement set."
+    },
+    {
+      "run_id": "RUN-002",
+      "started_at": "2026-04-20T09:21:00Z",
+      "ended_at": "2026-04-20T09:45:00Z",
+      "phase": "DESIGN",
+      "transition": "SPECIFY->DESIGN",
+      "agent_role": "design-agent",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-006",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/design.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "SPECIFY",
+      "decision": "continue",
+      "notes": "Chose the Orchestrator-first operating model and the paired state/run-history contract."
+    },
+    {
+      "run_id": "RUN-003",
+      "started_at": "2026-04-20T09:46:00Z",
+      "ended_at": "2026-04-20T10:05:00Z",
+      "phase": "TASKS",
+      "transition": "DESIGN->TASKS",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-004",
+        "REQ-010"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/tasks.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "DESIGN",
+      "decision": "continue",
+      "notes": "Split the implementation into contract docs, skill/template work, memory/examples, and consistency close-out." 
+    },
+    {
+      "run_id": "RUN-004",
+      "started_at": "2026-04-20T10:06:00Z",
+      "ended_at": "2026-04-20T10:18:00Z",
+      "phase": "EVAL DEFINE",
+      "transition": "TASKS->EVAL DEFINE",
+      "agent_role": "eval-agent",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-002",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/eval.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "SPECIFY",
+      "decision": "continue",
+      "notes": "Defined capability and regression-style checks for the repository-wide workflow upgrade."
+    },
+    {
+      "run_id": "RUN-005",
+      "started_at": "2026-04-20T10:19:00Z",
+      "ended_at": "2026-04-20T11:10:00Z",
+      "phase": "EXECUTE",
+      "transition": "EVAL DEFINE->EXECUTE",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": "TASK-001",
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-003",
+        "REQ-006",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "README.md",
+        "AGENTS.md",
+        "docs/workflow/overview.md",
+        "docs/workflow/phases-and-gates.md",
+        "docs/workflow/agent-roles.md",
+        "docs/workflow/delegation.md",
+        "docs/workflow/parallelism.md",
+        "docs/workflow/codebase-reading.md",
+        "docs/workflow/state-and-runs.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "DESIGN",
+      "decision": "continue",
+      "notes": "Reframed the repository around an explicit Orchestrator-first operational contract."
+    },
+    {
+      "run_id": "RUN-006",
+      "started_at": "2026-04-20T11:11:00Z",
+      "ended_at": "2026-04-20T12:25:00Z",
+      "phase": "EXECUTE",
+      "transition": "EXECUTE->EXECUTE",
+      "agent_role": "execution-agent",
+      "agent_id": "parallel-lane-skills-templates",
+      "task_id": "TASK-002",
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "skills/harness-engineering-workflow/SKILL.md",
+        "skills/harness-planning/SKILL.md",
+        "skills/harness-execution/SKILL.md",
+        "skills/harness-evals/SKILL.md",
+        "skills/harness-review/SKILL.md",
+        "templates/spec.md",
+        "templates/design.md",
+        "templates/tasks.md",
+        "templates/eval.md",
+        "templates/state.md",
+        "templates/state.json",
+        "templates/review.md",
+        "templates/report.md",
+        "templates/run-history.md",
+        "templates/run-history.json",
+        "templates/delegation.md",
+        "templates/codebase-reader-report.md",
+        "schemas/state.schema.json",
+        "schemas/run-history.schema.json"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "TASKS",
+      "decision": "continue",
+      "notes": "Expanded the skill, template, and schema layers and added the formal review skill."
+    },
+    {
+      "run_id": "RUN-007",
+      "started_at": "2026-04-20T12:26:00Z",
+      "ended_at": "2026-04-20T13:40:00Z",
+      "phase": "EXECUTE",
+      "transition": "EXECUTE->EXECUTE",
+      "agent_role": "codebase-reader",
+      "agent_id": "parallel-lane-memory-examples",
+      "task_id": "TASK-003",
+      "related_req_ids": [
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "memory/project/overview.md",
+        "memory/codebase/map.md",
+        "memory/codebase/hotspots.md",
+        "examples/small-feature/.specs/features/example-small/report.md",
+        "examples/medium-feature/.specs/features/example-medium/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EXECUTE",
+      "decision": "continue",
+      "notes": "Added memory docs and small/medium worked examples that mirror the revised artifact model."
+    },
+    {
+      "run_id": "RUN-008",
+      "started_at": "2026-04-20T13:41:00Z",
+      "ended_at": "2026-04-20T13:52:00Z",
+      "phase": "VERIFY",
+      "transition": "EXECUTE->VERIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "command: git diff --check",
+        "command: state/run-history JSON validation"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EXECUTE",
+      "decision": "continue",
+      "notes": "Structural verification passed before the first review pass."
+    },
+    {
+      "run_id": "RUN-009",
+      "started_at": "2026-04-20T13:53:00Z",
+      "ended_at": "2026-04-20T14:10:00Z",
+      "phase": "REVIEW",
+      "transition": "VERIFY->REVIEW",
+      "agent_role": "reviewer",
+      "agent_id": "external-review-pass-1",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002"
+      ],
+      "status": "failed",
+      "evidence_refs": [
+        "docs/workflow/phases-and-gates.md",
+        "docs/workflow/codebase-reading.md",
+        "templates/report.md",
+        ".specs/features/operational-sdd-harness-workflow/state.md",
+        ".specs/features/operational-sdd-harness-workflow/run-history.md"
+      ],
+      "failure_type": "review_findings",
+      "rollback_to_phase": "EXECUTE",
+      "decision": "rework",
+      "notes": "Review found invalid rollback vocabulary, an incomplete reader contract, a missing report rollback reminder, and stale feature-state artifacts."
+    },
+    {
+      "run_id": "RUN-010",
+      "started_at": "2026-04-20T14:11:00Z",
+      "ended_at": "2026-04-20T14:25:00Z",
+      "phase": "VERIFY",
+      "transition": "REVIEW->VERIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "command: git diff --check",
+        "command: state/run-history JSON validation",
+        "command: repo drift grep check"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EXECUTE",
+      "decision": "continue",
+      "notes": "Applied the rework and refreshed verification evidence before the final review pass."
+    },
+    {
+      "run_id": "RUN-011",
+      "started_at": "2026-04-20T14:26:00Z",
+      "ended_at": "2026-04-20T14:35:00Z",
+      "phase": "REVIEW",
+      "transition": "VERIFY->REVIEW",
+      "agent_role": "reviewer",
+      "agent_id": "final-review-pass",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/review.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "VERIFY",
+      "decision": "continue",
+      "notes": "Final review passed after the last contract and example fixes were applied."
+    },
+    {
+      "run_id": "RUN-012",
+      "started_at": "2026-04-20T14:36:00Z",
+      "ended_at": "2026-04-20T14:42:00Z",
+      "phase": "REPORT",
+      "transition": "REVIEW->REPORT",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REVIEW",
+      "decision": "continue",
+      "notes": "Consolidated the repository-wide workflow upgrade and its verification evidence into the final feature report."
+    },
+    {
+      "run_id": "RUN-013",
+      "started_at": "2026-04-20T14:43:00Z",
+      "ended_at": "2026-04-20T14:45:00Z",
+      "phase": "FINISH",
+      "transition": "REPORT->FINISH",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/review.md",
+        ".specs/features/operational-sdd-harness-workflow/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REVIEW",
+      "decision": "finish",
+      "notes": "Confirmed that review and report artifacts were current and closed the feature in FINISH."
+    },
+    {
+      "run_id": "RUN-014",
+      "started_at": "2026-04-20T14:46:00Z",
+      "ended_at": "2026-04-20T14:50:00Z",
+      "phase": "VERIFY",
+      "transition": "FINISH->VERIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009"
+      ],
+      "related_eval_ids": [
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        "command: git diff --check",
+        "command: state/run-history JSON validation",
+        "command: repo drift grep check"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EXECUTE",
+      "decision": "continue",
+      "notes": "Refreshed verification after aligning report decision vocabulary to the repository standard."
+    },
+    {
+      "run_id": "RUN-015",
+      "started_at": "2026-04-20T14:51:00Z",
+      "ended_at": "2026-04-20T14:56:00Z",
+      "phase": "REVIEW",
+      "transition": "VERIFY->REVIEW",
+      "agent_role": "reviewer",
+      "agent_id": "final-closeout-review",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/review.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "VERIFY",
+      "decision": "continue",
+      "notes": "Final standards review confirmed no remaining findings after the report vocabulary alignment."
+    },
+    {
+      "run_id": "RUN-016",
+      "started_at": "2026-04-20T14:57:00Z",
+      "ended_at": "2026-04-20T15:00:00Z",
+      "phase": "REPORT",
+      "transition": "REVIEW->REPORT",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REVIEW",
+      "decision": "continue",
+      "notes": "Refreshed the feature report after the final closeout review."
+    },
+    {
+      "run_id": "RUN-017",
+      "started_at": "2026-04-20T15:01:00Z",
+      "ended_at": "2026-04-20T15:03:00Z",
+      "phase": "FINISH",
+      "transition": "REPORT->FINISH",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003",
+        "EVAL-004"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/operational-sdd-harness-workflow/review.md",
+        ".specs/features/operational-sdd-harness-workflow/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REVIEW",
+      "decision": "finish",
+      "notes": "Confirmed the refreshed review/report evidence and closed the feature again in FINISH."
+    }
+  ]
+}

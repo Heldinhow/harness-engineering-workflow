@@ -2,27 +2,31 @@
 
 ## Summary
 - Feature: <name>
-- Outcome: <ready / rework / blocked>
+- Outcome: <pass / rework / escalate>
 
 ## Scope Delivered
 - <item>
 
 ## Verification
-- Tests:
-- Checks:
 - Evidence:
+- Notes:
 
 ## Review
-- Status:
+- Decision: <pass / rework / escalate>
 - Findings:
 
 ## Evals
 - Capability:
 - Regression:
-- pass@k if used:
-- pass^k if used:
+- Thresholds used:
+
+## Residual Risks
+- <risk>
+
+## Reopen / Rollback Target
+- <phase to return to if later evidence fails>
 
 ## Final Decision
-- [ ] Ready to finalize
-- [ ] Needs rework
-- [ ] Needs human review
+- [ ] pass
+- [ ] rework
+- [ ] escalate

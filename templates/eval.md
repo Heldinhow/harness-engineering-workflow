@@ -1,16 +1,26 @@
 # Eval Definition: <feature>
 
-## Capability Evals
-- CE-001: <new behavior that must pass>
-- CE-002: <new behavior that must pass>
+## Evals
 
-## Regression Evals
-- RE-001: <existing behavior that must still pass>
+### EVAL-001
+- Type: capability
+- Maps to: REQ-001
+- Description: <new behavior that must pass>
+- Evidence method: <command, inspection, or structured review>
+- Rerun triggers:
+  - <change that invalidates this eval>
+- Thresholds:
+  - <threshold if relevant>
 
-## Thresholds
-- pass@1: <target if relevant>
-- pass@3: <target if relevant>
-- pass^3: <target if relevant>
+### EVAL-002
+- Type: regression
+- Maps to: REQ-002
+- Description: <existing behavior that must still pass>
+- Evidence method: <command, inspection, or structured review>
+- Rerun triggers:
+  - <change that invalidates this eval>
+- Thresholds:
+  - <threshold if relevant>
 
 ## Notes
-- <grader assumptions>
+- <grader assumptions or limits>

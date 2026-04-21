@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schemas/run-history.schema.json",
+  "feature_id": "<feature>",
+  "runs": [
+    {
+      "run_id": "RUN-001",
+      "started_at": "2026-04-20T00:00:00Z",
+      "ended_at": null,
+      "phase": "SPECIFY",
+      "transition": "INTAKE->SPECIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001"
+      ],
+      "related_eval_ids": [
+        "EVAL-001"
+      ],
+      "status": "in_progress",
+      "evidence_refs": [
+        ".specs/features/<feature>/spec.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": null,
+      "decision": "continue",
+      "notes": "<what changed in this run>"
+    }
+  ]
+}

@@ -1,97 +1,17 @@
 # Harness Engineering Workflow
 
-A compact skill package for harness engineering built around one practical workflow with four reusable skills and a small template set.
+An operational SDD + Harness Engineering workflow package for lightweight but disciplined planning, execution, validation, and resume.
 
-This repository packages the workflow as four reusable skills plus a small template set.
+This repository is built around one rule: the main agent is an orchestrator, not a codebase vacuum. It plans, sizes, delegates, consolidates, enforces gates, and decides progress. Broad codebase reading, parallel execution, and scoped implementation are delegated to subagents with explicit contracts.
 
----
+## What This Package Provides
 
-## Repository Structure
+- A planning layer with spec-driven artifacts, adaptive depth, and requirement IDs.
+- An execution layer with task-driven work, controlled delegation, and parallelism rules.
+- A quality layer with evals, verify, review, report, and explicit rollback targets.
+- A harness layer with human-readable state, machine-readable state, run history, and resume guidance.
 
-```text
-README.md
-skills/
-  harness-engineering-workflow/
-    SKILL.md
-  harness-planning/
-    SKILL.md
-  harness-execution/
-    SKILL.md
-  harness-evals/
-    SKILL.md
-templates/
-  spec.md
-  design.md
-  tasks.md
-  eval.md
-  state.md
-  report.md
-```
-
----
-
-## What This Package Is
-
-This is a **workflow package**, not a large framework runtime.
-
-It is designed to be:
-- small enough to adopt quickly
-- structured enough to prevent sloppy execution
-- explicit enough to support rework loops and evidence-based completion
-- flexible enough for small and medium changes without too much ceremony
-
-It does **not** require specialized agents.
-The workflow is implemented as a small set of skills with clear responsibilities.
-
----
-
-## Installed Skills
-
-### 1. `harness-engineering-workflow`
-The primary workflow skill.
-
-Responsibilities:
-- define the full workflow
-- decide which phases apply
-- apply sizing rules
-- define loop-back behavior
-- route work to planning, execution, and eval skills
-
-Use this when you want the whole process.
-
-### 2. `harness-planning`
-The planning layer.
-
-Responsibilities:
-- create `spec.md`
-- create `design.md` when needed
-- create `tasks.md` when needed
-- maintain `state.md`
-- keep requirements traceable with IDs
-
-### 3. `harness-execution`
-The execution layer.
-
-Responsibilities:
-- implement against approved planning artifacts
-- enforce TDD for behavior changes
-- require fresh verification before completion claims
-- loop back instead of improvising missing scope
-
-### 4. `harness-evals`
-The evidence layer.
-
-Responsibilities:
-- define capability evals
-- define regression evals
-- scale eval rigor by complexity
-- contribute final evidence to the report
-
----
-
-## Unified Workflow
-
-The package uses this end-to-end flow:
+## Core Workflow
 
 ```text
 INTAKE
@@ -106,423 +26,196 @@ INTAKE
 → FINISH
 ```
 
-This flow is intentionally simple.
-It is meant to be followed consistently, not interpreted differently every time.
-
----
-
-## Phase-by-Phase Explanation
-
-## 1. Intake
-
-Purpose:
-- identify the feature or change
-- define the local goal
-- choose a complexity level
-
-Typical outcome:
-- a feature name or slug
-- a sense of whether the change is Small, Medium, Large, or Complex
-
-For very small work, Intake may be brief, but it should still happen.
-
----
-
-## 2. Specify
-
-Purpose:
-- define what the change is supposed to achieve
-- create a minimum shared contract before implementation
-
-Artifact:
-- `spec.md`
-
-A good spec should include:
-- objective
-- in-scope and out-of-scope items
-- requirement IDs like `REQ-001`
-- acceptance criteria in behavioral language
-
-Why this matters:
-- prevents premature coding
-- gives review and evals something concrete to check against
-
----
-
-## 3. Design
-
-Purpose:
-- explain how the solution should work when structure matters
-
-Artifact:
-- `design.md`
-
-Design is needed when:
-- multiple components are involved
-- interfaces matter
-- integrations matter
-- there are trade-offs to resolve
-- review would otherwise be guesswork
-
-Design can be skipped for clearly local Small changes.
-
----
-
-## 4. Tasks
-
-Purpose:
-- decompose execution into trackable pieces when needed
-
-Artifact:
-- `tasks.md`
-
-Tasks are useful when:
-- multiple steps are needed
-- sequence matters
-- several files are touched
-- progress would otherwise be vague
-
-Tasks can be skipped when a Small change fits a single short TDD cycle.
-
----
-
-## 5. Eval Define
-
-Purpose:
-- define how success will be checked before completion
-
-Artifact:
-- `eval.md`
-
-The eval file should describe:
-- new behavior that must work (capability evals)
-- existing behavior that must still work (regression evals)
-- thresholds when relevant
-- assumptions about grading or evidence
-
-Why this matters:
-- avoids vague “looks good” completion
-- forces explicit proof expectations before finalization
-
----
-
-## 6. Execute
-
-Purpose:
-- implement the change using the approved planning artifacts
-
-Execution rules:
-- follow the spec
-- use the design when present
-- follow tasks when present
-- do not improvise scope
-- use TDD for feature work, bugfixes, and behavior changes
-- prefer isolation on Medium+ work when practical
-
----
-
-## 7. Verify
-
-Purpose:
-- prove the implementation currently works
-
-This is not the same thing as “I think it is done.”
-
-Verification means:
-- identify the command that proves the claim
-- run that command now
-- inspect the actual output
-- report the result based on evidence
-
----
-
-## 8. Review
-
-Purpose:
-- compare what was built against what was intended
-- ensure the solution is not obviously out of bounds or structurally wrong
-
-Review should check:
-- does implementation match the spec?
-- was anything clearly out-of-scope added?
-- is the structure reasonable for the intended change?
-- are open issues explicit?
-
-This is lighter than a heavyweight formal review system, but it is still a gate.
-
----
-
-## 9. Report
-
-Purpose:
-- summarize what was delivered and what evidence exists
-
-Artifact:
-- `report.md`
-
-The report should include:
-- summary of scope delivered
-- verification evidence
-- review result
-- eval result
-- final recommendation: ready, rework, or blocked
-
----
-
-## 10. Finish
-
-Purpose:
-- decide whether the work is actually ready to be finalized
-
-Before finish, confirm:
-- applicable planning artifacts exist
-- evals were defined before meaningful implementation
-- verification evidence is fresh
-- review was completed
-- report was written
-
-This phase corresponds to the final branch/PR readiness decision.
-
----
-
-## Where Each Source Enters the Workflow
-
-## TLC Spec-Driven
-
-TLC is the base of the **planning layer**.
-
-It contributes:
-- explicit artifacts per feature
-- requirement IDs
-- persistent feature state
-- adaptive depth by complexity
-
-In this package, that influence is concentrated in:
-- `skills/harness-planning/`
-- `templates/spec.md`
-- `templates/design.md`
-- `templates/tasks.md`
-- `templates/state.md`
-
-## Superpowers
-
-Superpowers is the base of the **execution discipline layer**.
-
-It contributes:
-- skill-first discipline
-- TDD for behavior changes
-- evidence before completion
-- execution against a plan
-- practical isolation guidance for larger work
-- review/finish mindset
-
-In this package, that influence is strongest in:
-- `skills/harness-execution/`
-- Verify, Review, and Finish behavior in the main workflow
-
-## eval-harness
-
-eval-harness is the base of the **quality and evidence layer**.
-
-It contributes:
-- capability evals
-- regression evals
-- pass/fail thinking before finalization
-- thresholds for stronger cases
-
-In this package, that influence is concentrated in:
-- `skills/harness-evals/`
-- `templates/eval.md`
-- `templates/report.md`
-
----
-
-## Sizing Rules
-
-## Small
-Use the lightweight path when the work is local and obvious.
-
-Expected:
-- `spec.md` required
-- `design.md` optional
-- `tasks.md` optional
-- `eval.md` lightweight
-- review still required
-
-## Medium
-Use the standard path for multi-file or moderately risky changes.
-
-Expected:
-- `spec.md` required
-- `design.md` recommended
-- `tasks.md` required
-- `eval.md` required
-- review required
-
-## Large / Complex
-Use the full path.
-
-Expected:
-- `spec.md` required
-- `design.md` required
-- `tasks.md` required
-- capability and regression evals required
-- explicit rework loops required
-
----
-
-## Loop-Back Rules
-
-When a gate fails, do not improvise. Go back to the right phase.
-
-- Verify fails → go back to Execute
-- Review fails because implementation is incomplete → go back to Execute
-- Review fails because structure is wrong → go back to Design
-- Eval fails because behavior is wrong → go back to Execute
-- Eval fails because criteria are weak or unclear → go back to Eval Define
-- Spec is unclear or conflicting → go back to Specify
-
-This is one of the most important properties of the workflow.
-
----
-
-## Feature Files
-
-For each feature, the recommended working set is:
+## Operating Principles
+
+- Spec before execute.
+- Evals before meaningful behavior change.
+- The main agent consolidates filtered outputs instead of reading the whole codebase.
+- Broad codebase reading is delegated to scoped `Codebase Reader` subagents.
+- Every task declares requirement traceability, dependencies, and execution class.
+- Every relevant phase produces evidence.
+- Every gate defines its rollback target.
+- State and run history must support reliable resume.
+
+## Roles
+
+| Role | Purpose |
+| --- | --- |
+| Orchestrator | Classify complexity, choose phases, decide gates, delegate, fan-out, fan-in, and consolidate outputs |
+| Codebase Reader | Investigate a bounded area and return filtered findings only |
+| Spec Agent | Produce and refine `spec.md` |
+| Design Agent | Produce and refine `design.md` when structure matters |
+| Eval Agent | Produce and refine `eval.md` before meaningful implementation |
+| Execution Agent | Complete scoped tasks with minimal context |
+| Reviewer | Decide `pass`, `rework`, or `escalate` |
+
+## Repository Structure
+
+```text
+README.md
+AGENTS.md
+docs/
+  workflow/
+    overview.md
+    phases-and-gates.md
+    agent-roles.md
+    delegation.md
+    parallelism.md
+    codebase-reading.md
+    state-and-runs.md
+memory/
+  project/
+  codebase/
+examples/
+  small-feature/
+  medium-feature/
+schemas/
+  state.schema.json
+  run-history.schema.json
+skills/
+  harness-engineering-workflow/
+  harness-planning/
+  harness-execution/
+  harness-evals/
+  harness-review/
+templates/
+  spec.md
+  design.md
+  tasks.md
+  eval.md
+  state.md
+  state.json
+  review.md
+  report.md
+  run-history.md
+  run-history.json
+  delegation.md
+  codebase-reader-report.md
+```
+
+## Skills
+
+### `harness-engineering-workflow`
+The main workflow skill. It acts as the Orchestrator and routes work across planning, execution, eval, and review.
+
+### `harness-planning`
+Creates the planning artifacts, sizes the work, and ensures requirement traceability.
+
+### `harness-execution`
+Runs implementation through task-scoped work, controlled delegation, and verification discipline.
+
+### `harness-evals`
+Defines capability and regression evals, evidence policy, and rerun triggers.
+
+### `harness-review`
+Runs the formal review gate and decides `pass`, `rework`, or `escalate`.
+
+## Artifact Model
+
+Each feature should have a working set under `.specs/features/<feature>/`:
 
 ```text
 .specs/features/<feature>/
   spec.md
-  design.md        # when needed
-  tasks.md         # when needed
+  design.md
+  tasks.md
   eval.md
+  delegation.md
+  codebase-reader-report.md
+  review.md
   state.md
+  state.json
+  run-history.md
+  run-history.json
   report.md
 ```
 
-### `state.md`
-This is the minimal persistent memory for the feature.
+Small features may omit `design.md`, `tasks.md`, and delegation artifacts when the work is truly local. Medium and complex features should use the full set when structure, dependencies, or parallelism matter.
 
-It should record:
-- current phase
-- status
-- complexity
-- open issues
-- latest evidence
-- next step
-- loop rule
+## Phase Output Summary
 
----
+| Phase | Primary output | Gate summary |
+| --- | --- | --- |
+| Intake | feature id, scope, complexity | scope is classified |
+| Specify | `spec.md` | requirements are clear and testable |
+| Design | `design.md` | solution structure is explicit enough |
+| Tasks | `tasks.md` | execution units, deps, and parallelism are explicit |
+| Eval Define | `eval.md` | proof is defined before meaningful behavior change |
+| Execute | code/docs/artifacts + evidence | tasks are complete or explicitly blocked |
+| Verify | fresh command or inspection evidence | current status is proven now |
+| Review | `review.md` | decision is `pass`, `rework`, or `escalate` |
+| Report | `report.md` | scope and evidence are consolidated |
+| Finish | completion decision | all required gates are green |
 
-## Typical Usage
+## Delegation and Codebase Reading
 
-A normal feature might be handled like this:
+The Orchestrator may read local context, feature artifacts, and memory docs. Once analysis goes beyond a small local scope, codebase reading must be delegated.
 
-1. Use `harness-engineering-workflow`
-2. Create `spec.md`
-3. Create `design.md` if the structure matters
-4. Create `tasks.md` if decomposition is needed
-5. Create `eval.md`
-6. Implement using `harness-execution`
-7. Verify using fresh command output
-8. Review against the plan
-9. Write `report.md`
-10. Finalize only if all required evidence exists
+Use `Codebase Reader` subagents when any of these are true:
 
----
+- more than one area matters
+- likely more than three files matter
+- impact analysis is needed
+- dependencies or boundaries are unclear
+- the main agent would otherwise absorb raw context
 
-## Example: Medium Feature
+Each delegated reader returns only:
 
-Suppose you want to add a new harness report mode.
+- relevant files
+- technical summary
+- expected impact
+- risks
+- dependencies
+- objective recommendations
 
-A good path would be:
+## Parallelism
 
-1. **Specify**
-   - define what the new report mode does
-   - add `REQ-001`, `REQ-002`
+Tasks must declare one execution class:
 
-2. **Design**
-   - explain where the new mode plugs into the existing flow
-   - describe any formatter or output decisions
+- `sequential`
+- `parallelizable`
+- `blocked`
 
-3. **Tasks**
-   - split implementation into parser/update/report steps
+The Orchestrator decides fan-out only after planning and eval definitions are stable enough. Fan-in is required before `VERIFY`, `REVIEW`, `REPORT`, and `FINISH`.
 
-4. **Eval Define**
-   - define one capability eval for the new mode
-   - define one regression eval for existing report output
+## State and Run History
 
-5. **Execute**
-   - implement using TDD for the new behavior
+- `state.md` is the human summary.
+- `state.json` is the machine-readable control state.
+- `run-history.md` is the human digest.
+- `run-history.json` is the append-only execution ledger.
 
-6. **Verify**
-   - run commands proving the new mode works
+The JSON forms are backed by schemas in `schemas/`.
 
-7. **Review**
-   - compare delivered behavior to the spec/design
+## Start Here
 
-8. **Report**
-   - summarize what shipped and what passed
+1. Use `harness-engineering-workflow`.
+2. Create `spec.md`.
+3. Create `design.md` and `tasks.md` when complexity requires them.
+4. Create `eval.md` before meaningful implementation.
+5. Delegate broad codebase reading through `Codebase Reader` subagents when needed.
+6. Execute per task with explicit evidence.
+7. Verify with fresh evidence.
+8. Run the review gate.
+9. Write the report.
+10. Finalize only after all required gates pass.
 
-9. **Finish**
-   - only then treat it as ready
+## Further Reading
 
----
-
-## Suggested Commands / Triggers
-
-These phrases map well to the package:
-
-- `initialize project`
-- `specify feature <name>`
-- `design feature <name>`
-- `plan tasks <name>`
-- `define evals <name>`
-- `execute feature <name>`
-- `verify feature <name>`
-- `review feature <name>`
-- `report feature <name>`
-- `resume feature <name>`
-- `finalize feature <name>`
-
----
-
-## How to Install / Reuse
-
-If you want to reuse this package in another environment:
-
-1. Copy the `skills/` directory into your skills workspace
-2. Copy the `templates/` directory into your preferred project scaffolding location
-3. Start with `harness-engineering-workflow`
-4. Use the companion skills as directed by the workflow
-
----
+- `AGENTS.md`
+- `docs/workflow/overview.md`
+- `docs/workflow/phases-and-gates.md`
+- `docs/workflow/agent-roles.md`
+- `docs/workflow/delegation.md`
+- `docs/workflow/parallelism.md`
+- `docs/workflow/codebase-reading.md`
+- `docs/workflow/state-and-runs.md`
 
 ## Why This Package Exists
 
-The goal is to avoid both extremes:
+This package is meant to avoid both extremes:
 
-- **too loose**: coding without spec, eval, or evidence
-- **too heavy**: turning every change into a giant planning ceremony
+- coding without spec, eval, evidence, or rollback rules
+- turning every change into a heavyweight process
 
-This package keeps the workflow:
-- explicit
-- composable
-- evidence-based
-- practical for real work
-
----
-
-## Summary
-
-This repository gives you a compact, reusable workflow package for harness engineering with:
-- 1 main workflow skill
-- 3 focused companion skills
-- 6 minimal templates
-- clear loops for rework
-- explicit planning, execution, and evidence phases
-
-If you want to extend it later, the most natural next additions would be:
-- a dedicated review skill
-- a dedicated finish skill
-- stricter eval templates for release-critical work
+The result should stay pragmatic, operational, and resumable.

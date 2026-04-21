@@ -4,15 +4,18 @@
 <chosen approach>
 
 ## Existing Context / Reuse
-- <existing module or pattern>
+- <existing artifact, module, or pattern>
 
-## Decisions
+## Key Decisions
 - DES-001: <decision>
 - DES-002: <decision>
 
 ## Requirement Mapping
-- REQ-001 → <component / flow>
-- REQ-002 → <component / flow>
+- REQ-001 -> <artifact, flow, or decision>
+- REQ-002 -> <artifact, flow, or decision>
 
 ## Risks
 - <risk>
+
+## Mitigations
+- <mitigation>

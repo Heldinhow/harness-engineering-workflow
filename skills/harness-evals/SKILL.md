@@ -1,63 +1,57 @@
 ---
 name: harness-evals
-description: Use when a feature needs explicit capability or regression evals before completion, with lightweight definitions for small work and stronger evidence for larger or riskier changes.
+description: Use when the workflow needs explicit eval definitions with stable EVAL IDs, requirement traceability, rerun triggers, and evidence rules before meaningful behavior change or final reporting.
 ---
 
 # Harness Evals
 
-This skill owns the quality and evidence layer.
+This skill owns `EVAL DEFINE` and the eval-side evidence policy.
 
-It keeps eval-driven development lightweight but non-optional for meaningful work.
+## Eval Contract
+
+- Create `eval.md` before meaningful behavior change.
+- Use stable eval IDs such as `EVAL-001`.
+- Map each eval to the `REQ-*` it proves or protects.
+- Prefer deterministic evidence when possible.
+- Keep eval evidence and stale-evidence state explicit.
 
 ## Eval Types
 
-### Capability Evals
-Use for new behavior.
-Question answered: can the system now do what it could not do before?
+- Capability evals prove new behavior.
+- Regression evals protect existing behavior.
 
-### Regression Evals
-Use for existing behavior that must still work.
-Question answered: did this change preserve what already worked?
+Medium work and above should name at least one concrete capability or regression eval. Large or high-risk work should usually include both.
 
-## Eval Definition Rules
+## `eval.md`
 
-Create `.specs/features/<feature>/eval.md` before meaningful implementation.
+`eval.md` should capture:
 
-That file should include:
-- capability evals
-- regression evals
+- `EVAL-*`
+- linked `REQ-*`
+- eval type
+- evidence method
 - thresholds when relevant
-- notes about graders or assumptions
+- assumptions or grader notes
+- rerun triggers
 
-## Strength by Complexity
+## Rerun Triggers
 
-### Small
-A lightweight eval definition is enough.
-At minimum, name the new behavior and the regression risk.
+Rerun dependent evals when any of these happen:
 
-### Medium
-Define at least one concrete capability or regression eval.
-Tie each eval back to a requirement ID where possible.
+- implementation changes affect the covered behavior
+- requirements change
+- design changes affect the evaluated path
+- thresholds or eval definitions change
+- prior eval evidence is stale
 
-### Large / Complex
-Use both capability and regression evals.
-For critical paths, use stronger repeatability expectations such as pass@k or pass^k.
+## Evidence Policy
 
-## Reporting
+- Eval evidence must be fresh enough for the current claim.
+- Old eval results cannot justify new behavior after relevant changes.
+- If eval definitions are wrong or incomplete, roll back to `EVAL DEFINE`.
+- If requirements are not testable, roll back to `SPECIFY`.
+- If the behavior fails the defined eval, roll back to `EXECUTE`.
 
-The final feature report should summarize:
-- which capability evals passed
-- which regression evals passed
-- any threshold used
-- whether the feature is ready, needs rework, or needs human review
+## Reporting Expectations
 
-## Eval Failure Loops
-
-- Behavior fails eval → back to Execute
-- Eval criteria are vague, incomplete, or wrong → back to Eval Define
-- Requirement itself is unclear → back to Specify
-
-## Preference Order
-
-Prefer deterministic evidence when possible.
-Use broader or human judgment only when deterministic checks are insufficient.
+`REPORT` should summarize which `EVAL-*` passed, which failed, what thresholds were used, and any residual risk or human judgment still required.

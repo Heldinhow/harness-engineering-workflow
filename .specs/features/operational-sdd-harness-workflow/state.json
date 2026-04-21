@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../schemas/state.schema.json",
+  "feature_id": "operational-sdd-harness-workflow",
+  "complexity": "complex",
+  "current_phase": "FINISH",
+  "status": "done",
+  "pending_gate": "finish_complete",
+  "owner_role": "orchestrator",
+  "owner_id": "main-session",
+  "last_run_id": "RUN-017",
+  "next_step": "Reuse this working set as the in-repo example of a complex repository-wide workflow upgrade.",
+  "blockers": [],
+  "latest_evidence_refs": [
+    ".specs/features/operational-sdd-harness-workflow/run-history.json#RUN-015",
+    ".specs/features/operational-sdd-harness-workflow/run-history.json#RUN-016",
+    ".specs/features/operational-sdd-harness-workflow/run-history.json#RUN-017",
+    ".specs/features/operational-sdd-harness-workflow/review.md",
+    ".specs/features/operational-sdd-harness-workflow/report.md"
+  ],
+  "stale_evidence_refs": [],
+  "rollback_target": "REVIEW",
+  "updated_at": "2026-04-20T19:05:00Z"
+}

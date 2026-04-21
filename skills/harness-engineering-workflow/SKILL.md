@@ -1,15 +1,13 @@
 ---
 name: harness-engineering-workflow
-description: Use when a task needs a unified harness engineering workflow with minimal planning artifacts, disciplined execution, explicit rework loops, and eval-based evidence before final completion.
+description: Use when work in this repository or an adopting repository needs the full Orchestrator-first harness workflow, including phase selection, delegation, fan-out and fan-in control, and stateful resume.
 ---
 
 # Harness Engineering Workflow
 
-A compact workflow for harness engineering with minimal planning artifacts, disciplined execution, explicit rework loops, and eval-based evidence before final completion.
+Use this as the main workflow skill. The main agent is the `Orchestrator`: it classifies work, chooses phases, delegates broad reading and scoped execution, consolidates filtered outputs, and decides whether to continue, roll back, rework, or escalate.
 
-Use this as the primary workflow skill. It decides the path and hands off to the planning, execution, and eval skills.
-
-## Core Flow
+## Phase Order
 
 ```text
 INTAKE
@@ -24,107 +22,71 @@ INTAKE
 → FINISH
 ```
 
-## What Each Phase Produces
+## Orchestrator Contract
 
-| Phase | Output |
-|------|--------|
-| Intake | feature name, scope, complexity |
-| Specify | `.specs/features/<feature>/spec.md` |
-| Design | `.specs/features/<feature>/design.md` when needed |
-| Tasks | `.specs/features/<feature>/tasks.md` when needed |
-| Eval Define | `.specs/features/<feature>/eval.md` |
-| Execute | code + tests + implementation evidence |
-| Verify | fresh command output proving current status |
-| Review | brief review notes against spec and quality |
-| Report | `.specs/features/<feature>/report.md` |
-| Finish | branch/PR/local completion decision |
+- Keep the main agent context narrow.
+- Read directly only the request, root framing docs, feature artifacts, memory docs, or one clearly local file or diff.
+- Delegate codebase reading when more than one area matters, more than three files likely matter, dependencies are unclear, impact analysis is needed, or broad rereading would pollute context.
+- Delegate with only: objective, relevant `REQ-*`, relevant `EVAL-*` when applicable, allowed paths or areas, required artifacts, ready definition, done definition, dependencies.
+- Accept delegated results only as: relevant files, technical summary, expected impact, risks, dependencies, objective recommendations.
 
-## Required Rules
+## Artifact Expectations
 
-1. Never implement before minimal spec exists.
-2. Never change behavior before defining applicable evals.
-3. Use TDD for feature work, bugfixes, and behavior changes.
-4. Never claim completion without fresh verification evidence.
-5. Review before finishing.
-6. If a gate fails, loop back explicitly instead of improvising.
+Keep the feature working set under `.specs/features/<feature>/`.
 
-## Sizing
+- `spec.md` is always required before execution.
+- `design.md` is required when structure matters.
+- `tasks.md` is required when work spans files, phases, dependencies, or parallel lanes.
+- `eval.md` is required before meaningful behavior change.
+- `review.md` records the formal review decision.
+- `state.md` and `state.json` must stay aligned.
+- `run-history.md` and `run-history.json` must stay aligned.
 
-### Small
-Use the light path when the change is local and obvious.
-- `spec.md`: required
-- `design.md`: optional
-- `tasks.md`: optional
-- `eval.md`: lightweight
-- review: still required
+## Execution Classes And Parallelism
 
-### Medium
-Use the standard path for multi-file or moderately risky changes.
-- `spec.md`: required
-- `design.md`: recommended
-- `tasks.md`: required
-- `eval.md`: required
-- review: required
+Every task should declare one execution class:
 
-### Large / Complex
-Use the full path.
-- `spec.md`: required
-- `design.md`: required
-- `tasks.md`: required
-- capability + regression evals: required
-- explicit review and rework loops: required
+- `sequential`
+- `parallelizable`
+- `blocked`
 
-## Loop Rules
+Use `parallelizable` only when ownership boundaries are clear and the work can fan in safely before `VERIFY`, `REVIEW`, `REPORT`, and `FINISH`.
 
-- Verify fails → go back to Execute
-- Review fails due to implementation gap → go back to Execute
-- Review fails due to structural/design issue → go back to Design
-- Eval fails due to behavior → go back to Execute
-- Eval fails due to bad or missing criteria → go back to Eval Define
-- Spec is unclear or conflicting → go back to Specify
+## Gate Rules
 
-## Skill Routing
+Every relevant phase must define:
 
-Use these companion skills during the workflow:
-- **REQUIRED SUB-SKILL:** `harness-planning` for Specify, Design, and Tasks
-- **REQUIRED SUB-SKILL:** `harness-execution` for Execute and Verify discipline
-- **REQUIRED SUB-SKILL:** `harness-evals` for Eval Define and evidence reporting
+- entry assumptions
+- exit conditions
+- evidence
+- rollback target on failure
 
-## State File
+Use only these review decisions:
 
-Use one feature state file as the workflow memory source of truth:
-- `.specs/features/<feature>/state.md`
+- `pass`
+- `rework`
+- `escalate`
 
-Keep it simple:
-- current phase
-- current status
-- complexity
-- open issues
-- latest evidence
-- next step
-- loop-back rule
+Do not treat work as complete when `VERIFY`, `REVIEW`, or `REPORT` evidence is stale.
 
-## Commands / Triggers
+## Rollback And Resume
 
-- `initialize project`
-- `specify feature <name>`
-- `design feature <name>`
-- `plan tasks <name>`
-- `define evals <name>`
-- `execute feature <name>`
-- `verify feature <name>`
-- `review feature <name>`
-- `report feature <name>`
-- `resume feature <name>`
-- `finalize feature <name>`
+- Roll back to the phase named by the failing gate or invalidated artifact.
+- Relevant changes after `VERIFY` make `VERIFY`, `REVIEW`, and `REPORT` stale.
+- Relevant changes after `REVIEW` make `REVIEW` and `REPORT` stale.
+- Requirement or eval changes make dependent evidence stale.
 
-## Finish Criteria
+When resuming, read in this order:
 
-Before finishing, confirm all applicable conditions are true:
-- spec exists and matches delivered scope
-- evals were defined before meaningful implementation
-- verification evidence is fresh
-- review completed
-- report written
+1. `state.json`
+2. `state.md`
+3. latest `run-history.json` entry
+4. `review.md` when present
+5. only the feature artifacts referenced by current state
 
-If any of these are missing, the work is not ready to finish.
+## Required Sub-Skills
+
+- **REQUIRED SUB-SKILL:** `harness-planning` for `SPECIFY`, `DESIGN`, and `TASKS`
+- **REQUIRED SUB-SKILL:** `harness-evals` for `EVAL DEFINE`
+- **REQUIRED SUB-SKILL:** `harness-execution` for `EXECUTE` and `VERIFY`
+- **REQUIRED SUB-SKILL:** `harness-review` for `REVIEW`

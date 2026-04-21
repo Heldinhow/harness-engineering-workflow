@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../schemas/state.schema.json",
+  "feature_id": "<feature>",
+  "complexity": "medium",
+  "current_phase": "SPECIFY",
+  "status": "in_progress",
+  "pending_gate": "specify_to_execute",
+  "owner_role": "orchestrator",
+  "owner_id": "main-session",
+  "last_run_id": "RUN-001",
+  "next_step": "<next workflow step>",
+  "blockers": [],
+  "latest_evidence_refs": [
+    ".specs/features/<feature>/spec.md"
+  ],
+  "stale_evidence_refs": [],
+  "rollback_target": "SPECIFY",
+  "updated_at": "2026-04-20T00:00:00Z"
+}

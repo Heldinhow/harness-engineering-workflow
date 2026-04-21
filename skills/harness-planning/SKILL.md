@@ -1,77 +1,74 @@
 ---
 name: harness-planning
-description: Use when the workflow needs minimal but explicit planning artifacts for a feature, including spec, optional design, optional task breakdown, and persistent feature state.
+description: Use when the Orchestrator needs to size work, choose planning artifact depth, maintain requirement traceability, and decide whether codebase reading can stay local or must be delegated.
 ---
 
 # Harness Planning
 
-This skill owns the planning layer.
+This skill owns `SPECIFY`, `DESIGN`, and `TASKS`.
 
-It keeps the workflow lightweight while preserving:
-- explicit feature artifacts
-- requirement IDs
-- adaptive depth by complexity
-- session continuity through a feature state file
+## Planning Contract
 
-## Outputs
+- Keep planning as small as possible, but explicit enough for `EXECUTE`, `VERIFY`, `REVIEW`, and resume.
+- Use stable requirement IDs such as `REQ-001`.
+- Keep tasks and evals traceable back to the relevant `REQ-*`.
+- Keep `state.md` and `state.json` aligned when planning changes the current phase, scope, blockers, or next step.
 
-Create or update these files under `.specs/features/<feature>/`:
-- `spec.md`
-- `design.md` when structure or integration matters
-- `tasks.md` when the work benefits from decomposition
-- `state.md`
+## Artifact Depth By Complexity
 
-## Planning Rules
+### Small
+- Require `spec.md`.
+- `design.md` is optional for clearly local work.
+- `tasks.md` is optional when one short execution loop is enough.
 
-### Spec
-Always create a minimal spec before implementation.
+### Medium
+- Require `spec.md`, `tasks.md`, and state updates.
+- Strongly recommend `design.md` when interfaces, data flow, or trade-offs matter.
 
-The spec must include:
+### Large / Complex
+- Require `spec.md`, `design.md`, `tasks.md`, delegation planning, and explicit rollback targets.
+
+## `spec.md`
+
+`spec.md` should define:
+
 - objective
-- in-scope vs out-of-scope
-- requirement IDs (`REQ-001`, `REQ-002`, ...)
-- acceptance criteria in clear behavioral terms
+- in-scope and out-of-scope
+- `REQ-*`
+- acceptance criteria in testable terms
 
-### Design
-Create `design.md` when any of these are true:
-- the change spans multiple components
-- an interface, integration, or data flow matters
-- there are meaningful trade-offs
+Do not allow `EXECUTE` to start while requirements remain vague or contradictory.
+
+## `design.md`
+
+Create `design.md` when:
+
+- more than one component or interface matters
+- structure or integration decisions affect execution or review
+- design trade-offs need to be recorded
 - review would otherwise rely on guesswork
 
-Skip `design.md` for clearly local Small changes.
+Skip it only for clearly local work where structure is already obvious.
 
-### Tasks
-Create `tasks.md` when any of these are true:
-- the work spans multiple steps or files
-- sequencing matters
-- parallel or staged execution matters
-- progress would otherwise be hard to track
+## `tasks.md`
 
-Skip `tasks.md` when a Small change fits one short TDD cycle.
+Create `tasks.md` when work spans multiple files, phases, dependencies, or parallel lanes.
 
-## State Tracking
+Each task should include:
 
-Maintain `.specs/features/<feature>/state.md` with:
-- current phase
-- status
-- complexity
-- open issues
-- latest evidence
-- next step
-- loop rule
+- scope
+- related `REQ-*`
+- dependencies
+- execution class: `sequential`, `parallelizable`, or `blocked`
 
-## Lightweight Planning Standard
+## Codebase Reading Rule
 
-Do not over-design.
+The Orchestrator may read a small local scope directly. Delegate codebase reading when more than one area matters, more than three files likely matter, boundaries are unclear, impact analysis is needed, or broad reading would pollute main-agent context.
 
-Default to the smallest planning surface that still makes execution, review, and evals unambiguous.
+Use the standard delegation contract and keep the returned output filtered.
 
-## Requirement IDs
+## Planning Rollback
 
-Use simple IDs:
-- `REQ-001`
-- `REQ-002`
-- `REQ-003`
-
-Keep tasks and evals traceable back to those IDs.
+- Requirement ambiguity or contradiction rolls back to `SPECIFY`.
+- Structural uncertainty rolls back to `DESIGN`.
+- Bad decomposition or unsafe task boundaries roll back to `TASKS`.

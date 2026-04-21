@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../schemas/state.schema.json",
+  "feature_id": "example-small",
+  "complexity": "small",
+  "current_phase": "FINISH",
+  "status": "done",
+  "pending_gate": "finish_complete",
+  "owner_role": "orchestrator",
+  "owner_id": "example-session-small",
+  "last_run_id": "RUN-007",
+  "next_step": "Reuse this working set as the minimal example for a local feature that still records state and run history.",
+  "blockers": [],
+  "latest_evidence_refs": [
+    ".specs/features/example-small/run-history.json#RUN-007",
+    ".specs/features/example-small/review.md",
+    ".specs/features/example-small/report.md"
+  ],
+  "stale_evidence_refs": [],
+  "rollback_target": "REVIEW",
+  "updated_at": "2026-04-20T13:18:00Z"
+}

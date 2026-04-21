@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./state.schema.json",
+  "title": "Feature State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "feature_id",
+    "complexity",
+    "current_phase",
+    "status",
+    "pending_gate",
+    "owner_role",
+    "owner_id",
+    "last_run_id",
+    "next_step",
+    "blockers",
+    "latest_evidence_refs",
+    "stale_evidence_refs",
+    "rollback_target",
+    "updated_at"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "feature_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "complexity": {
+      "type": "string",
+      "enum": ["small", "medium", "large", "complex"]
+    },
+    "current_phase": {
+      "type": "string",
+      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "blocked", "done"]
+    },
+    "pending_gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_role": {
+      "type": "string",
+      "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "execution-agent", "reviewer"]
+    },
+    "owner_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "last_run_id": {
+      "type": "string",
+      "pattern": "^RUN-[0-9]+$"
+    },
+    "next_step": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "latest_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stale_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rollback_target": {
+      "type": "string",
+      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

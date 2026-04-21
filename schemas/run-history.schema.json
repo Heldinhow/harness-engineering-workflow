@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./run-history.schema.json",
+  "title": "Run History",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "feature_id",
+    "runs"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "feature_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "run_id",
+          "started_at",
+          "ended_at",
+          "phase",
+          "transition",
+          "agent_role",
+          "agent_id",
+          "task_id",
+          "related_req_ids",
+          "related_eval_ids",
+          "status",
+          "evidence_refs",
+          "failure_type",
+          "rollback_to_phase",
+          "decision",
+          "notes"
+        ],
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "pattern": "^RUN-[0-9]+$"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "phase": {
+            "type": "string",
+            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+          },
+          "transition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "agent_role": {
+            "type": "string",
+            "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "execution-agent", "reviewer"]
+          },
+          "agent_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "task_id": {
+            "type": ["string", "null"]
+          },
+          "related_req_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^REQ-[0-9]+$"
+            }
+          },
+          "related_eval_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^EVAL-[0-9]+$"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": ["in_progress", "passed", "failed", "blocked"]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "failure_type": {
+            "type": ["string", "null"]
+          },
+          "rollback_to_phase": {
+            "type": ["string", "null"],
+            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH", null]
+          },
+          "decision": {
+            "type": "string",
+            "enum": ["continue", "rework", "escalate", "finish"]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

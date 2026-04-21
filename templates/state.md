@@ -1,25 +1,32 @@
 # State: <feature>
 
 ## Current Phase
-<SPECIFY / DESIGN / TASKS / EVAL DEFINE / EXECUTE / VERIFY / REVIEW / REPORT / FINISH>
+<INTAKE / SPECIFY / DESIGN / TASKS / EVAL DEFINE / EXECUTE / VERIFY / REVIEW / REPORT / FINISH>
 
 ## Status
-<Not Started / In Progress / Blocked / Done>
+<not_started / in_progress / blocked / done>
 
 ## Complexity
-<Small / Medium / Large / Complex>
+<small / medium / large / complex>
+
+## Pending Gate
+<gate waiting to clear>
+
+## Owner
+- Role: <orchestrator | codebase-reader | spec-agent | design-agent | eval-agent | execution-agent | reviewer>
+- Id: <session or agent id>
 
 ## Open Issues
 - <item>
 
-## Evidence
-- <latest proof>
+## Latest Evidence
+- <evidence ref>
+
+## Stale Evidence
+- <stale evidence ref or none>
 
 ## Next Step
 - <next step>
 
-## Loop Rule
-- Verify fail → EXECUTE
-- Review fail → EXECUTE or DESIGN
-- Eval fail → EXECUTE or EVAL DEFINE
-- Spec unclear → SPECIFY
+## Rollback Target
+- <phase to return to on failure>

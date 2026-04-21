@@ -1,58 +1,60 @@
 ---
 name: harness-execution
-description: Use when a planned feature is ready to be implemented with disciplined execution, TDD for behavior changes, fresh verification evidence, and explicit loop-back when a gate fails.
+description: Use when planned work is ready for task-scoped execution with minimal-context delegation, fresh verification evidence, and explicit rollback when implementation or evidence becomes invalid.
 ---
 
 # Harness Execution
 
-This skill owns the execution layer.
+This skill owns `EXECUTE` and the execution-side discipline that feeds `VERIFY`.
 
-It keeps execution disciplined while staying compact.
+## Execution Contract
 
-## Execution Rules
+- Execute per task, not as one undifferentiated change.
+- Follow the current `spec.md`, `design.md`, `tasks.md`, and `eval.md`.
+- Delegate only the local context needed for the scoped task.
+- Keep delegated output filtered to the standard contract.
+- Mark work as complete, `blocked`, or not started. Do not report vague progress.
 
-1. Follow the approved planning artifacts.
-2. Use TDD for feature work, bugfixes, and behavior changes.
-3. Prefer isolated work on Medium+ changes when practical.
-4. Never claim success without fresh verification output.
-5. If execution reveals missing clarity, stop and loop back instead of inventing scope.
+## Task-Scoped Execution
 
-## TDD Policy
+Each execution unit should carry:
 
-For any behavior change:
-- write the failing test first
-- run it and confirm the expected failure
-- implement the minimum change
-- run the test and confirm it passes
-- run relevant regressions
+- the task objective
+- relevant `REQ-*`
+- relevant `EVAL-*` when applicable
+- allowed paths
+- dependencies
+- ready definition
+- done definition
 
-If you skipped the failing test, you do not have TDD evidence.
+If execution reveals missing scope, unclear requirements, or broken task boundaries, stop and roll back instead of inventing new contract.
 
-## Verify Discipline
+## Verification Discipline
 
-Before saying something is complete, fixed, or passing:
-- identify the command that proves it
-- run the full command now
+`VERIFY` requires fresh evidence.
+
+Before claiming something is complete, fixed, or passing:
+
+- identify the command or inspection that proves it
+- run it now
 - inspect the actual output
-- report the result with evidence
+- record the evidence reference
 
-## When to Loop Back
+## Evidence Invalidation
 
-- Test failure caused by bad code → back to Execute
-- Missing acceptance clarity → back to Specify
-- Structural inconsistency → back to Design
-- Task decomposition no longer makes sense → back to Tasks
+- Relevant changes after `VERIFY` invalidate `VERIFY`, `REVIEW`, and `REPORT` evidence.
+- Relevant changes after `REVIEW` invalidate `REVIEW` and `REPORT` evidence.
+- Requirement, eval, or design changes invalidate dependent execution claims.
 
-## Review Expectations
+When evidence is stale, mark it stale in state and roll back to the needed gate.
 
-Before finish, confirm:
-- implementation matches spec
-- nothing clearly out-of-scope was added
-- verification output is fresh
-- known issues are either fixed or explicitly recorded
+## Rollback Rules
 
-## Worktree Guidance
+- implementation issue or failing proof: back to `EXECUTE`
+- requirement ambiguity: back to `SPECIFY`
+- structural inconsistency: back to `DESIGN`
+- bad decomposition or dependency framing: back to `TASKS`
 
-For Small changes, inline execution is usually enough.
+## Parallelism Rule
 
-For Medium+ changes, isolated work is recommended when branch safety or context separation matters.
+Only execute tasks in parallel when planning already marked them `parallelizable` and fan-in can happen before `VERIFY`, `REVIEW`, `REPORT`, and `FINISH`.
