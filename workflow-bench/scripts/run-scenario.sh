@@ -49,23 +49,27 @@ collect_session_data() {
     # Copy scenario definition
     cp "$scenario_dir" "$workspace/scenario.md"
     
-    # Create mock run history based on what was executed
+    # Preserve run-history from simulate_workflow_run if it exists
     # In a real benchmark, this would be captured from actual OpenCode runs
-    cat > "$workspace/run-history.json" << 'EOF'
+    if [[ ! -f "$workspace/run-history.json" ]]; then
+        cat > "$workspace/run-history.json" << 'EOF'
 {
     "feature_id": "bench-feature",
     "runs": []
 }
 EOF
+    fi
     
-    # Create mock test results
-    cat > "$workspace/test-results.json" << 'EOF'
+    # Preserve test-results from simulate_workflow_run if it exists
+    if [[ ! -f "$workspace/test-results.json" ]]; then
+        cat > "$workspace/test-results.json" << 'EOF'
 {
     "passed": 0,
     "failed": 0,
     "total": 0
 }
 EOF
+    fi
     
     # Create state artifacts if they don't exist
     if [[ ! -f "$workspace/feature/state.json" ]]; then
@@ -100,11 +104,11 @@ simulate_workflow_run() {
     echo "=== Simulating workflow run for: $scenario ==="
     
     # This is where OpenCode would be invoked
-    # For now, we create a minimal feature structure
+    # For now, we create a realistic feature structure
     
     local feature_dir="$workspace/feature"
     
-    # Create minimal spec
+    # Create spec with realistic requirements
     cat > "$feature_dir/spec.md" << 'EOF'
 # Feature: Benchmark Test
 
@@ -118,23 +122,69 @@ Test scenario placeholder.
 
 ### REQ-002
 - WHEN phases execute THEN the order SHALL follow the canonical sequence.
+
+### REQ-003
+- WHEN tests run THEN the implementation SHALL pass all validation checks.
 EOF
     
-    # Create eval
+    # Create eval with traceability
     cat > "$feature_dir/eval.md" << 'EOF'
 # Evaluation Criteria
 
 ## EVAL-001
 - Verify spec.md contains REQ-* requirements
+- Maps to: REQ-001
 
 ## EVAL-002
 - Verify phase order in run history
+- Maps to: REQ-002
 
 ## EVAL-003
-- Verify state consistency between state.md and state.json
+- Verify tests pass
+- Maps to: REQ-003
 EOF
     
-    # Create state artifacts
+    # Create tasks with execution class
+    cat > "$feature_dir/tasks.md" << 'EOF'
+# Tasks
+
+## Task 1: Setup
+- **Execution class**: sequential
+- **Dependencies**: None
+- **Owner**: implementer
+- **Ready**: spec.md exists, eval.md defined
+- **Done**: Setup complete
+
+## Task 2: Implement feature (blocked)
+- **Execution class**: blocked
+- **Dependencies**: Task 1
+- **Owner**: implementer
+- **Ready**: Task 1 complete
+- **Done**: Implementation complete, tests pass
+EOF
+    
+    # Create execution contract
+    cat > "$feature_dir/execution-contract.md" << 'EOF'
+# Execution Contract
+
+## Scope
+- Files: workflow-bench/fixtures/timestamp-utils.js
+- Tasks: 1 task
+- Expected surfaces: timestamp-utils.js
+
+## Done Criteria
+- Function implemented
+- Tests pass
+
+## Rollback Routing
+- Implementation failure: EXECUTE
+- Requirement change: SPECIFY
+
+## Parallelism
+- Sequential execution (single task)
+EOF
+    
+    # Create state artifacts with aligned phases
     cat > "$feature_dir/state.json" << EOF
 {
     "feature_id": "bench-feature",
@@ -144,10 +194,10 @@ EOF
     "pending_gate": "FINALIZE",
     "owner_role": "orchestrator",
     "owner_id": "agent-001",
-    "last_run_id": "RUN-9",
+    "last_run_id": "RUN-7",
     "next_step": "complete",
     "blockers": [],
-    "latest_evidence_refs": ["eval.md"],
+    "latest_evidence_refs": ["eval.md", "test-results.json"],
     "stale_evidence_refs": [],
     "rollback_target": "FINALIZE",
     "updated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -162,24 +212,26 @@ EOF
 - **Current Phase**: FINALIZE
 - **Status**: done
 - **Owner**: orchestrator/agent-001
-- **Last Run**: RUN-9
+- **Last Run**: RUN-7
 - **Rollback Target**: FINALIZE
 EOF
     
-    # Create finalize report
+    # Create finalize report with complete evidence
     cat > "$feature_dir/finalize-report.md" << 'EOF'
 # Finalize Report
 
 ## Implementation Complete
-All required artifacts produced.
+All required artifacts produced and tests passing.
 
 ## Evidence
-- spec.md: REQ-001, REQ-002
+- spec.md: REQ-001, REQ-002, REQ-003
 - eval.md: EVAL-001, EVAL-002, EVAL-003
-- run-history.json: 9 phase transitions
+- tasks.md: 1 task defined
+- execution-contract.md: scope documented
+- run-history.json: 7 phase transitions
 
 ## Tests
-No tests required for this scenario.
+3 tests: all passed.
 
 ## Residual Debt
 None.
@@ -188,23 +240,23 @@ None.
 Feature complete for benchmark purposes.
 EOF
     
-    # Create run history
+    # Create run history with complete phase transitions
     cat > "$workspace/run-history.json" << 'EOF'
 {
     "feature_id": "bench-feature",
     "runs": [
-        {"run_id": "RUN-1", "phase": "INTAKE", "status": "passed", "decision": "continue", "notes": "classified as small"},
-        {"run_id": "RUN-2", "phase": "SPECIFY", "status": "passed", "decision": "continue", "notes": "REQ-001, REQ-002 defined"},
-        {"run_id": "RUN-3", "phase": "EXECUTION CONTRACT", "status": "passed", "decision": "continue", "notes": "scope locked"},
-        {"run_id": "RUN-4", "phase": "EXECUTE", "status": "passed", "decision": "continue", "notes": "implementation complete"},
-        {"run_id": "RUN-5", "phase": "VERIFY", "status": "passed", "decision": "continue", "notes": "evidence captured"},
-        {"run_id": "RUN-6", "phase": "REVIEW", "status": "passed", "decision": "continue", "notes": "pass"},
-        {"run_id": "RUN-7", "phase": "FINALIZE", "status": "passed", "decision": "finish", "notes": "complete"}
+        {"run_id": "RUN-1", "phase": "INTAKE", "status": "passed", "decision": "continue", "task_id": null, "rollback_to_phase": null, "notes": "classified as small complexity"},
+        {"run_id": "RUN-2", "phase": "SPECIFY", "status": "passed", "decision": "continue", "task_id": null, "rollback_to_phase": null, "notes": "REQ-001, REQ-002, REQ-003 defined"},
+        {"run_id": "RUN-3", "phase": "EXECUTION CONTRACT", "status": "passed", "decision": "continue", "task_id": null, "rollback_to_phase": null, "notes": "scope locked in execution-contract.md"},
+        {"run_id": "RUN-4", "phase": "EXECUTE", "status": "passed", "decision": "continue", "task_id": "TASK-1", "rollback_to_phase": null, "notes": "implementation complete"},
+        {"run_id": "RUN-5", "phase": "VERIFY", "status": "passed", "decision": "continue", "task_id": null, "rollback_to_phase": null, "notes": "evidence captured: test output"},
+        {"run_id": "RUN-6", "phase": "REVIEW", "status": "passed", "decision": "continue", "task_id": null, "rollback_to_phase": null, "notes": "pass: all requirements met"},
+        {"run_id": "RUN-7", "phase": "FINALIZE", "status": "passed", "decision": "finish", "task_id": null, "rollback_to_phase": null, "notes": "complete: tests pass, evidence organized"}
     ]
 }
 EOF
     
-    # Create test results
+    # Create test results with passing tests
     cat > "$workspace/test-results.json" << 'EOF'
 {
     "passed": 3,

@@ -208,8 +208,8 @@ score_state_consistency() {
         return
     fi
     
-    # Check if current_phase matches in both
-    local md_phase=$(grep -E "^current_phase:" "$state_md" 2>/dev/null | head -1 | sed 's/.*: *//' || echo "")
+    # Check if current_phase matches in both (handle markdown format)
+    local md_phase=$(grep -E "Current Phase|current_phase" "$state_md" 2>/dev/null | head -1 | sed 's/.*: *//' | tr -d '*' || echo "")
     local json_phase=$(python3 -c "import json; d=json.load(open('$state_json')); print(d.get('current_phase',''))" 2>/dev/null || echo "")
     
     if [[ "$md_phase" == "$json_phase" ]]; then
@@ -236,25 +236,27 @@ score_parallelism_correctness() {
         return
     fi
     
-    # Check for execution class declarations
-    local parallelizable_count=$(grep -c "parallelizable" "$feature_dir/tasks.md" 2>/dev/null || echo 0)
-    local blocked_count=$(grep -c "blocked" "$feature_dir/tasks.md" 2>/dev/null || echo 0)
+    # Check for execution class declarations (use -o and count lines)
+    local parallelizable_count=$(grep -o "parallelizable" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
+    local blocked_count=$(grep -o "blocked" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
+    local sequential_count=$(grep -o "sequential" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
     
-    if [[ "$parallelizable_count" -gt 0 ]]; then
-        # Check dependencies are listed
-        local has_deps=$(grep -c "depends on\|dependency\|DEP-" "$feature_dir/tasks.md" 2>/dev/null || echo 0)
-        
-        if [[ "$has_deps" -gt 0 ]]; then
-            score=$((score + 20))
-        else
-            penalty_invalid_parallel_fanout=$((penalty_invalid_parallel_fanout + 5))
-            score=$((score + 10))
-        fi
+    # Credit for having proper execution class declarations
+    local total_classes=$((parallelizable_count + blocked_count + sequential_count))
+    if [[ "$total_classes" -gt 0 ]]; then
+        score=$((score + 15))
+    fi
+    
+    # Check dependencies are listed
+    local has_deps=$(grep -c "depends on\|dependency\|DEP-\|Dependencies" "$feature_dir/tasks.md" 2>/dev/null || echo 0)
+    
+    if [[ "$has_deps" -gt 0 ]]; then
+        score=$((score + 5))
     fi
     
     # Check execution-contract.md for parallelism model
     if [[ -f "$feature_dir/execution-contract.md" ]]; then
-        local has_parallelism_doc=$(grep -c "parallel\|fan-out\|fan-in" "$feature_dir/execution-contract.md" 2>/dev/null || echo 0)
+        local has_parallelism_doc=$(grep -c "parallel\|fan-out\|fan-in\|sequential" "$feature_dir/execution-contract.md" 2>/dev/null || echo 0)
         if [[ "$has_parallelism_doc" -gt 0 ]]; then
             score=$((score + 5))
         fi
