@@ -44,6 +44,24 @@ Rerun dependent evals when any of these happen:
 - thresholds or eval definitions change
 - prior eval evidence is stale
 
+## Eval Quality Checklist
+
+Before finalizing `eval.md`, verify:
+
+1. **Every REQ-* has EVAL-*** coverage (capability or regression)
+2. **Evidence method is concrete**: command, inspection, or structured review
+3. **Thresholds are measurable**: percentages, counts, or pass/fail criteria
+4. **Rerun triggers are specific**: what file changes invalidate evidence?
+5. **Rollback target is defined**: which phase to return to on failure?
+
+## Common Eval Quality Issues
+
+1. **Missing mapping**: REQ-* without corresponding EVAL-*
+2. **Vague evidence method**: "inspect" instead of specific command or file
+3. **No thresholds**: eval without pass/fail criteria
+4. **Generic rerun triggers**: "any change" instead of specific files or patterns
+5. **Missing rollback**: gate without defined rollback target
+
 ## Evidence Policy
 
 - Eval evidence must be fresh enough for the current claim.

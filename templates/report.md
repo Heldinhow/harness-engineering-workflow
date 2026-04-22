@@ -3,6 +3,7 @@
 ## Summary
 - Feature: <name>
 - Outcome: <pass / rework / escalate>
+- Completed: <ISO 8601 timestamp>
 
 ## Scope Delivered
 - <item>
@@ -10,6 +11,7 @@
 ## Verification
 - Evidence:
 - Notes:
+- Evidence freshness: <current / stale - describe changes since capture>
 
 ## Review
 - Decision: <pass / rework / escalate>
@@ -20,11 +22,19 @@
 - Regression:
 - Thresholds used:
 
+## Evidence Freshness Check
+Before finalizing this report, verify:
+- [ ] All evidence_refs point to files that exist and reflect current state
+- [ ] No relevant artifacts were modified after evidence was recorded
+- [ ] If evidence is stale, either re-verify or update rollback target
+
 ## Residual Risks
 - <risk>
 
 ## Reopen / Rollback Target
-- <phase to return to if later evidence fails>
+- **Phase**: <specific phase name>
+- **Trigger**: <what evidence would cause rollback>
+- **Action**: <what changes would be needed>
 
 ## Final Decision
 - [ ] pass

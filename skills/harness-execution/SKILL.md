@@ -48,6 +48,24 @@ Before claiming something is complete, fixed, or passing:
 
 When evidence is stale, mark it stale in state and roll back to the needed gate.
 
+## Stale Evidence Detection Checklist
+
+Before passing work to `VERIFY` or `REVIEW`, run this checklist:
+
+1. **Compare timestamps**: Is evidence newer than all relevant artifacts?
+2. **Check for changes**: Were any files modified after evidence was recorded?
+3. **Review eval triggers**: Do any changed files match rerun triggers in `eval.md`?
+4. **Validate state**: Do `state.md` and `state.json` agree on current phase?
+
+If any check fails, the evidence is stale. Do not pass work without fresh evidence.
+
+## Common Rework Traps
+
+1. **Early commit**: Recording evidence before verification commands run
+2. **Skip verify**: Claiming completion without running verification
+3. **Vague evidence**: Recording "looks good" instead of command output
+4. **Missing rollback**: Gates passed without defining rollback target
+
 ## Rollback Rules
 
 - implementation issue or failing proof: back to `EXECUTE`

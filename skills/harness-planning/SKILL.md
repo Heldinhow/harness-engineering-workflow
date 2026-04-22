@@ -72,3 +72,21 @@ Use the standard delegation contract and keep the returned output filtered.
 - Requirement ambiguity or contradiction rolls back to `SPECIFY`.
 - Structural uncertainty rolls back to `DESIGN`.
 - Bad decomposition or unsafe task boundaries roll back to `TASKS`.
+
+## Spec Quality Checklist
+
+Before starting `EXECUTE`, verify:
+
+1. **Objective is concrete**: what exactly will change, not why we want it
+2. **Scope is bounded**: what is explicitly out of scope
+3. **REQ-* are testable**: "SHALL" statements with measurable criteria
+4. **REQ-* are traceable**: each maps to an acceptance criterion
+5. **No conflicting requirements**: REQ-* don't contradict each other
+
+## Common Spec Rework Triggers
+
+1. **Vague objective**: "improve X" instead of specific behavior change
+2. **Unbounded scope**: missing "Out of scope" section or ambiguous boundaries
+3. **Untestable requirements**: "should" instead of "SHALL", no measurable criteria
+4. **Missing acceptance criteria**: requirements without way to verify completion
+5. **Implicit dependencies**: requirements that assume infrastructure not in scope

@@ -90,3 +90,20 @@ When resuming, read in this order:
 - **REQUIRED SUB-SKILL:** `harness-evals` for `EVAL DEFINE`
 - **REQUIRED SUB-SKILL:** `harness-execution` for `EXECUTE` and `VERIFY`
 - **REQUIRED SUB-SKILL:** `harness-review` for `REVIEW`
+
+## Rework Prevention
+
+Prevent unnecessary rework by:
+
+1. **Verify before claiming complete**: Run verification commands, inspect actual output, record evidence
+2. **Keep evidence fresh**: Evidence from before recent changes is stale - re-verify
+3. **Define rollback targets**: Every gate should have a specific phase to return to on failure
+4. **Check state alignment**: state.md and state.json must agree before passing gates
+5. **Update run history**: Every phase transition should be recorded in run-history.json
+
+## Resume Before Delegating
+
+When resuming or delegating, verify:
+- Current phase matches state.md and state.json
+- Evidence is fresh (not invalidated by recent changes)
+- Next step is documented in state artifacts

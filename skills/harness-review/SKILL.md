@@ -44,6 +44,30 @@ Review should use:
 - Do not pass work when relevant eval evidence is stale or missing.
 - Relevant changes after review invalidate `REVIEW` and `REPORT` evidence.
 
+## Rework Detection Checklist
+
+Before issuing `pass`, verify:
+
+1. **Evidence freshness**: Is verification evidence from current artifact state?
+2. **Eval coverage**: Does each REQ-* have passing EVAL-* evidence?
+3. **Rollback specificity**: Is rollback target a specific phase, not "earlier"?
+4. **State alignment**: Do `state.md` and `state.json` agree on all fields?
+5. **No drift**: Has anything changed since verification that invalidates evidence?
+
+Issue `rework` if:
+- Evidence is stale or missing
+- Rollback target is vague
+- Eval coverage is incomplete
+- State artifacts are misaligned
+
+## Common Review Rework Triggers
+
+- Verification evidence captured before recent file changes
+- Rollback target defined as "earlier phase" instead of specific phase name
+- State artifacts (state.md/json) disagree on current phase or status
+- REQ-* exists without corresponding EVAL-* evidence
+- Missing eval rerun triggers documentation
+
 ## Output
 
 `review.md` should capture findings, decision, evidence references, rollback target when applicable, and residual risks.

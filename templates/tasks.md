@@ -25,6 +25,14 @@ Done definition:
 Expected evidence:
 - <command output, inspection note, or artifact>
 
+## Verification Checklist (run before marking complete)
+- [ ] All file changes are intentional and documented
+- [ ] Evidence command was run and output captured
+- [ ] Evidence is from current artifact state (not stale)
+- [ ] State artifacts (state.md, state.json) are updated
+- [ ] Run history (run-history.md, run-history.json) is updated
+- [ ] Rollback target is defined for this gate
+
 ### TASK-002
 Objective: <what this task is meant to accomplish>
 Maps to: REQ-002
