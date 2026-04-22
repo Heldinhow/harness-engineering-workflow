@@ -1,7 +1,7 @@
 # Spec: <feature>
 
 ## Objective
-<what this change achieves>
+<what this change achieves — be specific: "Add X behavior" not "improve X">
 
 ## Context
 <why this work is needed now>
@@ -14,6 +14,11 @@
 - <item>
 
 ## Requirements
+
+**Requirement Quality Rules:**
+- Use "SHALL" for mandatory behavior (not "should" or "will")
+- Each REQ-* must be testable with concrete evidence
+- Avoid vague conditions like "when appropriate" — be specific
 
 ### REQ-001
 - WHEN <condition> THEN the workflow SHALL <behavior>

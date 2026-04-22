@@ -3,6 +3,8 @@
 ## Current Phase
 <INTAKE / SPECIFY / DESIGN / TASKS / EVAL DEFINE / EXECUTE / VERIFY / REVIEW / REPORT / FINISH>
 
+**IMPORTANT**: This MUST match state.json "current_phase"
+
 ## Status
 <not_started / in_progress / blocked / done>
 
@@ -29,4 +31,9 @@
 - <next step>
 
 ## Rollback Target
-- <phase to return to on failure>
+- <specific phase name — NOT "earlier" or "previous">
+
+**Rollback Checklist:**
+- [ ] Specific phase named (e.g., "EXECUTE") not vague ("earlier")
+- [ ] Consistent with state.json "rollback_target"
+- [ ] Documented in run-history.json for this gate

@@ -11,7 +11,8 @@
 - Related evals: <EVAL-*>
 - Evidence refs:
   - <artifact or command output>
+  - **Freshness**: Evidence captured AFTER last relevant change (not stale)
 - Failure type: <none or failure>
-- Rollback target: <phase or none>
+- Rollback target: <specific phase name — NOT "earlier">
 - Decision: <continue / rework / escalate / finish>
-- Notes: <summary>
+- Notes: <summary of what happened and what's next>
