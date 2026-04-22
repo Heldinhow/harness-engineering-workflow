@@ -124,6 +124,19 @@ Without explicit scope documentation, code_scope_alignment scores drop to 0.
 - **REQUIRED SUB-SKILL:** `harness-execution` for `EXECUTE`, `EXECUTION CONTRACT`, and `VERIFY`
 - **REQUIRED SUB-SKILL:** `harness-review` for `REVIEW`
 
+
+## Stale Evidence Enforcement
+Evidence becomes stale when:
+- Requirements change after verification
+- Implementation changes after verification
+- Tests are added or modified
+
+When evidence becomes stale:
+1. Mark old evidence as stale in `state.json` under `stale_evidence_refs`
+2. Update `latest_evidence_refs` with new evidence
+3. Re-run verification
+4. Never pass REVIEW with stale evidence
+
 ## Rework Prevention
 
 Prevent unnecessary rework by:
