@@ -1,16 +1,23 @@
 #!/bin/bash
 # Autoresearch benchmark script for workflow improvement
-# Runs the workflow benchmark and outputs METRIC lines for optimization
+# Runs the workflow benchmark using real OpenCode execution
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BENCH_DIR="$SCRIPT_DIR"
 
-# Run the benchmark suite and capture output
+# Timeout for each OpenCode scenario (15 minutes default)
+TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-900}"
+
+# Run the benchmark suite with OpenCode
 run_benchmark() {
     local output
-    output=$("$BENCH_DIR/scripts/run-all-scenarios.sh" 2>&1) || true
+    
+    # Run with OpenCode using run-opencode-scenario.sh
+    export TIMEOUT_SECONDS
+    
+    output=$("$BENCH_DIR/scripts/run-all-opencode-scenarios.sh" 2>&1) || true
     echo "$output"
 }
 
@@ -39,8 +46,9 @@ extract_metrics() {
 
 # Main execution
 main() {
-    echo "=== Workflow Benchmark Autoresearch ==="
+    echo "=== Workflow Benchmark Autoresearch with OpenCode ==="
     echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    echo "Timeout per scenario: $TIMEOUT_SECONDS seconds"
     echo ""
     
     # Run benchmark and capture output
