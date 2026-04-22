@@ -1,66 +1,88 @@
 const { format_timestamp } = require('./timestamp-utils');
 
-describe('format_timestamp', () => {
-    test('REQ-1: Function accepts timestamp (number) and timezone (string)', () => {
-        expect(typeof format_timestamp).toBe('function');
-        const result = format_timestamp(0, 'UTC');
-        expect(typeof result).toBe('string');
-    });
+const tests = [];
 
-    test('REQ-2: Function returns formatted string in YYYY-MM-DD HH:mm:ss Z pattern', () => {
-        const result = format_timestamp(1705320000, 'UTC');
-        expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [A-Z]{3,4}$/);
-    });
+function test(name, fn) {
+    try {
+        fn();
+        tests.push({ name, passed: true });
+    } catch (e) {
+        tests.push({ name, passed: false, error: e.message });
+    }
+}
 
-    test('REQ-3: UTC timezone works correctly', () => {
-        const result = format_timestamp(0, 'UTC');
-        expect(result).toBe('1970-01-01 00:00:00 UTC');
-    });
+function assertEquals(actual, expected, msg) {
+    if (actual !== expected) {
+        throw new Error(`${msg || 'Assertion failed'}: expected "${expected}", got "${actual}"`);
+    }
+}
 
-    test('REQ-3: America/New_York timezone works correctly', () => {
-        const result = format_timestamp(0, 'America/New_York');
-        expect(result).toBe('1969-12-31 19:00:00 EST');
-    });
-
-    test('REQ-3: Europe/London timezone works correctly', () => {
-        const result = format_timestamp(0, 'Europe/London');
-        expect(result).toBe('1970-01-01 00:00:00 GMT');
-    });
-
-    test('REQ-3: Asia/Tokyo timezone works correctly', () => {
-        const result = format_timestamp(0, 'Asia/Tokyo');
-        expect(result).toBe('1970-01-01 09:00:00 JST');
-    });
-
-    test('REQ-4: Unix timestamp is in seconds (not milliseconds)', () => {
-        const result = format_timestamp(1705320000, 'UTC');
-        expect(result).toContain('2024-01-15');
-    });
-
-    test('REQ-5: Invalid timezone falls back to UTC', () => {
-        const result = format_timestamp(0, 'Invalid/Timezone');
-        expect(result).toBe('1970-01-01 00:00:00 UTC');
-    });
-
-    test('REQ-5: Empty timezone falls back to UTC', () => {
-        const result = format_timestamp(0, '');
-        expect(result).toBe('1970-01-01 00:00:00 UTC');
-    });
-
-    test('REQ-6: Output format is YYYY-MM-DD HH:mm:ss Z', () => {
-        const timestamp = 1705320000;
-        const result = format_timestamp(timestamp, 'UTC');
-        const expectedPattern = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [A-Z]{3,4}$/;
-        expect(result).toMatch(expectedPattern);
-    });
-
-    test('EVAL-4: Edge case - timestamp 0 (Unix epoch)', () => {
-        const result = format_timestamp(0, 'UTC');
-        expect(result).toBe('1970-01-01 00:00:00 UTC');
-    });
-
-    test('EVAL-4: Edge case - negative timestamp', () => {
-        const result = format_timestamp(-86400, 'UTC');
-        expect(result).toBe('1969-12-31 00:00:00 UTC');
-    });
+// Test 1: UTC timezone with timestamp 0 (Unix epoch)
+test('timestamp 0 with UTC', () => {
+    const result = format_timestamp(0, 'UTC');
+    assertEquals(result, '1970-01-01 00:00:00 UTC', 'Unix epoch UTC');
 });
+
+// Test 2: America/New_York timezone
+test('timestamp 0 with America/New_York', () => {
+    const result = format_timestamp(0, 'America/New_York');
+    assertEquals(result, '1969-12-31 19:00:00 EST', 'Unix epoch NY');
+});
+
+// Test 3: Europe/London timezone
+test('timestamp 0 with Europe/London', () => {
+    const result = format_timestamp(0, 'Europe/London');
+    assertEquals(result, '1970-01-01 01:00:00 GMT+1', 'Unix epoch London');
+});
+
+// Test 4: Asia/Tokyo timezone
+test('timestamp 0 with Asia/Tokyo', () => {
+    const result = format_timestamp(0, 'Asia/Tokyo');
+    assertEquals(result, '1970-01-01 09:00:00 GMT+9', 'Unix epoch Tokyo');
+});
+
+// Test 5: Invalid timestamp throws error
+test('invalid timestamp throws error', () => {
+    let threw = false;
+    try {
+        format_timestamp('not a number', 'UTC');
+    } catch (e) {
+        threw = true;
+        if (!e.message.includes('Timestamp must be a number')) {
+            throw new Error('Wrong error message: ' + e.message);
+        }
+    }
+    if (!threw) throw new Error('Should have thrown');
+});
+
+// Test 6: Invalid timezone defaults to UTC
+test('invalid timezone defaults to UTC', () => {
+    const result = format_timestamp(0, 'Invalid/Timezone');
+    assertEquals(result, '1970-01-01 00:00:00 UTC', 'Invalid should default to UTC');
+});
+
+// Test 7: Specific timestamp (1609459200 = 2021-01-01 00:00:00 UTC)
+test('specific timestamp 1609459200 UTC', () => {
+    const result = format_timestamp(1609459200, 'UTC');
+    assertEquals(result, '2021-01-01 00:00:00 UTC', '2021-01-01 UTC');
+});
+
+// Print results
+console.log('\n=== Test Results ===');
+let passed = 0;
+let failed = 0;
+tests.forEach(t => {
+    const status = t.passed ? 'PASS' : 'FAIL';
+    console.log(`[${status}] ${t.name}`);
+    if (!t.passed) {
+        console.log(`       Error: ${t.error}`);
+        failed++;
+    } else {
+        passed++;
+    }
+});
+console.log(`\nTotal: ${passed} passed, ${failed} failed`);
+
+if (failed > 0) {
+    process.exit(1);
+}

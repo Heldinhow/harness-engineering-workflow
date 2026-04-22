@@ -4,6 +4,11 @@
 
 set -euo pipefail
 
+# Timeout in seconds (default 15 minutes for full workflow)
+TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-900}"
+
+echo "Timeout set to: $TIMEOUT_SECONDS seconds"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BENCH_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 REPO_ROOT="$(cd "$BENCH_DIR/.." && pwd)"
@@ -80,20 +85,37 @@ IMPORTANT: Actually create all the artifact files. Do not just describe what you
 PROMPT
 }
 
-# Run OpenCode
+# Run OpenCode with timeout
 run_opencode() {
     local workspace="$1"
     local prompt="$2"
     
     echo "=== Running OpenCode with harness-engineering-workflow ==="
+    echo "Timeout: $TIMEOUT_SECONDS seconds"
     
-    # Run OpenCode with the prompt
-    # Using --pure to avoid plugins and --prompt to pass the scenario
+    # Change to workspace
     cd "$workspace"
     
-    opencode run "$prompt" 2>&1 || {
-        echo "WARNING: OpenCode run had issues, but continuing..." >&2
-    }
+    # Run OpenCode with timeout (use gtimeout on macOS if available, else timeout)
+    local timeout_cmd=""
+    if command -v gtimeout &> /dev/null; then
+        timeout_cmd="gtimeout ${TIMEOUT_SECONDS}s"
+    elif command -v timeout &> /dev/null; then
+        timeout_cmd="timeout ${TIMEOUT_SECONDS}s"
+    else
+        # No timeout command available - run directly
+        timeout_cmd=""
+    fi
+    
+    if [[ -n "$timeout_cmd" ]]; then
+        eval "$timeout_cmd opencode run '\$prompt'" 2>&1 || {
+            echo "WARNING: OpenCode run timed out or had issues, but continuing..." >&2
+        }
+    else
+        opencode run "$prompt" 2>&1 || {
+            echo "WARNING: OpenCode run had issues, but continuing..." >&2
+        }
+    fi
 }
 
 # Collect artifacts from workspace
