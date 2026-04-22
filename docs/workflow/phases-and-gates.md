@@ -50,3 +50,23 @@ Each phase defines entry assumptions, required evidence, an exit gate, and a rol
 - Any relevant change after `REVIEW` invalidates `REVIEW` and `REPORT` evidence.
 - Any requirement or eval change invalidates dependent verification/report claims.
 - Any structural change that contradicts design decisions should roll back to `DESIGN`.
+
+## Rework Prevention Checklist
+
+Before passing each gate, verify:
+
+1. **Evidence is fresh**: Evidence was captured after the last relevant change
+2. **Rollback is specific**: Target is a phase name, not "earlier" or "previous"
+3. **State is aligned**: `state.md` and `state.json` agree on current phase and status
+4. **Run history is current**: `run-history.json` records this phase transition
+
+## Common Rework Triggers
+
+| Phase | Common Rework Cause | Prevention |
+| --- | --- | --- |
+| SPECIFY | Vague requirements, missing scope | Use "SHALL" statements, explicit Out of Scope |
+| EVAL DEFINE | Missing rerun triggers, vague evidence | Define concrete evidence methods and thresholds |
+| EXECUTE | Partial progress reported as complete | Use task-level done definitions |
+| VERIFY | Stale evidence from before changes | Compare timestamps, re-run verification |
+| REVIEW | Missing rollback, vague findings | Include specific phase in rollback, cite evidence |
+| REPORT | Incomplete scope summary | Use template checklist, verify all evidence refs |

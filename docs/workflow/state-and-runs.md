@@ -62,6 +62,32 @@ Resume in this order:
 - Changes after review make review/report stale.
 - Changes to requirements or eval definitions make dependent evidence stale.
 
+## State Drift Prevention
+
+State drift occurs when `state.md` and `state.json` disagree. This causes:
+- Confusing resume context
+- Inconsistent automation behavior
+- Scoring failures
+
+### Prevention Checklist
+
+Before updating state, verify:
+- [ ] Both `state.md` and `state.json` are updated together
+- [ ] All shared fields match (current_phase, status, rollback_target, last_run_id)
+- [ ] `stale_evidence_refs` is cleared when evidence is refreshed
+- [ ] `updated_at` timestamp is recent
+
+### Common Drift Causes
+
+1. **Incomplete updates**: Only updating one format
+2. **Field name mismatches**: "current_phase" vs "Current Phase"
+3. **Missing fields**: New fields added to one format but not the other
+4. **Case differences**: "blocked" vs "BLOCKED"
+
+### Drift Detection
+
+The scoring script (`score_workflow.sh`) checks for drift and penalizes misalignment. Run it before committing to catch drift early.
+
 ## Schemas
 
 Use the JSON schemas in `schemas/` to keep the machine-readable forms stable enough for tooling without introducing a runtime.

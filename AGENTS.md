@@ -108,3 +108,21 @@ When resuming work, read in this order:
 5. only the feature artifacts referenced by current state
 
 Avoid broad repo rereads unless rollback or stale memory requires it.
+
+## Rework Prevention Checklist
+
+Before claiming work is complete, verify:
+
+- [ ] Evidence is fresh (captured after last relevant change)
+- [ ] Rollback target is specific (phase name, not "earlier")
+- [ ] State artifacts aligned (state.md and state.json agree)
+- [ ] Run history updated (this phase transition recorded)
+- [ ] Stale evidence marked (if any evidence is no longer valid)
+
+## Common Rework Patterns
+
+1. **Stale evidence pass**: Claiming completion with evidence from before recent changes
+2. **Vague rollback**: "go back" instead of naming a specific phase
+3. **State drift**: state.md and state.json disagreeing on current phase
+4. **Skip verification**: Reporting done without running verification commands
+5. **Unmapped requirements**: REQ-* without corresponding EVAL-* evidence

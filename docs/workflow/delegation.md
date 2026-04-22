@@ -50,3 +50,15 @@ The standard output contract is:
 - The Orchestrator merges conclusions, not raw transcripts.
 - If delegated work changes the feature shape, update `state.*` and `run-history.*` before continuing.
 - If delegated work invalidates evidence, mark stale evidence explicitly.
+
+## Delegation Rework Triggers
+
+Common delegation mistakes that cause rework:
+
+| Mistake | Cause | Prevention |
+| --- | --- | --- |
+| Scope creep | Delegating with too much context | Keep context minimal and task-local |
+| Wrong ownership | Task assigned to wrong role | Match owner to task type (e.g., Codebase Reader for analysis) |
+| Missing dependencies | Task marked sequential but blocked | List dependencies explicitly in task definition |
+| Vague objective | "fix X" instead of specific change | State exact objective with measurable done definition |
+| Stale context | Delegating with outdated state | Verify state is current before delegating |
