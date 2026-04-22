@@ -95,6 +95,17 @@ When resuming, read in this order:
 | Incomplete implementation or failing tests | EXECUTE |
 | Stale or missing evidence | VERIFY |
 
+
+## State Consistency (CRITICAL)
+Always keep `state.json` and `state.md` in sync:
+- After EVERY phase transition, update BOTH files
+- `current_phase` MUST match exactly in both files
+- Update `last_run_id` to match run-history.json
+- Update `updated_at` timestamp in ISO format
+- Check both files before claiming phase complete
+
+State drift causes benchmark penalties. Verify alignment before proceeding.
+
 ## Required Sub-Skills
 
 - **REQUIRED SUB-SKILL:** `harness-planning` for `SPECIFY`, `DESIGN`, and `TASKS`
