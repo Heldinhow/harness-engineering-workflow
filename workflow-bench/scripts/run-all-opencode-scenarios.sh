@@ -9,8 +9,8 @@ BENCH_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SCENARIOS_DIR="$BENCH_DIR/scenarios"
 RUNS_DIR="$BENCH_DIR/runs"
 
-# Timeout for each scenario (default 15 minutes)
-TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-900}"
+# Timeout for each scenario (default 30 minutes)
+TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-1800}"
 
 # Create runs directory
 mkdir -p "$RUNS_DIR"
@@ -23,13 +23,15 @@ run_scenario_safe() {
     # Set timeout for this run
     export TIMEOUT_SECONDS
     
+    # Capture both stdout and stderr
     output=$("$SCRIPT_DIR/run-opencode-scenario.sh" "$scenario" 2>&1) || {
         echo "WARNING: $scenario failed or timed out, but continuing..." >&2
         echo "$output" >&2
         return 0  # Don't fail the entire benchmark
     }
     
-    echo "$output"
+    # Return the combined output
+    printf '%s' "$output"
 }
 
 # Main

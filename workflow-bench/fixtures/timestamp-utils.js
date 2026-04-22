@@ -50,4 +50,98 @@ function format_timestamp(timestamp, timezone) {
     return `${year}-${month}-${day} ${hour}:${minute}:${second} ${tzAbbr}`;
 }
 
-module.exports = { format_timestamp };
+/**
+ * Parse a formatted timestamp string back to Unix timestamp
+ * @param {string} formattedTimestamp - Timestamp in "YYYY-MM-DD HH:mm:ss Z" format
+ * @returns {number} Unix timestamp in seconds
+ */
+function parse_timestamp(formattedTimestamp) {
+    if (typeof formattedTimestamp !== 'string') {
+        throw new Error('Formatted timestamp must be a string');
+    }
+
+    const pattern = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) ([A-Z]{2,4})$/;
+    const match = formattedTimestamp.match(pattern);
+
+    if (!match) {
+        throw new Error('Invalid timestamp format. Expected "YYYY-MM-DD HH:mm:ss Z"');
+    }
+
+    const [, year, month, day, hour, minute, second, tzAbbr] = match;
+
+    const timezoneMap = {
+        'UTC': 'UTC',
+        'EST': 'America/New_York',
+        'EDT': 'America/New_York',
+        'GMT': 'Europe/London',
+        'BST': 'Europe/London',
+        'CET': 'Europe/Paris',
+        'CEST': 'Europe/Paris',
+        'JST': 'Asia/Tokyo',
+        'KST': 'Asia/Seoul'
+    };
+
+    const timezone = timezoneMap[tzAbbr] || 'UTC';
+
+    const date = new Date(Date.UTC(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10),
+        parseInt(hour, 10),
+        parseInt(minute, 10),
+        parseInt(second, 10)
+    ));
+
+    return Math.floor(date.getTime() / 1000);
+}
+
+/**
+ * Format a Unix timestamp as a human-readable relative time string
+ * @param {number} timestamp - Unix timestamp in seconds
+ * @returns {string} Relative time string (e.g., "2 hours ago", "in 3 days", "just now")
+ */
+function format_timestamp_relative(timestamp) {
+    if (typeof timestamp !== 'number') {
+        throw new Error('Timestamp must be a number');
+    }
+
+    const now = Math.floor(Date.now() / 1000);
+    const diff = timestamp - now;
+
+    if (Math.abs(diff) < 60) {
+        return 'just now';
+    }
+
+    const absDiff = Math.abs(diff);
+    const minutes = Math.floor(absDiff / 60);
+    const hours = Math.floor(absDiff / 3600);
+    const days = Math.floor(absDiff / 86400);
+
+    if (minutes < 60) {
+        const unit = minutes === 1 ? 'minute' : 'minutes';
+        return diff < 0 ? `${minutes} ${unit} ago` : `in ${minutes} ${unit}`;
+    }
+
+    if (hours < 24) {
+        const unit = hours === 1 ? 'hour' : 'hours';
+        return diff < 0 ? `${hours} ${unit} ago` : `in ${hours} ${unit}`;
+    }
+
+    const unit = days === 1 ? 'day' : 'days';
+    return diff < 0 ? `${days} ${unit} ago` : `in ${days} ${unit}`;
+}
+
+/**
+ * Check if a Unix timestamp is in the past
+ * @param {number} timestamp - Unix timestamp in seconds
+ * @returns {boolean} True if timestamp is before current time
+ */
+function is_timestamp_past(timestamp) {
+    if (typeof timestamp !== 'number') {
+        throw new Error('Timestamp must be a number');
+    }
+    const now = Math.floor(Date.now() / 1000);
+    return timestamp < now;
+}
+
+module.exports = { format_timestamp, parse_timestamp, format_timestamp_relative, is_timestamp_past };

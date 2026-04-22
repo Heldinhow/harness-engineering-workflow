@@ -1,23 +1,31 @@
 #!/bin/bash
 # Autoresearch benchmark script for workflow improvement
-# Runs the workflow benchmark using real OpenCode execution
+# Uses simulated workflows for fast iteration, with OpenCode option for real runs
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BENCH_DIR="$SCRIPT_DIR"
 
-# Timeout for each OpenCode scenario (15 minutes default)
-TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-900}"
+# Use OpenCode or simulation based on environment variable
+USE_OPENCODE="${USE_OPENCODE:-true}"
 
-# Run the benchmark suite with OpenCode
+# Timeout for OpenCode (30 minutes default)
+TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-1800}"
+
+# Run the benchmark suite
 run_benchmark() {
     local output
     
-    # Run with OpenCode using run-opencode-scenario.sh
-    export TIMEOUT_SECONDS
+    if [[ "$USE_OPENCODE" == "true" ]]; then
+        echo "=== Running with OpenCode (slow) ==="
+        export TIMEOUT_SECONDS
+        output=$("$BENCH_DIR/scripts/run-all-opencode-scenarios.sh" 2>&1) || true
+    else
+        echo "=== Running simulation (fast) ==="
+        output=$("$BENCH_DIR/scripts/run-all-scenarios.sh" 2>&1) || true
+    fi
     
-    output=$("$BENCH_DIR/scripts/run-all-opencode-scenarios.sh" 2>&1) || true
     echo "$output"
 }
 
@@ -46,9 +54,9 @@ extract_metrics() {
 
 # Main execution
 main() {
-    echo "=== Workflow Benchmark Autoresearch with OpenCode ==="
+    echo "=== Workflow Benchmark Autoresearch ==="
     echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-    echo "Timeout per scenario: $TIMEOUT_SECONDS seconds"
+    echo "Mode: ${USE_OPENCODE}"
     echo ""
     
     # Run benchmark and capture output

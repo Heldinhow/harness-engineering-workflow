@@ -127,12 +127,13 @@ collect_artifacts() {
     
     if [[ -d "$feature_dir" ]]; then
         # Copy to run output
-        cp -r "$feature_dir" "$workspace/feature" 2>/dev/null || true
+        mkdir -p "$workspace/feature"
+        cp -r "$feature_dir"/* "$workspace/feature/" 2>/dev/null || true
         
         # List created files
         echo "Created artifacts:"
-        find "$feature_dir" -type f -name "*.md" -o -name "*.json" 2>/dev/null | while read -r f; do
-            echo "  - ${f#$feature_dir/}"
+        find "$feature_dir" -type f \( -name "*.md" -o -name "*.json" \) 2>/dev/null | while read -r f; do
+            echo "  - $(basename "$f")"
         done
     else
         echo "WARNING: No feature directory created"
@@ -221,6 +222,10 @@ main() {
     
     # Copy scenario
     cp "$SCENARIOS_DIR/${SCENARIO_NAME}.md" "$WORKSPACE_DIR/scenario.md"
+    
+    echo ""
+    echo "=== Scoring OpenCode Run ==="
+    "$BENCH_DIR/evaluators/score-run.sh" "$SCENARIOS_DIR/${SCENARIO_NAME}.md" "$WORKSPACE_DIR"
     
     echo ""
     echo "=== OpenCode Run Complete ==="
