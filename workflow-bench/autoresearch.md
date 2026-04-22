@@ -195,6 +195,8 @@ This round succeeds only if:
 
 ## Final Status
 
+## Final Status
+
 **Benchmark infrastructure complete and operational.**
 
 ### What was built:
@@ -203,8 +205,13 @@ This round succeeds only if:
 - `workflow-bench/scripts/` - Benchmark execution scripts
 - `workflow-bench/evaluators/score-run.sh` - Scoring logic
 - `.config/opencode/skills/` - Skill sync target for OpenCode
-- `run-opencode-scenario.sh` - Real OpenCode integration (slow)
+- `run-opencode-scenario.sh` - Real OpenCode integration
 - `run-all-opencode-scenarios.sh` - Full OpenCode benchmark (30min timeout)
+
+### Workflow Improvements (based on OpenCode analysis):
+1. **State Consistency (CRITICAL)** - Added explicit rules for state.json/state.md sync
+2. **Code Scope Alignment** - Added scope documentation requirements
+3. **Stale Evidence Enforcement** - Added evidence freshness handling
 
 ### Scoring Results:
 - **Simulation mode**: 100/100 (fast iteration)
