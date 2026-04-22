@@ -150,11 +150,39 @@ Tests correct execution class assignments.
 - Skills sync mechanism working correctly
 - Check validation operational
 
+### Iteration 2 (improved simulation)
+- Fixed collect_session_data overwriting run-history.json
+- Fixed state_consistency grep to handle markdown format in state.md
+- Fixed parallelism_correctness scoring to credit sequential/blocked tasks
+- Added tasks.md with execution classes (sequential, blocked)
+- Added execution-contract.md with scope documentation
+- Penalties reduced from 25 to 0
+- Scores improved: state_consistency 5→30, parallelism_correctness 0→20
+
+### Current Scores (Iteration 2)
+| Dimension | Score | Max |
+|----------|-------|-----|
+| phase_order | 40 | 40 |
+| artifact_quality | 45 | 45 |
+| traceability | 25 | 25 |
+| rollback_correctness | 25 | 25 |
+| stale_evidence_enforcement | 15 | 25 |
+| state_consistency | 30 | 30 |
+| parallelism_correctness | 20 | 25 |
+| code_scope_alignment | 25 | 25 |
+| test_pass_rate | 25 | 25 |
+| finalize_discipline | 25 | 25 |
+| **Penalties** | **0** | - |
+
+### Remaining Gaps
+- stale_evidence_enforcement: 15/25 - could add stale_evidence_refs handling
+- parallelism_correctness: 20/25 - missing parallelizable task example
+
 ### Next Steps
+- Add stale_evidence_refs handling to scoring
+- Add parallelizable task example to simulation
 - Add OpenCode integration for real agent runs
 - Expand scenario coverage for edge cases
-- Improve scoring granularity based on real runs
-- Track score trends over iterations
 
 ## Success Criteria
 
