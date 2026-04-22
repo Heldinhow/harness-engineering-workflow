@@ -47,3 +47,13 @@ Fan-in means:
 - two lanes editing the same artifact without a defined merge plan
 - work that depends on unresolved vocabulary or gate decisions
 - verification, review, and reporting before fan-in
+
+## Parallel Rework Triggers
+
+| Issue | Cause | Prevention |
+| --- | --- | --- |
+| Merge conflicts | Parallel lanes editing same files | Define ownership boundaries |
+| Inconsistent state | Lanes updating state differently | Consolidate state updates at fan-in |
+| Stale evidence from wrong lane | Evidence captured before merge | Re-verify after merge |
+| Missing fan-in | Skipping consolidation | Always fan-in before VERIFY |
+| Dependency not resolved | Tasks marked parallelizable but blocked | Verify dependencies at fan-in |

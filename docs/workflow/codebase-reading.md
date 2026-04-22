@@ -50,3 +50,19 @@ The reader returns:
 - limits context blow-up
 - improves resumability because the useful information is already filtered
 - makes parallel investigation natural
+
+## Reader Rework Prevention
+
+| Mistake | Cause | Prevention |
+| --- | --- | --- |
+| Scope creep | Reading too broadly | Stay within allowed paths |
+| Unfiltered output | Returning everything found | Return only contract items |
+| Stale findings | Reading old code | Verify file timestamps |
+| Missing boundaries | Reading outside objective | Confirm paths before reading |
+| Context pollution | Reading too much | Keep scope minimal |
+
+## Evidence Freshness
+
+Codebase reading findings should be timestamped. If the codebase changes after reading, findings may be stale. Re-read when:
+- Files in scope were modified after reading
+- Findings are used as evidence for VERIFY or REVIEW

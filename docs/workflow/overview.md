@@ -67,3 +67,22 @@ It should:
 - decide progress, rollback, or escalation
 
 It should not absorb large swaths of codebase context just because it can.
+
+## Rework Prevention
+
+### Before Claiming Complete
+
+- [ ] Evidence is fresh (captured after last relevant change)
+- [ ] Rollback target is specific (phase name, not "earlier")
+- [ ] State artifacts aligned (state.md and state.json agree)
+- [ ] Run history updated (this phase transition recorded)
+
+### Common Rework Traps
+
+| Trap | Cause | Prevention |
+| --- | --- | --- |
+| Stale evidence pass | Claiming completion with old evidence | Compare timestamps, re-verify |
+| Vague rollback | "go back" instead of phase name | Use phase vocabulary |
+| State drift | Updating one format but not both | Update state.md and state.json together |
+| Skip verify | Skipping fresh evidence capture | Always run verification |
+| Unmapped REQ | Requirement without EVAL-* | Map each REQ-* to EVAL-* |

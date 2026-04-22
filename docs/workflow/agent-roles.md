@@ -23,3 +23,35 @@ This workflow uses role-based delegation. Roles are logical responsibilities, no
 - Raw findings belong in delegated artifacts or reports.
 - The Orchestrator updates state and chooses the next phase.
 - Parallel lanes must fan in before verify, review, report, or finish.
+
+## Role-Specific Rework Prevention
+
+### Orchestrator
+- Verify state alignment before delegating
+- Check evidence freshness before passing gates
+- Ensure rollback targets are specific phase names
+
+### Codebase Reader
+- Confirm scope is bounded before starting
+- Report scope drift immediately
+- Keep findings filtered to objective
+
+### Spec Agent
+- Use "SHALL" for mandatory requirements
+- Ensure requirements are testable
+- Map REQ-* to acceptance criteria
+
+### Eval Agent
+- Define concrete evidence methods
+- Document rerun triggers for each EVAL-*
+- Ensure thresholds are measurable
+
+### Execution Agent
+- Follow task contracts exactly
+- Capture evidence for each task completion
+- Update state artifacts immediately
+
+### Reviewer
+- Check evidence freshness first
+- Verify rollback target specificity
+- Require complete evidence before pass
