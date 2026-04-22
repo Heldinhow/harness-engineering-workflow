@@ -7,9 +7,16 @@ Improve task quality and reduce unnecessary rework in the harness engineering wo
 - **Primary**: workflow_quality_score (higher is better) — composite score from 8 evals
 - **Secondary**: artifact_coverage, schema_compliance, state_alignment, state_drift, phase_coverage, evidence_quality, spec_structure, ci_hook
 
-## How to Run
+## Legacy Benchmark
 `bash .specs/features/harness-validation/score_workflow.sh`
-Outputs `METRIC name=number` lines for each eval component and composite quality_score.
+
+## New Workflow Benchmark
+See `workflow-bench/autoresearch.md` for the new workflow benchmark.
+
+```bash
+./workflow-bench/autoresearch.sh  # Run workflow scenarios
+./workflow-bench/autoresearch.checks.sh  # Validate benchmark health
+```
 
 ## Files in Scope
 - `skills/` — workflow skill definitions (harness-engineering-workflow, harness-evals, harness-execution, harness-planning, harness-review)
