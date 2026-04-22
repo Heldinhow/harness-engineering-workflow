@@ -39,3 +39,46 @@ Since score is already 1.0, focus on quality improvements:
 3. Add "common rework patterns" to documentation — help agents avoid known pitfalls
 4. Add "verification checklist" to tasks.md template — ensure VERIFY is complete before REVIEW
 5. Add "rollback checklist" to review.md template — ensure rollback targets are specific
+
+## Completed Improvements (Iterations 9-16)
+
+### Templates Enhanced (9 total)
+1. **eval.md**: Added stale evidence check, rollback on failure, rework detection checklist, common patterns, complete example
+2. **tasks.md**: Added verification checklist, complete example task
+3. **review.md**: Added review checklist, rollback specificity, common rework reasons, complete example
+4. **report.md**: Added evidence freshness check, specific rollback docs, complete example
+5. **spec.md**: Added Requirement Quality Rules (SHALL, testable), complete example
+6. **state.md**: Added rollback checklist, phase matching reminder
+7. **run-history.md**: Added evidence freshness prompts, specific rollback naming
+
+### Skills Enhanced (5 total)
+1. **harness-engineering-workflow**: Added rework prevention section
+2. **harness-execution**: Added stale evidence detection checklist, common rework traps
+3. **harness-review**: Added rework detection checklist, common review triggers
+4. **harness-evals**: Added eval quality checklist, common eval issues
+5. **harness-planning**: Added spec quality checklist, common spec rework triggers
+
+### Documentation Enhanced (4 total)
+1. **phases-and-gates.md**: Added rework prevention checklist, common rework triggers table
+2. **state-and-runs.md**: Added state drift prevention checklist, common drift causes
+3. **delegation.md**: Added delegation rework triggers table
+4. **AGENTS.md**: Added rework prevention checklist, common rework patterns
+
+### New Requirements Added (3 total)
+- REQ-010: Requirements SHALL use "SHALL" for mandatory behavior
+- REQ-011: Rollback targets SHALL be specific phase names
+- REQ-012: Evidence SHALL be verified as fresh
+
+### New Evals Added (2 total)
+- EVAL-009: Rollback specificity validation
+- EVAL-010: Evidence freshness validation
+
+## Impact Summary
+These improvements help agents:
+1. Identify stale evidence before passing gates
+2. Define specific rollback targets instead of vague ones
+3. Write testable requirements that reduce spec rework
+4. Follow checklists that prevent common rework patterns
+5. Understand expected artifact format through examples
+
+## Final Score: 1.0 (maintained across all 9 iterations)
