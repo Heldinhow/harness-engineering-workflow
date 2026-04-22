@@ -25,8 +25,7 @@ The Orchestrator must fan in before:
 
 - `VERIFY`
 - `REVIEW`
-- `REPORT`
-- `FINISH`
+- `FINALIZE`
 
 Fan-in means:
 

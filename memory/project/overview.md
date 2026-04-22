@@ -6,25 +6,28 @@
 - The main goal is resumable, evidence-based work without broad repo rereads.
 
 ## Read this first
-1. `README.md`
-2. `AGENTS.md`
-3. `memory/project/*.md`
-4. `memory/codebase/*.md`
-5. Only then the specific `docs/`, `skills/`, or `templates/` files needed for the current task.
+1. `AGENTS.md` — quick map and principles
+2. `docs/workflow/overview.md` — layered workflow overview
+3. `docs/workflow/phases-and-gates.md` — phase table with entry/exit/gate/rollback
+4. `memory/project/*.md` — project orientation
+5. `memory/codebase/*.md` — codebase orientation
+6. Only then the specific `docs/`, `skills/`, or `templates/` files needed for the current task.
 
 ## Core operating model
 - The main agent is the `Orchestrator`.
 - Broad reading is delegated; the Orchestrator should prefer filtered outputs.
-- Phase order is fixed: `INTAKE → SPECIFY → DESIGN → TASKS → EVAL DEFINE → EXECUTE → VERIFY → REVIEW → REPORT → FINISH`.
+- Phase order is fixed: `INTAKE → SPECIFY → DESIGN → TASKS → EXECUTION CONTRACT → EXECUTE → VERIFY → REVIEW → FINALIZE`.
 - Review decisions are fixed: `pass`, `rework`, `escalate`.
 
 ## Repository shape
-- `docs/workflow/`: human-facing workflow reference.
-- `skills/`: role and phase behavior.
-- `templates/`: artifact skeletons.
-- `schemas/`: JSON stability for machine-readable state and run history.
-- `.specs/features/`: in-repo working sets for actual feature work.
-- `examples/`: worked small and medium feature trees.
+- `docs/workflow/`: per-phase lifecycle guidance
+- `docs/roles/`: who does what
+- `docs/standards/`: operational rules (rollback, evidence, parallelism, etc.)
+- `skills/`: role and phase behavior
+- `templates/`: artifact skeletons
+- `schemas/`: JSON stability for machine-readable state and run history
+- `.specs/features/`: in-repo working sets for actual feature work
+- `examples/`: worked small and medium feature trees
 
 ## What to avoid rereading
 - Do not start from all skills or all templates.

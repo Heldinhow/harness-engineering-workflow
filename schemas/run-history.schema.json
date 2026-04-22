@@ -54,7 +54,7 @@
           },
           "phase": {
             "type": "string",
-            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EXECUTION CONTRACT", "EXECUTE", "VERIFY", "REVIEW", "FINALIZE"]
           },
           "transition": {
             "type": "string",
@@ -62,7 +62,7 @@
           },
           "agent_role": {
             "type": "string",
-            "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "execution-agent", "reviewer"]
+            "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "implementer", "verifier", "reviewer"]
           },
           "agent_id": {
             "type": "string",
@@ -100,7 +100,7 @@
           },
           "rollback_to_phase": {
             "type": ["string", "null"],
-            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH", null]
+            "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EXECUTION CONTRACT", "EXECUTE", "VERIFY", "REVIEW", "FINALIZE", null]
           },
           "decision": {
             "type": "string",

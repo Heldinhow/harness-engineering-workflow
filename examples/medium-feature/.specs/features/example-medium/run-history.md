@@ -2,166 +2,46 @@
 
 ## Runs
 
-### RUN-001
-- Phase: SPECIFY
-- Transition: INTAKE->SPECIFY
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-001, REQ-010
-- Related evals: none
-- Evidence refs:
-  - `.specs/features/example-medium/spec.md`
-- Failure type: none
-- Rollback target: none
-- Decision: continue
-- Notes: Classified the feature as medium because it spans delegated analysis, task decomposition, and a review loop.
+### RUN-001 — SPECIFY
+Transition: INTAKE→SPECIFY | Status: passed | Agent: orchestrator
+Notes: Classified the feature as medium. eval.md was created during SPECIFY (EVAL DEFINE is no longer a separate phase).
 
-### RUN-002
-- Phase: DESIGN
-- Transition: SPECIFY->DESIGN
-- Status: passed
-- Agent: design-agent:example-session-medium
-- Related requirements: REQ-004, REQ-010
-- Related evals: none
-- Evidence refs:
-  - `.specs/features/example-medium/design.md`
-- Failure type: none
-- Rollback target: SPECIFY
-- Decision: continue
-- Notes: Chose one delegated analysis lane and two execution lanes with required fan-in before verify.
+### RUN-002 — DESIGN
+Transition: SPECIFY→DESIGN | Status: passed | Agent: design-agent
+Notes: Chose one delegated analysis lane and two execution lanes with required fan-in before verify.
 
-### RUN-003
-- Phase: TASKS
-- Transition: DESIGN->TASKS
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-004
-- Related evals: EVAL-002
-- Evidence refs:
-  - `.specs/features/example-medium/tasks.md`
-  - `.specs/features/example-medium/eval.md`
-- Failure type: none
-- Rollback target: DESIGN
-- Decision: continue
-- Notes: Finalized task boundaries, dependencies, execution classes, and eval coverage before execution.
+### RUN-003 — TASKS
+Transition: DESIGN→TASKS | Status: passed | Agent: orchestrator
+Notes: Finalized task boundaries, dependencies, execution classes, and eval coverage.
 
-### RUN-004
-- Phase: EXECUTE
-- Transition: TASKS->EXECUTE
-- Status: passed
-- Agent: codebase-reader:example-reader-01
-- Related requirements: REQ-005, REQ-010
-- Related evals: EVAL-001, EVAL-003
-- Evidence refs:
-  - `.specs/features/example-medium/delegation.md`
-  - `.specs/features/example-medium/codebase-reader-report.md`
-- Failure type: none
-- Rollback target: TASKS
-- Decision: continue
-- Notes: Completed the delegated read and returned a bounded report for state/run-history planning.
+### RUN-004 — EXECUTION CONTRACT
+Transition: TASKS→EXECUTION CONTRACT | Status: passed | Agent: orchestrator
+Notes: Locked the run scope, included and excluded tasks, parallelism class, expected surfaces, mandatory tests, and rollback routing before fan-out.
 
-### RUN-005
-- Phase: EXECUTE
-- Transition: EXECUTE->EXECUTE
-- Status: passed
-- Agent: execution-agent:fanin-lanes
-- Related requirements: REQ-004, REQ-006, REQ-008, REQ-009
-- Related evals: EVAL-001, EVAL-002
-- Evidence refs:
-  - `.specs/features/example-medium/state.md`
-  - `.specs/features/example-medium/state.json`
-  - `.specs/features/example-medium/run-history.md`
-  - `.specs/features/example-medium/run-history.json`
-- Failure type: none
-- Rollback target: EXECUTE
-- Decision: continue
-- Notes: Completed both execution lanes and updated the example artifacts before the first verify pass.
+### RUN-005 — EXECUTE (TASK-001: delegated read)
+Transition: EXECUTION CONTRACT→EXECUTE | Status: passed | Agent: codebase-reader
+Notes: Completed the delegated read and returned a bounded report.
 
-### RUN-006
-- Phase: VERIFY
-- Transition: EXECUTE->VERIFY
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-006, REQ-008, REQ-009
-- Related evals: EVAL-001, EVAL-002
-- Evidence refs:
-  - `.specs/features/example-medium/state.json`
-  - `.specs/features/example-medium/run-history.json`
-- Failure type: none
-- Rollback target: EXECUTE
-- Decision: continue
-- Notes: Captured the first verify pass before a late fan-in wording fix changed `run-history.json`.
+### RUN-006 — EXECUTE (TASK-002, TASK-003: parallel lanes)
+Transition: EXECUTE→EXECUTE | Status: passed | Agent: implementer
+Notes: Completed both execution lanes and updated example artifacts before first verify pass.
 
-### RUN-007
-- Phase: REVIEW
-- Transition: VERIFY->REVIEW
-- Status: failed
-- Agent: reviewer:example-session-medium
-- Related requirements: REQ-006, REQ-007, REQ-009
-- Related evals: EVAL-001, EVAL-002
-- Evidence refs:
-  - `.specs/features/example-medium/run-history.json`
-  - `.specs/features/example-medium/state.json`
-- Failure type: stale_evidence
-- Rollback target: VERIFY
-- Decision: rework
-- Notes: Review found that a late fan-in edit to `run-history.json` invalidated RUN-006, so the workflow rolled back to VERIFY.
+### RUN-007 — VERIFY
+Transition: EXECUTE→VERIFY | Status: passed | Agent: orchestrator
+Notes: Captured the first verify pass before a late fan-in wording fix changed run-history.json.
 
-### RUN-008
-- Phase: VERIFY
-- Transition: REVIEW->VERIFY
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-006, REQ-008, REQ-009
-- Related evals: EVAL-001, EVAL-002
-- Evidence refs:
-  - `.specs/features/example-medium/state.json`
-  - `.specs/features/example-medium/run-history.json`
-  - `.specs/features/example-medium/run-history.md`
-- Failure type: none
-- Rollback target: EXECUTE
-- Decision: continue
-- Notes: Refreshed verify evidence after fan-in and cleared the stale evidence references.
+### RUN-008 — REVIEW (rework loop)
+Transition: VERIFY→REVIEW | Status: failed | Agent: reviewer | Decision: rework
+Notes: Review found that a late fan-in edit to run-history.json invalidated RUN-007 evidence. Rolled back to VERIFY.
 
-### RUN-009
-- Phase: REVIEW
-- Transition: VERIFY->REVIEW
-- Status: passed
-- Agent: reviewer:example-session-medium
-- Related requirements: REQ-006, REQ-007, REQ-010
-- Related evals: EVAL-001, EVAL-002, EVAL-003
-- Evidence refs:
-  - `.specs/features/example-medium/review.md`
-- Failure type: none
-- Rollback target: VERIFY
-- Decision: continue
-- Notes: Review passed after confirming that verify evidence was fresh and the rework loop was captured.
+### RUN-009 — VERIFY (after rework)
+Transition: REVIEW→VERIFY | Status: passed | Agent: orchestrator
+Notes: Refreshed verify evidence after fan-in and cleared stale evidence references.
 
-### RUN-010
-- Phase: REPORT
-- Transition: REVIEW->REPORT
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-008, REQ-009, REQ-010
-- Related evals: EVAL-001, EVAL-002, EVAL-003
-- Evidence refs:
-  - `.specs/features/example-medium/report.md`
-- Failure type: none
-- Rollback target: REVIEW
-- Decision: continue
-- Notes: Consolidated the delegated analysis, rework loop, and final readiness into the medium example report.
+### RUN-010 — REVIEW
+Transition: VERIFY→REVIEW | Status: passed | Agent: reviewer
+Notes: Review passed after confirming verify evidence was fresh and the rework loop was captured.
 
-### RUN-011
-- Phase: FINISH
-- Transition: REPORT->FINISH
-- Status: passed
-- Agent: orchestrator:example-session-medium
-- Related requirements: REQ-008, REQ-009, REQ-010
-- Related evals: EVAL-001, EVAL-002, EVAL-003
-- Evidence refs:
-  - `.specs/features/example-medium/review.md`
-  - `.specs/features/example-medium/report.md`
-- Failure type: none
-- Rollback target: REVIEW
-- Decision: finish
-- Notes: Confirmed the review/report evidence was current and closed the medium example in `FINISH`.
+### RUN-011 — FINALIZE
+Transition: REVIEW→FINALIZE | Status: passed | Agent: orchestrator | Decision: finish
+Notes: Confirmed review evidence was current and closed the medium example in FINALIZE. This replaces the old REPORT+FINISH split.

@@ -18,45 +18,21 @@
       "related_eval_ids": [],
       "status": "passed",
       "evidence_refs": [
-        ".specs/features/example-small/spec.md"
-      ],
-      "failure_type": null,
-      "rollback_to_phase": null,
-      "decision": "continue",
-      "notes": "Classified the feature as small and documented a local report-template scenario."
-    },
-    {
-      "run_id": "RUN-002",
-      "started_at": "2026-04-20T12:39:00Z",
-      "ended_at": "2026-04-20T12:45:00Z",
-      "phase": "EVAL DEFINE",
-      "transition": "SPECIFY->EVAL DEFINE",
-      "agent_role": "eval-agent",
-      "agent_id": "example-session-small",
-      "task_id": null,
-      "related_req_ids": [
-        "REQ-002"
-      ],
-      "related_eval_ids": [
-        "EVAL-001",
-        "EVAL-002"
-      ],
-      "status": "passed",
-      "evidence_refs": [
+        ".specs/features/example-small/spec.md",
         ".specs/features/example-small/eval.md"
       ],
       "failure_type": null,
       "rollback_to_phase": null,
       "decision": "continue",
-      "notes": "Defined capability and regression evals before execution."
+      "notes": "Classified the feature as small. eval.md was created during SPECIFY as part of the artifact discipline (EVAL DEFINE is no longer a separate phase)."
     },
     {
-      "run_id": "RUN-003",
+      "run_id": "RUN-002",
       "started_at": "2026-04-20T12:46:00Z",
       "ended_at": "2026-04-20T12:56:00Z",
       "phase": "EXECUTE",
-      "transition": "EVAL DEFINE->EXECUTE",
-      "agent_role": "execution-agent",
+      "transition": "SPECIFY->EXECUTE",
+      "agent_role": "implementer",
       "agent_id": "example-session-small",
       "task_id": null,
       "related_req_ids": [
@@ -75,7 +51,7 @@
       "notes": "Applied the local template change without expanding the scope into design or tasks."
     },
     {
-      "run_id": "RUN-004",
+      "run_id": "RUN-003",
       "started_at": "2026-04-20T12:57:00Z",
       "ended_at": "2026-04-20T13:02:00Z",
       "phase": "VERIFY",
@@ -104,7 +80,7 @@
       "notes": "Confirmed fresh evidence and aligned state/run artifacts."
     },
     {
-      "run_id": "RUN-005",
+      "run_id": "RUN-004",
       "started_at": "2026-04-20T13:03:00Z",
       "ended_at": "2026-04-20T13:08:00Z",
       "phase": "REVIEW",
@@ -130,38 +106,11 @@
       "notes": "Formal review passed with no findings."
     },
     {
-      "run_id": "RUN-006",
+      "run_id": "RUN-005",
       "started_at": "2026-04-20T13:09:00Z",
-      "ended_at": "2026-04-20T13:15:00Z",
-      "phase": "REPORT",
-      "transition": "REVIEW->REPORT",
-      "agent_role": "orchestrator",
-      "agent_id": "example-session-small",
-      "task_id": null,
-      "related_req_ids": [
-        "REQ-008",
-        "REQ-009",
-        "REQ-010"
-      ],
-      "related_eval_ids": [
-        "EVAL-001",
-        "EVAL-002"
-      ],
-      "status": "passed",
-      "evidence_refs": [
-        ".specs/features/example-small/report.md"
-      ],
-      "failure_type": null,
-      "rollback_to_phase": "REVIEW",
-      "decision": "continue",
-      "notes": "Consolidated the small feature into a final report and prepared the working set for the finish gate."
-    },
-    {
-      "run_id": "RUN-007",
-      "started_at": "2026-04-20T13:16:00Z",
       "ended_at": "2026-04-20T13:18:00Z",
-      "phase": "FINISH",
-      "transition": "REPORT->FINISH",
+      "phase": "FINALIZE",
+      "transition": "REVIEW->FINALIZE",
       "agent_role": "orchestrator",
       "agent_id": "example-session-small",
       "task_id": null,
@@ -177,12 +126,12 @@
       "status": "passed",
       "evidence_refs": [
         ".specs/features/example-small/review.md",
-        ".specs/features/example-small/report.md"
+        ".specs/features/example-small/finalize-report.md"
       ],
       "failure_type": null,
       "rollback_to_phase": "REVIEW",
       "decision": "finish",
-      "notes": "Confirmed that review and report evidence were current and closed the small example in FINISH."
+      "notes": "Confirmed review evidence was current and closed the small example in FINALIZE. This is the canonical local closeout phase."
     }
   ]
 }

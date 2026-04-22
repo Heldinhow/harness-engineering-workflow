@@ -33,12 +33,12 @@
 ### REVIEW
 ## Scope Reviewed
 - Feature: example-feature
-- Artifacts: spec.md, eval.md, state.md, state.json, run-history.json, review.md, report.md
+- Artifacts: spec.md, eval.md, state.md, state.json, run-history.json, review.md, finalize-report.md
 
 ## Findings
-- All 8 required artifacts present and non-empty
-- state.md and state.json agree on current_phase="FINISH" and status="done"
-- Evidence refs point to existing files (verified by score_workflow.sh)
+- All required artifacts present and non-empty
+- state.md and state.json agree on current_phase="FINALIZE" and status="done"
+- Evidence refs point to existing files (verified by grep)
 - Rollback target is specific: "REVIEW"
 
 ## Decision
@@ -51,11 +51,8 @@ none
 none (decision is pass)
 
 ## Evidence Reviewed
-- `.specs/features/example-feature/score_workflow.sh` output: quality_score=1.0
+- grep output confirming new phase vocabulary in canonical docs
 - All evals passed
-
-## Evidence Reviewed
-- <evidence ref>
 
 ## Residual Risks
 - <risk or none>

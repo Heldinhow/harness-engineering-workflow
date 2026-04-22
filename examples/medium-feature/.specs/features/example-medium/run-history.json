@@ -18,12 +18,13 @@
       "related_eval_ids": [],
       "status": "passed",
       "evidence_refs": [
-        ".specs/features/example-medium/spec.md"
+        ".specs/features/example-medium/spec.md",
+        ".specs/features/example-medium/eval.md"
       ],
       "failure_type": null,
       "rollback_to_phase": null,
       "decision": "continue",
-      "notes": "Classified the feature as medium because it spans delegated analysis, task decomposition, and a review loop."
+      "notes": "Classified the feature as medium because it spans delegated analysis, task decomposition, execution contract, and a review loop."
     },
     {
       "run_id": "RUN-002",
@@ -77,8 +78,35 @@
       "run_id": "RUN-004",
       "started_at": "2026-04-20T15:37:00Z",
       "ended_at": "2026-04-20T15:49:00Z",
+      "phase": "EXECUTION CONTRACT",
+      "transition": "TASKS->EXECUTION CONTRACT",
+      "agent_role": "orchestrator",
+      "agent_id": "example-session-medium",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-004",
+        "REQ-005"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/example-medium/execution-contract.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "TASKS",
+      "decision": "continue",
+      "notes": "Locked the run scope, included and excluded tasks, parallelism class, expected surfaces, mandatory tests, and rollback routing before fan-out."
+    },
+    {
+      "run_id": "RUN-005",
+      "started_at": "2026-04-20T15:50:00Z",
+      "ended_at": "2026-04-20T16:20:00Z",
       "phase": "EXECUTE",
-      "transition": "TASKS->EXECUTE",
+      "transition": "EXECUTION CONTRACT->EXECUTE",
       "agent_role": "codebase-reader",
       "agent_id": "example-reader-01",
       "task_id": "TASK-001",
@@ -101,12 +129,12 @@
       "notes": "Completed the delegated read and returned a bounded report for state/run-history planning."
     },
     {
-      "run_id": "RUN-005",
-      "started_at": "2026-04-20T15:50:00Z",
+      "run_id": "RUN-006",
+      "started_at": "2026-04-20T16:00:00Z",
       "ended_at": "2026-04-20T16:20:00Z",
       "phase": "EXECUTE",
       "transition": "EXECUTE->EXECUTE",
-      "agent_role": "execution-agent",
+      "agent_role": "implementer",
       "agent_id": "fanin-lanes",
       "task_id": "TASK-002,TASK-003",
       "related_req_ids": [
@@ -132,7 +160,7 @@
       "notes": "Completed both execution lanes and updated the example artifacts before the first verify pass."
     },
     {
-      "run_id": "RUN-006",
+      "run_id": "RUN-007",
       "started_at": "2026-04-20T16:21:00Z",
       "ended_at": "2026-04-20T16:28:00Z",
       "phase": "VERIFY",
@@ -160,7 +188,7 @@
       "notes": "Captured the first verify pass before a late fan-in wording fix changed run-history.json."
     },
     {
-      "run_id": "RUN-007",
+      "run_id": "RUN-008",
       "started_at": "2026-04-20T16:29:00Z",
       "ended_at": "2026-04-20T16:31:00Z",
       "phase": "REVIEW",
@@ -185,10 +213,10 @@
       "failure_type": "stale_evidence",
       "rollback_to_phase": "VERIFY",
       "decision": "rework",
-      "notes": "Review found that a late fan-in edit to run-history.json invalidated RUN-006, so the workflow rolled back to VERIFY."
+      "notes": "Review found that a late fan-in edit to run-history.json invalidated RUN-007, so the workflow rolled back to VERIFY."
     },
     {
-      "run_id": "RUN-008",
+      "run_id": "RUN-009",
       "started_at": "2026-04-20T16:32:00Z",
       "ended_at": "2026-04-20T16:43:00Z",
       "phase": "VERIFY",
@@ -217,7 +245,7 @@
       "notes": "Refreshed verify evidence after fan-in and cleared the stale evidence references."
     },
     {
-      "run_id": "RUN-009",
+      "run_id": "RUN-010",
       "started_at": "2026-04-20T16:44:00Z",
       "ended_at": "2026-04-20T16:55:00Z",
       "phase": "REVIEW",
@@ -245,39 +273,11 @@
       "notes": "Review passed after confirming that verify evidence was fresh and the rework loop was captured."
     },
     {
-      "run_id": "RUN-010",
-      "started_at": "2026-04-20T16:56:00Z",
-      "ended_at": "2026-04-20T17:25:00Z",
-      "phase": "REPORT",
-      "transition": "REVIEW->REPORT",
-      "agent_role": "orchestrator",
-      "agent_id": "example-session-medium",
-      "task_id": null,
-      "related_req_ids": [
-        "REQ-008",
-        "REQ-009",
-        "REQ-010"
-      ],
-      "related_eval_ids": [
-        "EVAL-001",
-        "EVAL-002",
-        "EVAL-003"
-      ],
-      "status": "passed",
-      "evidence_refs": [
-        ".specs/features/example-medium/report.md"
-      ],
-      "failure_type": null,
-      "rollback_to_phase": "REVIEW",
-      "decision": "continue",
-      "notes": "Consolidated the delegated analysis, rework loop, and final readiness into the medium example report."
-    },
-    {
       "run_id": "RUN-011",
-      "started_at": "2026-04-20T17:26:00Z",
+      "started_at": "2026-04-20T16:56:00Z",
       "ended_at": "2026-04-20T17:30:00Z",
-      "phase": "FINISH",
-      "transition": "REPORT->FINISH",
+      "phase": "FINALIZE",
+      "transition": "REVIEW->FINALIZE",
       "agent_role": "orchestrator",
       "agent_id": "example-session-medium",
       "task_id": null,
@@ -294,12 +294,12 @@
       "status": "passed",
       "evidence_refs": [
         ".specs/features/example-medium/review.md",
-        ".specs/features/example-medium/report.md"
+        ".specs/features/example-medium/finalize-report.md"
       ],
       "failure_type": null,
       "rollback_to_phase": "REVIEW",
       "decision": "finish",
-      "notes": "Confirmed the review/report evidence was current and closed the medium example in FINISH."
+      "notes": "Confirmed the review evidence was current and closed the medium example in FINALIZE. This replaces the old REPORT+FINISH split."
     }
   ]
 }

@@ -2,8 +2,10 @@
 
 ## Top-level layout
 - `README.md`: package overview and repository structure summary.
-- `AGENTS.md`: repository rules, reading policy, delegation contract, and resume order.
-- `docs/workflow/`: canonical workflow reference pages.
+- `AGENTS.md`: short index pointing to detailed docs.
+- `docs/workflow/`: per-phase lifecycle guidance.
+- `docs/roles/`: who does what (Orchestrator, Codebase Reader, Spec Agent, etc.).
+- `docs/standards/`: operational rules (rollback, evidence, parallelism, etc.).
 - `skills/`: agent-facing operating instructions for workflow phases.
 - `templates/`: artifact starter files.
 - `schemas/`: JSON contracts for machine-readable state.
@@ -14,8 +16,8 @@
 ## Recommended read paths by task
 
 ### General orientation
-1. `README.md`
-2. `AGENTS.md`
+1. `AGENTS.md`
+2. `docs/workflow/overview.md`
 3. `memory/project/overview.md`
 4. `memory/codebase/map.md`
 
@@ -23,21 +25,27 @@
 1. `AGENTS.md`
 2. `docs/workflow/overview.md`
 3. `docs/workflow/phases-and-gates.md`
-4. `docs/workflow/codebase-reading.md`
+4. `docs/standards/rollback-rules.md`
 5. affected skills and templates
 
 ### Resume / state work
-1. `docs/workflow/state-and-runs.md`
+1. `docs/workflow/phases-and-gates.md`
 2. `templates/state.*`
 3. `templates/run-history.*`
 4. `schemas/*.json`
 
 ### Delegation / Orchestrator behavior
-1. `docs/workflow/agent-roles.md`
-2. `docs/workflow/delegation.md`
-3. `docs/workflow/parallelism.md`
+1. `docs/roles/orchestrator.md`
+2. `docs/standards/subagent-boundaries.md`
+3. `docs/standards/parallelism.md`
 4. `skills/harness-engineering-workflow/SKILL.md`
 
-## Current repository note
-- `memory/` did not exist before this lane; use it as the first stop for future orientation.
-- `examples/` now provides artifact-only reference trees that mirror the revised workflow contract.
+## Workflow vocabulary
+
+Canonical phases: `INTAKE → SPECIFY → DESIGN (conditional) → TASKS → EXECUTION CONTRACT → EXECUTE → VERIFY → REVIEW → FINALIZE`
+
+Role names: `Orchestrator`, `Codebase Reader`, `Spec Agent`, `Design Agent`, `Eval Agent`, `Implementer`, `Verifier`, `Reviewer`
+
+Review decisions: `pass`, `rework`, `escalate`
+
+Execution classes: `sequential`, `parallelizable`, `blocked`

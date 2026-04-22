@@ -1,7 +1,7 @@
 # State: <feature>
 
 ## Current Phase
-<INTAKE / SPECIFY / DESIGN / TASKS / EVAL DEFINE / EXECUTE / VERIFY / REVIEW / REPORT / FINISH>
+<INTAKE / SPECIFY / DESIGN / TASKS / EXECUTION CONTRACT / EXECUTE / VERIFY / REVIEW / FINALIZE>
 
 **IMPORTANT**: This MUST match state.json "current_phase"
 
@@ -15,7 +15,7 @@
 <gate waiting to clear>
 
 ## Owner
-- Role: <orchestrator | codebase-reader | spec-agent | design-agent | eval-agent | execution-agent | reviewer>
+- Role: <orchestrator / codebase-reader / spec-agent / design-agent / eval-agent / implementer / verifier / reviewer>
 - Id: <session or agent id>
 
 ## Open Issues

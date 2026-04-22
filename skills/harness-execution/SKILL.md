@@ -5,15 +5,28 @@ description: Use when planned work is ready for task-scoped execution with minim
 
 # Harness Execution
 
-This skill owns `EXECUTE` and the execution-side discipline that feeds `VERIFY`.
+This skill owns `EXECUTE`, the `EXECUTION CONTRACT` phase, and the execution-side discipline that feeds `VERIFY`.
 
 ## Execution Contract
 
 - Execute per task, not as one undifferentiated change.
-- Follow the current `spec.md`, `design.md`, `tasks.md`, and `eval.md`.
+- Follow the current `spec.md`, `design.md`, `tasks.md`, `execution-contract.md`, and `eval.md`.
 - Delegate only the local context needed for the scoped task.
 - Keep delegated output filtered to the standard contract.
 - Mark work as complete, `blocked`, or not started. Do not report vague progress.
+
+## Execution Contract Phase
+
+Before real implementation, create `execution-contract.md` to lock:
+
+- exact run scope
+- included and excluded tasks
+- dependencies and their resolution status
+- parallelism class and rationale
+- expected codebase surfaces
+- mandatory run tests
+- done criteria
+- rollback routing by failure class
 
 ## Task-Scoped Execution
 
@@ -42,8 +55,8 @@ Before claiming something is complete, fixed, or passing:
 
 ## Evidence Invalidation
 
-- Relevant changes after `VERIFY` invalidate `VERIFY`, `REVIEW`, and `REPORT` evidence.
-- Relevant changes after `REVIEW` invalidate `REVIEW` and `REPORT` evidence.
+- Relevant changes after `VERIFY` invalidate `VERIFY` and `REVIEW` evidence.
+- Relevant changes after `REVIEW` invalidate `REVIEW` evidence.
 - Requirement, eval, or design changes invalidate dependent execution claims.
 
 When evidence is stale, mark it stale in state and roll back to the needed gate.
@@ -68,11 +81,18 @@ If any check fails, the evidence is stale. Do not pass work without fresh eviden
 
 ## Rollback Rules
 
-- implementation issue or failing proof: back to `EXECUTE`
-- requirement ambiguity: back to `SPECIFY`
-- structural inconsistency: back to `DESIGN`
-- bad decomposition or dependency framing: back to `TASKS`
+| Failure class | Rollback target |
+|---|---|
+| Ambiguity or requirement mismatch | SPECIFY |
+| Structural inconsistency | DESIGN |
+| Bad decomposition | TASKS |
+| Implementation issue or failing proof | EXECUTE |
+| Stale or missing evidence | VERIFY |
 
 ## Parallelism Rule
 
-Only execute tasks in parallel when planning already marked them `parallelizable` and fan-in can happen before `VERIFY`, `REVIEW`, `REPORT`, and `FINISH`.
+Only execute tasks in parallel when planning already marked them `parallelizable` and fan-in can happen before `VERIFY`, `REVIEW`, and `FINALIZE`.
+
+## Local Scope
+
+Testing and verification are local. CI/CD, deploy, release, and PR automation are out of scope.

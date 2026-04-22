@@ -5,7 +5,7 @@ description: Use when the workflow needs explicit eval definitions with stable E
 
 # Harness Evals
 
-This skill owns `EVAL DEFINE` and the eval-side evidence policy.
+This skill owns `eval.md` and the eval-side evidence policy. `EVAL DEFINE` is no longer a separate phase; eval definitions are created during or after `SPECIFY` and persist as a standing artifact through `VERIFY`, `REVIEW`, and `FINALIZE`.
 
 ## Eval Contract
 
@@ -54,22 +54,14 @@ Before finalizing `eval.md`, verify:
 4. **Rerun triggers are specific**: what file changes invalidate evidence?
 5. **Rollback target is defined**: which phase to return to on failure?
 
-## Common Eval Quality Issues
-
-1. **Missing mapping**: REQ-* without corresponding EVAL-*
-2. **Vague evidence method**: "inspect" instead of specific command or file
-3. **No thresholds**: eval without pass/fail criteria
-4. **Generic rerun triggers**: "any change" instead of specific files or patterns
-5. **Missing rollback**: gate without defined rollback target
-
 ## Evidence Policy
 
 - Eval evidence must be fresh enough for the current claim.
 - Old eval results cannot justify new behavior after relevant changes.
-- If eval definitions are wrong or incomplete, roll back to `EVAL DEFINE`.
+- If eval definitions are wrong or incomplete, roll back to `SPECIFY`.
 - If requirements are not testable, roll back to `SPECIFY`.
 - If the behavior fails the defined eval, roll back to `EXECUTE`.
 
 ## Reporting Expectations
 
-`REPORT` should summarize which `EVAL-*` passed, which failed, what thresholds were used, and any residual risk or human judgment still required.
+`review.md` and `finalize-report.md` should summarize which `EVAL-*` passed, which failed, what thresholds were used, and any residual risk or human judgment still required.

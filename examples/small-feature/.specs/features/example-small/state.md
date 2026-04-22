@@ -1,7 +1,7 @@
 # State: example-small
 
 ## Current Phase
-FINISH
+FINALIZE
 
 ## Status
 done
@@ -10,7 +10,7 @@ done
 small
 
 ## Pending Gate
-finish_complete
+finalize_complete
 
 ## Owner
 - Role: orchestrator
@@ -20,15 +20,14 @@ finish_complete
 - none
 
 ## Latest Evidence
-- `.specs/features/example-small/run-history.json#RUN-007`
-- `.specs/features/example-small/review.md`
-- `.specs/features/example-small/report.md`
+- `.specs/features/example-small/finalize-report.md`
+- `.specs/features/example-small/run-history.json#RUN-005`
 
 ## Stale Evidence
 - none
 
 ## Next Step
-- Reuse this working set as the minimal example for a local feature that still records state and run history.
+- Reuse this working set as the minimal example for a local feature demonstrating the new canonical workflow.
 
 ## Rollback Target
 - REVIEW

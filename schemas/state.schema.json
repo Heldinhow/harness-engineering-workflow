@@ -34,7 +34,7 @@
     },
     "current_phase": {
       "type": "string",
-      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EXECUTION CONTRACT", "EXECUTE", "VERIFY", "REVIEW", "FINALIZE"]
     },
     "status": {
       "type": "string",
@@ -46,7 +46,7 @@
     },
     "owner_role": {
       "type": "string",
-      "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "execution-agent", "reviewer"]
+      "enum": ["orchestrator", "codebase-reader", "spec-agent", "design-agent", "eval-agent", "implementer", "verifier", "reviewer"]
     },
     "owner_id": {
       "type": "string",
@@ -80,7 +80,7 @@
     },
     "rollback_target": {
       "type": "string",
-      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EVAL DEFINE", "EXECUTE", "VERIFY", "REVIEW", "REPORT", "FINISH"]
+      "enum": ["INTAKE", "SPECIFY", "DESIGN", "TASKS", "EXECUTION CONTRACT", "EXECUTE", "VERIFY", "REVIEW", "FINALIZE"]
     },
     "updated_at": {
       "type": "string",

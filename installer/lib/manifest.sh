@@ -2,7 +2,7 @@
 # This file declares the installable assets and target mappings.
 
 PACKAGE_NAME="harness-engineering-workflow"
-PACKAGE_VERSION="0.1.0"
+PACKAGE_VERSION="0.2.0"
 INSTALL_CONFIG_DIR="${HOME}/.config/harness-workflow"
 INSTALL_STATE_FILE="${INSTALL_CONFIG_DIR}/installed.json"
 
@@ -13,6 +13,7 @@ ASSET_GROUPS="
 skills:skills:SKILL.md
 templates:templates:*.md
 schemas:schemas:*.json
+docs:docs:*.md
 root:.:AGENTS.md
 root:.:README.md
 "
@@ -29,25 +30,31 @@ pi-agent|Pi Agent|full|official
 opencode|Sourcegraph OpenCode|fallback|experimental
 forgecode|ForgeCode|fallback|experimental
 :"
+
 # Assets to install per capability mode
 ASSETS_FULL="
 skills/
 templates/
 schemas/
+docs/
 scripts/
 AGENTS.md
+README.md
 "
 
 ASSETS_ADAPTED="
 templates/
 schemas/
+docs/
 scripts/
 AGENTS.md
+README.md
 "
 
 ASSETS_FALLBACK="
 AGENTS.md
 templates/
+docs/
 "
 
 # Get target info by ID
@@ -69,7 +76,7 @@ get_target_support() {
 # Get assets for a given mode
 get_assets_for_mode() {
     local mode="$1"
-    case "$mode" in
+    case $mode in
         full) echo "$ASSETS_FULL" ;;
         adapted) echo "$ASSETS_ADAPTED" ;;
         fallback) echo "$ASSETS_FALLBACK" ;;

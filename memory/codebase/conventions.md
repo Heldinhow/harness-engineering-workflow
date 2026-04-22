@@ -1,11 +1,11 @@
 # Codebase Memory Conventions
 
 ## Vocabulary that should not drift
-- Phases: `INTAKE`, `SPECIFY`, `DESIGN`, `TASKS`, `EVAL DEFINE`, `EXECUTE`, `VERIFY`, `REVIEW`, `REPORT`, `FINISH`
+- Phases: `INTAKE`, `SPECIFY`, `DESIGN`, `TASKS`, `EXECUTION CONTRACT`, `EXECUTE`, `VERIFY`, `REVIEW`, `FINALIZE`
 - Review decisions: `pass`, `rework`, `escalate`
 - Execution classes: `sequential`, `parallelizable`, `blocked`
 - Main role name: `Orchestrator`
-- Broad-reading helper role: `Codebase Reader`
+- Broad-reading helper roles: `Codebase Reader`, `Implementer`, `Verifier`
 
 ## Documentation conventions
 - Prefer short sections and bullets.
@@ -22,6 +22,7 @@
 - Markdown and JSON forms should stay aligned when paired.
 - State and run history are treated as control artifacts, not optional notes.
 - Review is a formal gate artifact, not an informal comment.
+- `finalize-report.md` is the canonical closeout artifact; `report.md` is legacy.
 
 ## Repository-specific caution
 - README, AGENTS, workflow docs, skills, templates, and memory intentionally echo each other.

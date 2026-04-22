@@ -20,13 +20,15 @@ This skill owns `SPECIFY`, `DESIGN`, and `TASKS`.
 - Require `spec.md`.
 - `design.md` is optional for clearly local work.
 - `tasks.md` is optional when one short execution loop is enough.
+- `execution-contract.md` is optional when the run is trivial.
 
 ### Medium
 - Require `spec.md`, `tasks.md`, and state updates.
-- Strongly recommend `design.md` when interfaces, data flow, or trade-offs matter.
+- `design.md` is strongly recommended when interfaces, data flow, or trade-offs matter.
+- `execution-contract.md` is required before real implementation.
 
 ### Large / Complex
-- Require `spec.md`, `design.md`, `tasks.md`, delegation planning, and explicit rollback targets.
+- Require `spec.md`, `design.md`, `tasks.md`, `execution-contract.md`, delegation planning, and explicit rollback targets.
 
 ## `spec.md`
 
@@ -39,7 +41,7 @@ This skill owns `SPECIFY`, `DESIGN`, and `TASKS`.
 
 Do not allow `EXECUTE` to start while requirements remain vague or contradictory.
 
-## `design.md`
+## `design.md` (Conditional)
 
 Create `design.md` when:
 
@@ -60,6 +62,18 @@ Each task should include:
 - related `REQ-*`
 - dependencies
 - execution class: `sequential`, `parallelizable`, or `blocked`
+
+## `execution-contract.md`
+
+Create `execution-contract.md` when real implementation work will follow. It locks:
+
+- exact run scope
+- included and excluded tasks
+- parallelism class
+- expected codebase surfaces
+- mandatory run tests
+- done criteria
+- rollback routing by failure class
 
 ## Codebase Reading Rule
 
@@ -82,11 +96,3 @@ Before starting `EXECUTE`, verify:
 3. **REQ-* are testable**: "SHALL" statements with measurable criteria
 4. **REQ-* are traceable**: each maps to an acceptance criterion
 5. **No conflicting requirements**: REQ-* don't contradict each other
-
-## Common Spec Rework Triggers
-
-1. **Vague objective**: "improve X" instead of specific behavior change
-2. **Unbounded scope**: missing "Out of scope" section or ambiguous boundaries
-3. **Untestable requirements**: "should" instead of "SHALL", no measurable criteria
-4. **Missing acceptance criteria**: requirements without way to verify completion
-5. **Implicit dependencies**: requirements that assume infrastructure not in scope

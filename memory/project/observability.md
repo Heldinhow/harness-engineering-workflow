@@ -1,29 +1,23 @@
 # Project Memory Observability
 
-## Where workflow visibility comes from
-- `state.md` and `state.json` show current position, blockers, owner, evidence, and rollback target.
-- `run-history.md` and `run-history.json` record transitions, loops, failures, and decisions over time.
-- `review.md` records the formal quality decision.
-- `report.md` consolidates delivered scope and evidence after gates pass.
+## What observability means here
+- Observability comes from readable state, traceable evidence, and explicit rollback routing.
+- The Orchestrator should be able to answer "where am I, what is blocked, and where do I go next?" from state artifacts alone.
 
-## Observability model
-- This repo uses artifact-based observability, not runtime telemetry.
-- The important question is: can a future agent resume safely from artifacts without rereading everything?
+## State visibility
+- `state.json` is the authoritative machine-readable state.
+- `state.md` is the human-readable summary.
+- Both must agree on current_phase, status, rollback_target, and last_run_id.
 
-## Resume-first signals
-- Read order is consistent across docs:
-  1. `state.json`
-  2. `state.md`
-  3. latest `run-history.json` entry
-  4. `review.md` when present
-  5. only the referenced feature artifacts
+## Evidence visibility
+- Evidence refs in run-history.json point to files that exist and are current.
+- Stale evidence is marked in stale_evidence_refs, not hidden.
+- Finalize report captures the complete evidence pack for handoff.
 
-## Staleness rules to remember
-- Relevant changes after `VERIFY` stale `VERIFY`, `REVIEW`, and `REPORT` evidence.
-- Relevant changes after `REVIEW` stale `REVIEW` and `REPORT` evidence.
-- Requirement, eval, or design changes can stale dependent evidence.
+## Rollback visibility
+- Every gate records a specific phase name for rollback, not a vague direction.
+- Rollback routing table in docs/standards/rollback-rules.md maps failure class to phase.
 
-## Why memory matters
-- `memory/project/*` captures stable repository intent.
-- `memory/codebase/*` captures layout, conventions, and hot spots.
-- Together they reduce the need for broad discovery before resume or delegation.
+## Local scope note
+- Observability tooling is local and self-contained.
+- No remote monitoring, no external dashboards, no CI pipelines.

@@ -17,7 +17,9 @@
 - Reuse exact vocabulary across files instead of synonyms.
 
 ## Structural patterns
-- `docs/workflow/` explains the model.
+- `docs/workflow/` explains the per-phase model.
+- `docs/roles/` tells who does what.
+- `docs/standards/` encodes operational rules.
 - `skills/` tells an agent how to behave inside the model.
 - `templates/` give the expected artifact shapes.
 - `memory/` should let a future Orchestrator orient quickly without broad rereads.
@@ -25,7 +27,7 @@
 ## Decision pattern
 - Keep the main agent narrow.
 - Delegate broad reading when more than one area or more than three files matter.
-- Fan out only after planning is stable enough; fan in before verify/review/report/finish.
+- Fan out only after planning is stable; fan in before VERIFY, REVIEW, and FINALIZE.
 
 ## Update pattern
 - When workflow vocabulary changes, update README, workflow docs, skills, templates, and memory together.

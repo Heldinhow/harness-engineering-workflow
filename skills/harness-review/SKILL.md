@@ -20,7 +20,7 @@ Review should use:
 
 - current `spec.md`
 - `design.md` when present
-- current `tasks.md` when present
+- current `tasks.md` and `execution-contract.md` when present
 - current `eval.md`
 - fresh verification evidence
 - current state and relevant run history
@@ -33,16 +33,18 @@ Review should use:
 
 ## Review Failure And Rollback
 
-- stale or missing evidence: roll back to `VERIFY`
-- implementation or requirement mismatch: roll back to `EXECUTE`
-- structural contradiction or bad design assumptions: roll back to `DESIGN`
-- scope or judgment conflict needing a person: `escalate`
+| Failure class | Rollback target |
+|---|---|
+| stale or missing evidence | VERIFY |
+| implementation or requirement mismatch | EXECUTE |
+| structural contradiction or bad design assumptions | DESIGN |
+| scope or judgment conflict needing a person | escalate |
 
 ## Evidence Discipline
 
 - Do not pass work with stale `VERIFY` evidence.
 - Do not pass work when relevant eval evidence is stale or missing.
-- Relevant changes after review invalidate `REVIEW` and `REPORT` evidence.
+- Relevant changes after review invalidate `REVIEW` evidence.
 
 ## Rework Detection Checklist
 
@@ -64,7 +66,7 @@ Issue `rework` if:
 
 - Verification evidence captured before recent file changes
 - Rollback target defined as "earlier phase" instead of specific phase name
-- State artifacts (state.md/json) disagree on current phase or status
+- State artifacts disagree on current phase or status
 - REQ-* exists without corresponding EVAL-* evidence
 - Missing eval rerun triggers documentation
 

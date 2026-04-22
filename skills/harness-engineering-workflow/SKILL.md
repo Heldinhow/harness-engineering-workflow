@@ -12,14 +12,13 @@ Use this as the main workflow skill. The main agent is the `Orchestrator`: it cl
 ```text
 INTAKE
 → SPECIFY
-→ DESIGN
+→ DESIGN (conditional)
 → TASKS
-→ EVAL DEFINE
+→ EXECUTION CONTRACT
 → EXECUTE
 → VERIFY
 → REVIEW
-→ REPORT
-→ FINISH
+→ FINALIZE
 ```
 
 ## Orchestrator Contract
@@ -35,10 +34,12 @@ INTAKE
 Keep the feature working set under `.specs/features/<feature>/`.
 
 - `spec.md` is always required before execution.
+- `eval.md` is required before meaningful behavior change.
 - `design.md` is required when structure matters.
 - `tasks.md` is required when work spans files, phases, dependencies, or parallel lanes.
-- `eval.md` is required before meaningful behavior change.
+- `execution-contract.md` is required when real implementation work begins.
 - `review.md` records the formal review decision.
+- `finalize-report.md` records local closeout.
 - `state.md` and `state.json` must stay aligned.
 - `run-history.md` and `run-history.json` must stay aligned.
 
@@ -50,7 +51,7 @@ Every task should declare one execution class:
 - `parallelizable`
 - `blocked`
 
-Use `parallelizable` only when ownership boundaries are clear and the work can fan in safely before `VERIFY`, `REVIEW`, `REPORT`, and `FINISH`.
+Use `parallelizable` only when ownership boundaries are clear and the work can fan in safely before `VERIFY`, `REVIEW`, and `FINALIZE`.
 
 ## Gate Rules
 
@@ -67,13 +68,13 @@ Use only these review decisions:
 - `rework`
 - `escalate`
 
-Do not treat work as complete when `VERIFY`, `REVIEW`, or `REPORT` evidence is stale.
+Do not treat work as complete when `VERIFY` or `REVIEW` evidence is stale.
 
 ## Rollback And Resume
 
 - Roll back to the phase named by the failing gate or invalidated artifact.
-- Relevant changes after `VERIFY` make `VERIFY`, `REVIEW`, and `REPORT` stale.
-- Relevant changes after `REVIEW` make `REVIEW` and `REPORT` stale.
+- Relevant changes after `VERIFY` make `VERIFY` and `REVIEW` stale.
+- Relevant changes after `REVIEW` make `REVIEW` stale.
 - Requirement or eval changes make dependent evidence stale.
 
 When resuming, read in this order:
@@ -84,11 +85,21 @@ When resuming, read in this order:
 4. `review.md` when present
 5. only the feature artifacts referenced by current state
 
+## Rollback Routing
+
+| Failure class | Rollback target |
+|---|---|
+| Ambiguity or bad requirements | SPECIFY |
+| Structural inconsistency | DESIGN |
+| Bad decomposition or unsafe parallelism | TASKS |
+| Incomplete implementation or failing tests | EXECUTE |
+| Stale or missing evidence | VERIFY |
+
 ## Required Sub-Skills
 
 - **REQUIRED SUB-SKILL:** `harness-planning` for `SPECIFY`, `DESIGN`, and `TASKS`
-- **REQUIRED SUB-SKILL:** `harness-evals` for `EVAL DEFINE`
-- **REQUIRED SUB-SKILL:** `harness-execution` for `EXECUTE` and `VERIFY`
+- **REQUIRED SUB-SKILL:** `harness-evals` for `eval.md` and evidence policy
+- **REQUIRED SUB-SKILL:** `harness-execution` for `EXECUTE`, `EXECUTION CONTRACT`, and `VERIFY`
 - **REQUIRED SUB-SKILL:** `harness-review` for `REVIEW`
 
 ## Rework Prevention
@@ -107,3 +118,7 @@ When resuming or delegating, verify:
 - Current phase matches state.md and state.json
 - Evidence is fresh (not invalidated by recent changes)
 - Next step is documented in state artifacts
+
+## Local Scope
+
+The workflow ends at local finalization with tests executed and evidence recorded. CI/CD, deploy, release, and PR automation are out of scope.

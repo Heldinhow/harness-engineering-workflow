@@ -1,128 +1,101 @@
 # AGENTS.md
 
-This repository defines an operational workflow package. Changes to this repository should model the same behavior the package recommends.
+This repository defines an operational workflow package for local agent-assisted development. Changes here model the same behavior the package recommends.
 
-## Default Stance
+## Quick Map
 
-- Treat the main agent as the `Orchestrator`.
-- Keep the main agent's context narrow.
-- Delegate broad codebase reading to scoped subagents.
-- Prefer explicit gates over implied completion.
-- Keep artifacts lightweight, but make them operational.
+```
+INTAKE → SPECIFY → DESIGN → TASKS → EXECUTION CONTRACT → EXECUTE → VERIFY → REVIEW → FINALIZE
+```
 
-## Required Workflow Behavior
+See [docs/workflow/overview.md](docs/workflow/overview.md) for the full phase guide.
 
-1. Create or update a feature working set under `.specs/features/<feature>/` before meaningful implementation.
-2. Keep `spec.md` ahead of execution.
-3. Keep `eval.md` ahead of meaningful behavior change.
-4. Use `tasks.md` whenever work spans multiple files, phases, dependencies, or parallel lanes.
-5. Use `review.md` for formal review decisions.
-6. Keep `state.md` and `state.json` aligned.
-7. Keep `run-history.md` and `run-history.json` aligned.
+## Core Principles
 
-## Codebase Reading Policy
+- Main agent is the **Orchestrator**: plans, classifies, sizes, delegates, consolidates, and enforces gates.
+- Keep the Orchestrator's context narrow. Delegate broad reading to scoped subagents.
+- Prefer explicit gates over implied completion. Keep artifacts lightweight but operational.
+- Evidence must be fresh. Rollback must name a specific phase, not "earlier".
+- State and run history must stay aligned. Resume from them first.
 
-The Orchestrator may directly read:
+## Phase Summary
 
-- the user request
-- feature artifacts under `.specs/features/<feature>/`
-- root framing docs like `README.md` and `AGENTS.md`
-- `memory/project/*` and `memory/codebase/*`
-- a clearly local scope such as one file or one tight diff
+| Phase | Purpose | Primary artifact |
+|---|---|---|
+| INTAKE | Classify scope and complexity | feature id, complexity |
+| SPECIFY | Define clear, testable requirements | `spec.md` |
+| DESIGN | Define structure when it matters | `design.md` (conditional) |
+| TASKS | Break work into verifiable units | `tasks.md` |
+| EXECUTION CONTRACT | Lock exact run scope before implementation | `execution-contract.md` |
+| EXECUTE | Implement per task with minimal context | code + evidence |
+| VERIFY | Prove current status with fresh evidence | command output |
+| REVIEW | Judge readiness against contract and evidence | `review.md` |
+| FINALIZE | Close locally: tests done, artifacts synced, handoff clear | `finalize-report.md` |
 
-Delegate to `Codebase Reader` subagents when:
+## Artifact Expectations
+
+Feature working set under `.specs/features/<feature>/`:
+
+```
+spec.md              # always
+eval.md              # before meaningful implementation
+design.md            # when structure matters
+tasks.md             # when work spans files/phases/dependencies
+execution-contract.md  # when real implementation work exists
+review.md            # formal review gate
+finalize-report.md   # local closeout (replaces REPORT+FINISH split)
+state.md + state.json
+run-history.md + run-history.json
+```
+
+## Subagent Firewall Rules
+
+Delegate to subagents when any of these are true:
 
 - more than one subsystem matters
-- more than three files are likely relevant
+- more than three files likely matter
 - module boundaries or dependencies are unclear
 - impact analysis is needed
-- broad rereading would pollute context
+- broad rereading would pollute the main context
 
-## Delegation Contract
+Delegated task input: objective, relevant REQ-*, relevant EVAL-*, allowed paths, required artifacts, ready definition, done definition, dependencies.
 
-Every delegated task should include only:
+Delegated output: relevant files, technical summary, expected impact, risks, dependencies, objective recommendations.
 
-- objective
-- relevant `REQ-*`
-- relevant `EVAL-*` when applicable
-- allowed paths or areas
-- required artifacts
-- ready definition
-- done definition
-- dependencies
+## Rollback Routing
 
-Every delegated result should return only:
-
-- relevant files
-- technical summary
-- expected impact
-- risks
-- dependencies
-- objective recommendations
-
-## Parallelism Policy
-
-Every task should declare one of:
-
-- `sequential`
-- `parallelizable`
-- `blocked`
-
-Use `parallelizable` only when ownership boundaries are clear and fan-in can happen safely before verify/review.
-
-## Gate Policy
-
-Every relevant phase must define:
-
-- entry assumptions
-- exit conditions
-- evidence
-- rollback target on failure
-
-Do not treat work as complete when `VERIFY`, `REVIEW`, or `REPORT` evidence is stale.
+| Failure class | Rollback target |
+|---|---|
+| Ambiguity or bad requirements | SPECIFY |
+| Structural inconsistency or bad design | DESIGN |
+| Bad task decomposition or unsafe parallelism | TASKS |
+| Incomplete implementation or failing tests | EXECUTE |
+| Stale or missing evidence | VERIFY |
 
 ## Vocabulary
 
-Use these terms consistently across docs, skills, templates, examples, and feature artifacts:
+Use only these phase names: `INTAKE`, `SPECIFY`, `DESIGN`, `TASKS`, `EXECUTION CONTRACT`, `EXECUTE`, `VERIFY`, `REVIEW`, `FINALIZE`.
 
-- phases: `INTAKE`, `SPECIFY`, `DESIGN`, `TASKS`, `EVAL DEFINE`, `EXECUTE`, `VERIFY`, `REVIEW`, `REPORT`, `FINISH`
-- review decisions: `pass`, `rework`, `escalate`
-- execution classes: `sequential`, `parallelizable`, `blocked`
+Review decisions: `pass`, `rework`, `escalate`.
 
-## Review Standard
+Execution classes: `sequential`, `parallelizable`, `blocked`.
 
-The reviewer decides:
+## State and Resume
 
-- `pass` when requirements, evidence, and structure are acceptable
-- `rework` when issues can be fixed inside the workflow
-- `escalate` when the workflow needs human judgment or scope direction
+Resume in this order: `state.json` → `state.md` → latest `run-history.json` entry → `review.md` when present → only the feature artifacts referenced by current state.
 
-## Resume Standard
+## Detailed Docs
 
-When resuming work, read in this order:
+| Area | Location |
+|---|---|
+| Phase lifecycle and gates | `docs/workflow/phases-and-gates.md` |
+| Per-phase guidance | `docs/workflow/intake.md` through `docs/workflow/finalize.md` |
+| Role responsibilities | `docs/roles/orchestrator.md` through `docs/roles/eval-agent.md` |
+| Operational standards | `docs/standards/rollback-rules.md` through `docs/standards/evidence-pack.md` |
+| Templates | `templates/` |
+| Skills | `skills/` |
+| Schemas | `schemas/` |
 
-1. `state.json`
-2. `state.md`
-3. latest `run-history.json` entry
-4. `review.md` when present
-5. only the feature artifacts referenced by current state
+## What This Does Not Include
 
-Avoid broad repo rereads unless rollback or stale memory requires it.
-
-## Rework Prevention Checklist
-
-Before claiming work is complete, verify:
-
-- [ ] Evidence is fresh (captured after last relevant change)
-- [ ] Rollback target is specific (phase name, not "earlier")
-- [ ] State artifacts aligned (state.md and state.json agree)
-- [ ] Run history updated (this phase transition recorded)
-- [ ] Stale evidence marked (if any evidence is no longer valid)
-
-## Common Rework Patterns
-
-1. **Stale evidence pass**: Claiming completion with evidence from before recent changes
-2. **Vague rollback**: "go back" instead of naming a specific phase
-3. **State drift**: state.md and state.json disagreeing on current phase
-4. **Skip verification**: Reporting done without running verification commands
-5. **Unmapped requirements**: REQ-* without corresponding EVAL-* evidence
+CI pipelines, GitHub Actions, deploy automation, release automation, or PR checks. The workflow ends at local finalization with tests executed and evidence recorded.

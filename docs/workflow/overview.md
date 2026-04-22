@@ -27,7 +27,7 @@ The workflow stays small by making each layer explicit instead of introducing a 
 - `eval.md` exists before meaningful behavior changes.
 - `verify` is a fresh proof step, not a feeling.
 - `review.md` is a formal gate.
-- `report.md` consolidates the story after gates pass.
+- `finalize-report.md` closes the feature locally with tests and evidence.
 
 ### Harness and Orchestration Layer
 - `state.md` and `state.json` track the current feature state.
@@ -35,16 +35,30 @@ The workflow stays small by making each layer explicit instead of introducing a 
 - Resume happens from state and run history first.
 - Rollback is explicit when a gate fails.
 
+## Canonical Phase Order
+
+```
+INTAKE
+→ SPECIFY
+→ DESIGN (conditional)
+→ TASKS
+→ EXECUTION CONTRACT
+→ EXECUTE
+→ VERIFY
+→ REVIEW
+→ FINALIZE
+```
+
 ## Complexity Model
 
 ### Small
 - Local and obvious change.
 - Requires `spec.md`, `eval.md`, and state.
-- `design.md` and `tasks.md` are optional.
+- `design.md`, `tasks.md`, and `execution-contract.md` are optional.
 
 ### Medium
 - Multi-file or moderately risky change.
-- Requires `spec.md`, `tasks.md`, `eval.md`, and state.
+- Requires `spec.md`, `tasks.md`, `eval.md`, `execution-contract.md`, and state.
 - `design.md` is strongly recommended.
 
 ### Large / Complex

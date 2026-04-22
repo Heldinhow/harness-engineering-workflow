@@ -1,0 +1,172 @@
+{
+  "$schema": "../../../schemas/run-history.schema.json",
+  "feature_id": "agent-readable-local-finalize-workflow",
+  "runs": [
+    {
+      "run_id": "RUN-001",
+      "started_at": "2026-04-21T00:00:00Z",
+      "ended_at": "2026-04-21T00:05:00Z",
+      "phase": "INTAKE",
+      "transition": "START->INTAKE",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        "user request in current session"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "INTAKE",
+      "decision": "continue",
+      "notes": "Classified the work as a large repo-wide workflow refactor affecting docs, templates, skills, schemas, examples, and installer assets."
+    },
+    {
+      "run_id": "RUN-002",
+      "started_at": "2026-04-21T00:05:00Z",
+      "ended_at": "2026-04-21T00:15:00Z",
+      "phase": "SPECIFY",
+      "transition": "INTAKE->SPECIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/agent-readable-local-finalize-workflow/spec.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "SPECIFY",
+      "decision": "continue",
+      "notes": "Wrote the feature spec and fixed the eval artifact compatibility decision before implementation."
+    },
+    {
+      "run_id": "RUN-003",
+      "started_at": "2026-04-21T00:15:00Z",
+      "ended_at": "2026-04-21T00:20:00Z",
+      "phase": "DESIGN",
+      "transition": "SPECIFY->DESIGN",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/agent-readable-local-finalize-workflow/design.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "DESIGN",
+      "decision": "continue",
+      "notes": "Chose a progressive-disclosure docs model and compatibility-preserving artifact strategy."
+    },
+    {
+      "run_id": "RUN-004",
+      "started_at": "2026-04-21T00:20:00Z",
+      "ended_at": "2026-04-21T00:30:00Z",
+      "phase": "TASKS",
+      "transition": "DESIGN->TASKS",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003"
+      ],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/agent-readable-local-finalize-workflow/tasks.md",
+        ".specs/features/agent-readable-local-finalize-workflow/eval.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "TASKS",
+      "decision": "continue",
+      "notes": "Sequenced the repo-wide refactor into root docs, progressive docs, templates/schemas, and skills/examples/installer alignment."
+    },
+    {
+      "run_id": "RUN-005",
+      "started_at": "2026-04-21T00:30:00Z",
+      "ended_at": null,
+      "phase": "EXECUTION CONTRACT",
+      "transition": "TASKS->EXECUTION CONTRACT",
+      "agent_role": "orchestrator",
+      "agent_id": "main-session",
+      "task_id": null,
+      "related_req_ids": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003",
+        "REQ-004",
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010"
+      ],
+      "related_eval_ids": [
+        "EVAL-001",
+        "EVAL-002",
+        "EVAL-003"
+      ],
+      "status": "in_progress",
+      "evidence_refs": [
+        ".specs/features/agent-readable-local-finalize-workflow/execution-contract.md",
+        ".specs/features/agent-readable-local-finalize-workflow/state.md",
+        ".specs/features/agent-readable-local-finalize-workflow/state.json"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "TASKS",
+      "decision": "continue",
+      "notes": "Locked the exact run scope, excluded CI/CD scope, and required repo-wide local verification before review and finalize."
+    }
+  ]
+}

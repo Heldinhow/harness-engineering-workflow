@@ -9,7 +9,7 @@
 Objective: <what this task is meant to accomplish>
 Maps to: REQ-001
 Related evals: EVAL-001
-Owner role: <Orchestrator | Codebase Reader | Spec Agent | Design Agent | Eval Agent | Execution Agent | Reviewer>
+Owner role: <Orchestrator | Codebase Reader | Spec Agent | Design Agent | Eval Agent | Implementer | Verifier | Reviewer>
 Execution class: sequential
 Depends on: none
 Required artifacts:
@@ -37,7 +37,7 @@ Expected evidence:
 Objective: <what this task is meant to accomplish>
 Maps to: REQ-002
 Related evals: EVAL-002
-Owner role: <Orchestrator | Codebase Reader | Spec Agent | Design Agent | Eval Agent | Execution Agent | Reviewer>
+Owner role: <Orchestrator | Codebase Reader | Spec Agent | Design Agent | Eval Agent | Implementer | Verifier | Reviewer>
 Execution class: parallelizable
 Depends on: TASK-001
 Required artifacts:
@@ -59,7 +59,7 @@ Expected evidence:
 Objective: Add validation to check that all required artifacts exist
 Maps to: REQ-001
 Related evals: EVAL-001
-Owner role: Execution Agent
+Owner role: Implementer
 Execution class: sequential
 Depends on: none
 Required artifacts:

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../schemas/state.schema.json",
+  "feature_id": "agent-readable-local-finalize-workflow",
+  "complexity": "large",
+  "current_phase": "FINALIZE",
+  "status": "done",
+  "pending_gate": "finalize_complete",
+  "owner_role": "orchestrator",
+  "owner_id": "main-session",
+  "last_run_id": "RUN-007",
+  "next_step": "Feature closed. Repository uses the new canonical workflow.",
+  "blockers": [],
+  "latest_evidence_refs": [
+    ".specs/features/agent-readable-local-finalize-workflow/finalize-report.md",
+    ".specs/features/agent-readable-local-finalize-workflow/review.md"
+  ],
+  "stale_evidence_refs": [],
+  "rollback_target": "REVIEW",
+  "updated_at": "2026-04-21T00:00:00Z"
+}
