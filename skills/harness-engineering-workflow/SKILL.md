@@ -106,6 +106,17 @@ Always keep `state.json` and `state.md` in sync:
 
 State drift causes benchmark penalties. Verify alignment before proceeding.
 
+
+## Code Scope Alignment
+In `execution-contract.md`, explicitly document:
+- Files to be created/modified
+- Modules or components affected
+- API surfaces or interfaces
+- Test files required
+- Any configuration changes
+
+Without explicit scope documentation, code_scope_alignment scores drop to 0.
+
 ## Required Sub-Skills
 
 - **REQUIRED SUB-SKILL:** `harness-planning` for `SPECIFY`, `DESIGN`, and `TASKS`
