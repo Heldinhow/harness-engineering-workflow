@@ -45,6 +45,15 @@ The workflow package has no automated quality gate. Running a real feature throu
 ### REQ-009
 - WHEN the feature is scored THEN quality_score SHALL be computed from: artifact coverage (0-1), schema compliance (0-1), phase coverage (0-1), evidence quality (0-1), state alignment (0-1).
 
+### REQ-010
+- WHEN the workflow defines requirements THEN the requirements SHALL use "SHALL" for mandatory behavior with testable criteria.
+
+### REQ-011
+- WHEN the workflow records a gate THEN the rollback target SHALL be a specific phase name, not a vague term like "earlier".
+
+### REQ-012
+- WHEN the workflow records evidence THEN the evidence SHALL be verified as fresh (captured after the last relevant change).
+
 ## Acceptance Criteria
 - All 8 required artifacts are present and non-empty.
 - run-history.json passes JSON schema validation.

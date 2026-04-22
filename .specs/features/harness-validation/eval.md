@@ -84,19 +84,51 @@
 
 ### EVAL-008: Spec Structure Validation
 - Type: regression
-- Maps to: REQ-001, REQ-002
-- Description: spec.md and eval.md must have properly structured requirements and eval IDs. REQ-* IDs must follow sequential pattern. EVAL-* IDs must match between eval.md and run-history.json.
+- Maps to: REQ-001, REQ-002, REQ-010
+- Description: spec.md and eval.md must have properly structured requirements and eval IDs. REQ-* IDs must follow sequential pattern. EVAL-* IDs must match between eval.md and run-history.json. Requirements should use "SHALL" for mandatory behavior.
 - Evidence method:
   1. Check spec.md has required sections: Objective, Context, Scope, Requirements, Acceptance Criteria.
   2. Extract REQ-* IDs from spec.md, verify sequential numbering.
   3. Extract EVAL-* IDs from eval.md, verify sequential numbering.
   4. Check run-history.json references only EVAL-* IDs that exist in eval.md.
+  5. Check REQ-* statements use "SHALL" for mandatory behavior.
 - Rerun triggers: Any edit to spec.md, eval.md, or run-history.json.
 - Thresholds:
-  - All 5 sections + sequential IDs + valid EVAL refs → score 1.0
-  - All sections + sequential IDs → score 0.8
+  - All 5 sections + sequential IDs + valid EVAL refs + SHALL usage → score 1.0
+  - All sections + sequential IDs + valid EVAL refs → score 0.8
   - Sections present but IDs not sequential → score 0.5
   - Missing required sections → score 0.0
+
+### EVAL-009: Rollback Specificity
+- Type: regression
+- Maps to: REQ-011
+- Description: Rollback targets must be specific phase names, not vague terms like "earlier" or "previous".
+- Evidence method:
+  1. Check state.json "rollback_target" is a valid phase name from the workflow vocabulary.
+  2. Check state.md "Rollback Target" section uses specific phase name.
+  3. Check run-history.json entries use specific phase names.
+  4. Check review.md and report.md use specific phase names.
+- Rerun triggers: Any edit to state.md, state.json, run-history.json, review.md, or report.md.
+- Thresholds:
+  - All rollback targets are specific phase names → score 1.0
+  - ≥80% specific phase names → score 0.8
+  - ≥60% specific phase names → score 0.6
+  - <60% specific phase names → score 0.0
+
+### EVAL-010: Evidence Freshness
+- Type: capability
+- Maps to: REQ-012
+- Description: Evidence refs must point to files that exist and were not modified before the evidence was recorded.
+- Evidence method:
+  1. Check all evidence_refs in run-history.json point to existing files.
+  2. Verify evidence documentation includes freshness check prompts.
+  3. Check templates include evidence freshness guidance.
+- Rerun triggers: Any edit to templates or run-history.json.
+- Thresholds:
+  - All evidence refs valid + templates include freshness guidance → score 1.0
+  - All evidence refs valid + some freshness guidance → score 0.8
+  - All evidence refs valid → score 0.6
+  - Some evidence refs invalid → score 0.0
 
 
 ## Composite Quality Score

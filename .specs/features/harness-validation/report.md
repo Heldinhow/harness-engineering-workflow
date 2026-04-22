@@ -78,3 +78,41 @@ If quality_score < 0.7 in a future iteration, rollback to **VERIFY** and fix the
 - State alignment between state.md and state.json is easy to drift on — add a lint check.
 - run-history.json evidence_refs should be validated for file existence — scoring script catches this.
 - The workflow is self-documenting: this report IS the evidence.
+
+## Iteration 9+: Rework Prevention Improvements
+
+The workflow was enhanced with rework prevention guidance to improve task quality and reduce unnecessary rework:
+
+### Skills Enhanced
+- **harness-engineering-workflow**: Added rework prevention section with evidence freshness checks
+- **harness-execution**: Added stale evidence detection checklist and common rework traps
+- **harness-review**: Added rework detection checklist and common review triggers
+- **harness-evals**: Added eval quality checklist and common eval issues
+- **harness-planning**: Added spec quality checklist and common spec rework triggers
+
+### Templates Enhanced
+- **eval.md**: Added stale evidence check, rollback on failure, rework detection checklist
+- **tasks.md**: Added verification checklist with stale evidence check
+- **review.md**: Added review checklist, rollback specificity, common rework reasons
+- **report.md**: Added evidence freshness check, specific rollback documentation
+- **spec.md**: Added Requirement Quality Rules (SHALL, testable, specific conditions)
+- **state.md**: Added rollback checklist and phase matching reminder
+- **run-history.md**: Added evidence freshness prompts, specific rollback naming
+
+### Documentation Enhanced
+- **phases-and-gates.md**: Added rework prevention checklist and common rework triggers table
+- **state-and-runs.md**: Added state drift prevention checklist and common drift causes
+- **delegation.md**: Added delegation rework triggers table
+- **AGENTS.md**: Added rework prevention checklist and common rework patterns
+
+### New Requirements Added
+- **REQ-010**: Requirements SHALL use \"SHALL\" for mandatory behavior with testable criteria
+- **REQ-011**: Rollback targets SHALL be specific phase names, not vague terms
+- **REQ-012**: Evidence SHALL be verified as fresh (captured after last relevant change)
+
+### Impact
+These improvements help agents:
+1. Identify stale evidence before passing gates
+2. Define specific rollback targets instead of vague ones
+3. Write testable requirements that reduce spec rework
+4. Follow checklists that prevent common rework patterns
