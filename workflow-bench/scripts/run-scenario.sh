@@ -155,11 +155,25 @@ EOF
 - **Ready**: spec.md exists, eval.md defined
 - **Done**: Setup complete
 
-## Task 2: Implement feature (blocked)
-- **Execution class**: blocked
+## Task 2: Implement core logic (parallelizable)
+- **Execution class**: parallelizable
 - **Dependencies**: Task 1
 - **Owner**: implementer
 - **Ready**: Task 1 complete
+- **Done**: Core logic implemented
+
+## Task 3: Add tests (parallelizable)
+- **Execution class**: parallelizable
+- **Dependencies**: Task 1
+- **Owner**: implementer
+- **Ready**: Task 1 complete
+- **Done**: Tests written
+
+## Task 4: Final verification (blocked)
+- **Execution class**: blocked
+- **Dependencies**: Task 2, Task 3
+- **Owner**: implementer
+- **Ready**: Task 2 and Task 3 complete
 - **Done**: Implementation complete, tests pass
 EOF
     

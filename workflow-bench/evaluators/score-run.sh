@@ -40,17 +40,22 @@ score_phase_order() {
         return
     fi
     
-    # Valid phase sequence
-    local valid_phases=("INTAKE" "SPECIFY" "DESIGN" "TASKS" "EXECUTION CONTRACT" "EXECUTE" "VERIFY" "REVIEW" "FINALIZE")
-    local phases_in_run=$(python3 -c "
+    # Valid phase sequence - count phases directly
+    local phase_count=$(python3 -c "
 import json
 with open('$run_history') as f:
     data = json.load(f)
-phases = [r['phase'] for r in data.get('runs', [])]
-print(','.join(phases))
-" 2>/dev/null || echo "")
+runs = data.get('runs', [])
+if isinstance(runs, list):
+    print(len(runs))
+elif isinstance(runs, dict):
+    # Handle array format
+    print(len([k for k in runs.keys() if runs[k].get('phase')]))
+else:
+    print(0)
+" 2>/dev/null)
     
-    if [[ -z "$phases_in_run" ]]; then
+    if [[ -z "$phase_count" || "$phase_count" -eq 0 || "$phase_count" -lt 0 ]]; then
         penalty_skipped_phase=$((penalty_skipped_phase + 15))
         return
     fi
@@ -71,7 +76,7 @@ score_artifact_quality() {
     
     # Check artifact content quality (has REQ-*, EVAL-* patterns)
     if [[ -f "$feature_dir/spec.md" ]]; then
-        local req_count=$(grep -cE "REQ-[0-9]+" "$feature_dir/spec.md" 2>/dev/null || echo 0)
+        local req_count=$(grep -oE "REQ-[0-9]+" "$feature_dir/spec.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
         if [[ "$req_count" -gt 0 ]]; then
             score=$((score + 5))
         fi
@@ -237,9 +242,9 @@ score_parallelism_correctness() {
     fi
     
     # Check for execution class declarations (use -o and count lines)
-    local parallelizable_count=$(grep -o "parallelizable" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
-    local blocked_count=$(grep -o "blocked" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
-    local sequential_count=$(grep -o "sequential" "$feature_dir/tasks.md" 2>/dev/null | wc -l)
+    local parallelizable_count=$(grep -o "parallelizable" "$feature_dir/tasks.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
+    local blocked_count=$(grep -o "blocked" "$feature_dir/tasks.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
+    local sequential_count=$(grep -o "sequential" "$feature_dir/tasks.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
     
     # Credit for having proper execution class declarations
     local total_classes=$((parallelizable_count + blocked_count + sequential_count))
@@ -248,7 +253,7 @@ score_parallelism_correctness() {
     fi
     
     # Check dependencies are listed
-    local has_deps=$(grep -c "depends on\|dependency\|DEP-\|Dependencies" "$feature_dir/tasks.md" 2>/dev/null || echo 0)
+    local has_deps=$(grep -o "depends on\|dependency\|DEP-\|Dependencies" "$feature_dir/tasks.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
     
     if [[ "$has_deps" -gt 0 ]]; then
         score=$((score + 5))
@@ -256,7 +261,7 @@ score_parallelism_correctness() {
     
     # Check execution-contract.md for parallelism model
     if [[ -f "$feature_dir/execution-contract.md" ]]; then
-        local has_parallelism_doc=$(grep -c "parallel\|fan-out\|fan-in\|sequential" "$feature_dir/execution-contract.md" 2>/dev/null || echo 0)
+        local has_parallelism_doc=$(grep -o "parallel\|fan-out\|fan-in\|sequential" "$feature_dir/execution-contract.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
         if [[ "$has_parallelism_doc" -gt 0 ]]; then
             score=$((score + 5))
         fi
@@ -272,7 +277,7 @@ score_code_scope_alignment() {
     
     if [[ -f "$feature_dir/execution-contract.md" ]]; then
         # Check for "expected surfaces" or "codebase surfaces" documentation
-        local has_scope=$(grep -c "surface\|scope\|file\|module" "$feature_dir/execution-contract.md" 2>/dev/null || echo 0)
+        local has_scope=$(grep -o "surface\|scope\|file\|module" "$feature_dir/execution-contract.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
         
         if [[ "$has_scope" -gt 0 ]]; then
             score=$((score + 20))
@@ -337,9 +342,9 @@ score_finalize_discipline() {
     fi
     
     # Check for required finalize elements
-    local has_implementation=$(grep -c "implementation\|complete\|done" "$feature_dir/finalize-report.md" 2>/dev/null || echo 0)
-    local has_evidence=$(grep -c "evidence\|test\|verification" "$feature_dir/finalize-report.md" 2>/dev/null || echo 0)
-    local has_tests=$(grep -c "test\|check\|validation" "$feature_dir/finalize-report.md" 2>/dev/null || echo 0)
+    local has_implementation=$(grep -o "implementation\|complete\|done" "$feature_dir/finalize-report.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
+    local has_evidence=$(grep -o "evidence\|test\|verification" "$feature_dir/finalize-report.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
+    local has_tests=$(grep -o "test\|check\|validation" "$feature_dir/finalize-report.md" 2>/dev/null | wc -l | tr -d ' ' | tr -d '\n' || echo 0)
     
     if [[ "$has_implementation" -gt 0 ]]; then
         score=$((score + 8))
