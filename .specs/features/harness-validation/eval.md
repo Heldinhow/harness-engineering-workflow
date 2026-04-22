@@ -82,14 +82,32 @@
   - Hook exists but not executable → score 0.5
   - Hook missing → score 0.0
 
+### EVAL-008: Spec Structure Validation
+- Type: regression
+- Maps to: REQ-001, REQ-002
+- Description: spec.md and eval.md must have properly structured requirements and eval IDs. REQ-* IDs must follow sequential pattern. EVAL-* IDs must match between eval.md and run-history.json.
+- Evidence method:
+  1. Check spec.md has required sections: Objective, Context, Scope, Requirements, Acceptance Criteria.
+  2. Extract REQ-* IDs from spec.md, verify sequential numbering.
+  3. Extract EVAL-* IDs from eval.md, verify sequential numbering.
+  4. Check run-history.json references only EVAL-* IDs that exist in eval.md.
+- Rerun triggers: Any edit to spec.md, eval.md, or run-history.json.
+- Thresholds:
+  - All 5 sections + sequential IDs + valid EVAL refs → score 1.0
+  - All sections + sequential IDs → score 0.8
+  - Sections present but IDs not sequential → score 0.5
+  - Missing required sections → score 0.0
+
+
 ## Composite Quality Score
 The composite quality_score = weighted average:
 - artifact_coverage × 0.15
 - schema_compliance × 0.15
 - state_alignment × 0.15
-- state_drift × 0.10
-- phase_coverage × 0.10
+- state_drift × 0.05
+- phase_coverage × 0.05
 - evidence_quality × 0.15
+- spec_structure × 0.10
 - ci_hook × 0.20
 
 ## Notes
