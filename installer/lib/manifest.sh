@@ -34,12 +34,14 @@ ASSETS_FULL="
 skills/
 templates/
 schemas/
+scripts/
 AGENTS.md
 "
 
 ASSETS_ADAPTED="
 templates/
 schemas/
+scripts/
 AGENTS.md
 "
 
