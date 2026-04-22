@@ -41,3 +41,18 @@ Before marking work complete, verify:
 
 ## Notes
 - <grader assumptions or limits>
+
+## Example
+
+### EVAL-001
+- Type: capability
+- Maps to: REQ-001
+- Description: The feature produces a spec.md with all required sections.
+- Evidence method: Inspection of spec.md for sections: Objective, Context, Scope, Requirements, Acceptance Criteria.
+- Rerun triggers:
+  - Any edit to spec.md
+  - **Stale evidence check**: Evidence captured before spec.md edit is stale.
+- Thresholds:
+  - All 5 sections present → pass
+  - Missing sections → fail
+- Rollback on failure: SPECIFY

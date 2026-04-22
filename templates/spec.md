@@ -37,3 +37,8 @@
 
 ## Notes
 - <assumption or follow-up>
+
+## Example
+
+### REQ-001
+- WHEN a user runs `harness validate` THEN the system SHALL exit with code 0 when all required artifacts are present.
