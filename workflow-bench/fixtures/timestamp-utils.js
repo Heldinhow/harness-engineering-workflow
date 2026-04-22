@@ -144,4 +144,17 @@ function is_timestamp_past(timestamp) {
     return timestamp < now;
 }
 
-module.exports = { format_timestamp, parse_timestamp, format_timestamp_relative, is_timestamp_past };
+/**
+ * Check if a Unix timestamp is in the future
+ * @param {number} timestamp - Unix timestamp in seconds
+ * @returns {boolean} True if timestamp is after current time
+ */
+function is_timestamp_future(timestamp) {
+    if (typeof timestamp !== 'number') {
+        throw new Error('Timestamp must be a number');
+    }
+    const now = Math.floor(Date.now() / 1000);
+    return timestamp >= now;
+}
+
+module.exports = { format_timestamp, parse_timestamp, format_timestamp_relative, is_timestamp_past, is_timestamp_future };

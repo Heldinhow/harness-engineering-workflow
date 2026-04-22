@@ -1,25 +1,20 @@
 #!/bin/bash
 # Autoresearch benchmark script for workflow improvement
-# Uses simulated workflows for fast iteration, with OpenCode option for real runs
+# Uses simulated workflows for fast iteration
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BENCH_DIR="$SCRIPT_DIR"
 
-# Use OpenCode or simulation based on environment variable
-USE_OPENCODE="${USE_OPENCODE:-true}"
-
-# Timeout for OpenCode (30 minutes default)
-TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-1800}"
-
-# Run the benchmark suite
+# Run the benchmark suite (simulation mode for fast iteration)
+# Use USE_OPENCODE=true for real OpenCode runs (slow)
 run_benchmark() {
     local output
     
-    if [[ "$USE_OPENCODE" == "true" ]]; then
+    if [[ "${USE_OPENCODE:-false}" == "true" ]]; then
         echo "=== Running with OpenCode (slow) ==="
-        export TIMEOUT_SECONDS
+        export TIMEOUT_SECONDS="${TIMEOUT_SECONDS:-1800}"
         output=$("$BENCH_DIR/scripts/run-all-opencode-scenarios.sh" 2>&1) || true
     else
         echo "=== Running simulation (fast) ==="
@@ -56,7 +51,7 @@ extract_metrics() {
 main() {
     echo "=== Workflow Benchmark Autoresearch ==="
     echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-    echo "Mode: ${USE_OPENCODE}"
+    echo "Mode: ${USE_OPENCODE:-simulation}"
     echo ""
     
     # Run benchmark and capture output
