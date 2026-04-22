@@ -28,6 +28,32 @@
 - Vague rollback: "earlier phase" instead of specific phase name
 - Incomplete verification: VERIFY skipped or evidence not captured
 
+## Example
+
+### REVIEW
+## Scope Reviewed
+- Feature: example-feature
+- Artifacts: spec.md, eval.md, state.md, state.json, run-history.json, review.md, report.md
+
+## Findings
+- All 8 required artifacts present and non-empty
+- state.md and state.json agree on current_phase="FINISH" and status="done"
+- Evidence refs point to existing files (verified by score_workflow.sh)
+- Rollback target is specific: "REVIEW"
+
+## Decision
+pass
+
+## Required Rework
+none
+
+## Rollback Target
+none (decision is pass)
+
+## Evidence Reviewed
+- `.specs/features/example-feature/score_workflow.sh` output: quality_score=1.0
+- All evals passed
+
 ## Evidence Reviewed
 - <evidence ref>
 

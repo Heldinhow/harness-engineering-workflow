@@ -52,3 +52,28 @@ Done definition:
 - <what makes this task complete>
 Expected evidence:
 - <command output, inspection note, or artifact>
+
+## Example Task
+
+### TASK-001
+Objective: Add validation to check that all required artifacts exist
+Maps to: REQ-001
+Related evals: EVAL-001
+Owner role: Execution Agent
+Execution class: sequential
+Depends on: none
+Required artifacts:
+- `scripts/validate.sh`
+Minimal context:
+- REQ-001 requirement: all required artifacts MUST be present
+- Feature directory structure: `.specs/features/<feature>/`
+Files/areas:
+- `scripts/validate.sh`
+Ready definition:
+- Feature ID is known (`<feature>`)
+- Required artifacts list is defined in spec.md
+Done definition:
+- `scripts/validate.sh` exists and returns 0 when all artifacts present
+- Returns non-zero with message when artifacts are missing
+Expected evidence:
+- Output of `bash scripts/validate.sh <feature>` showing all artifacts present
