@@ -3,6 +3,157 @@
   "feature_id": "harness-validation",
   "runs": [
     {
+      "run_id": "RUN-009",
+      "started_at": "2026-04-21T01:29:00Z",
+      "ended_at": "2026-04-21T02:00:00Z",
+      "phase": "EXECUTE",
+      "transition": "FINISH->EXECUTE",
+      "agent_role": "orchestrator",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        "templates/eval.md",
+        "templates/tasks.md",
+        "templates/review.md",
+        "templates/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EVAL DEFINE",
+      "decision": "continue",
+      "notes": "Added rework prevention guidance to templates: stale evidence checklists, rollback specificity, requirement quality rules, verification checklists."
+    },
+    {
+      "run_id": "RUN-010",
+      "started_at": "2026-04-21T02:01:00Z",
+      "ended_at": "2026-04-21T02:30:00Z",
+      "phase": "EXECUTE",
+      "transition": "EXECUTE->EXECUTE",
+      "agent_role": "execution-agent",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        "skills/harness-engineering-workflow/SKILL.md",
+        "skills/harness-execution/SKILL.md",
+        "skills/harness-review/SKILL.md",
+        "skills/harness-evals/SKILL.md",
+        "skills/harness-planning/SKILL.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EVAL DEFINE",
+      "decision": "continue",
+      "notes": "Enhanced skills with rework prevention guidance: stale evidence detection checklists, common rework traps, eval quality checklists, spec quality checklists."
+    },
+    {
+      "run_id": "RUN-011",
+      "started_at": "2026-04-21T02:31:00Z",
+      "ended_at": "2026-04-21T03:00:00Z",
+      "phase": "EXECUTE",
+      "transition": "EXECUTE->EXECUTE",
+      "agent_role": "orchestrator",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        "docs/workflow/phases-and-gates.md",
+        "docs/workflow/state-and-runs.md",
+        "docs/workflow/delegation.md",
+        "AGENTS.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EVAL DEFINE",
+      "decision": "continue",
+      "notes": "Enhanced documentation with rework prevention guidance: phases-and-gates.md rework checklist, state-and-runs.md drift prevention, delegation.md rework triggers, AGENTS.md common patterns."
+    },
+    {
+      "run_id": "RUN-012",
+      "started_at": "2026-04-21T03:01:00Z",
+      "ended_at": "2026-04-21T03:10:00Z",
+      "phase": "VERIFY",
+      "transition": "EXECUTE->VERIFY",
+      "agent_role": "orchestrator",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/harness-validation/score_workflow.sh"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "EXECUTE",
+      "decision": "continue",
+      "notes": "Verified quality score remains at 1.0. All rework prevention improvements in place. Score unchanged because scoring script not modified per scope constraint."
+    },
+    {
+      "run_id": "RUN-013",
+      "started_at": "2026-04-21T03:11:00Z",
+      "ended_at": "2026-04-21T03:20:00Z",
+      "phase": "REVIEW",
+      "transition": "VERIFY->REVIEW",
+      "agent_role": "reviewer",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/harness-validation/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "VERIFY",
+      "decision": "pass",
+      "notes": "Review of rework prevention improvements: all 9+ skill/template/doc improvements verified. Quality score maintained at 1.0."
+    },
+    {
+      "run_id": "RUN-014",
+      "started_at": "2026-04-21T03:21:00Z",
+      "ended_at": "2026-04-21T03:30:00Z",
+      "phase": "REPORT",
+      "transition": "REVIEW->REPORT",
+      "agent_role": "orchestrator",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/harness-validation/report.md"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REVIEW",
+      "decision": "continue",
+      "notes": "Report updated with documentation of all rework prevention improvements across skills, templates, docs, and AGENTS.md."
+    },
+    {
+      "run_id": "RUN-015",
+      "started_at": "2026-04-21T03:31:00Z",
+      "ended_at": "2026-04-21T03:35:00Z",
+      "phase": "FINISH",
+      "transition": "REPORT->FINISH",
+      "agent_role": "orchestrator",
+      "agent_id": "harness-autoresearch",
+      "task_id": null,
+      "related_req_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "related_eval_ids": ["EVAL-009", "EVAL-010"],
+      "status": "passed",
+      "evidence_refs": [
+        ".specs/features/harness-validation/report.md",
+        ".specs/features/harness-validation/run-history.json"
+      ],
+      "failure_type": null,
+      "rollback_to_phase": "REPORT",
+      "decision": "finish",
+      "notes": "Rework prevention iteration complete. All improvements documented. Feature closed."
+    },
+    {
       "run_id": "RUN-001",
       "started_at": "2026-04-21T00:00:00Z",
       "ended_at": "2026-04-21T00:05:00Z",
