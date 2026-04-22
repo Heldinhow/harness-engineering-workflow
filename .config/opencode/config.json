@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "workflow": "harness-engineering-workflow",
+  "required_skills": [
+    "harness-engineering-workflow",
+    "harness-planning",
+    "harness-evals",
+    "harness-execution",
+    "harness-review"
+  ],
+  "local_only": true
+}

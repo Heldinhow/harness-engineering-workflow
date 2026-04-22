@@ -1,0 +1,98 @@
+---
+name: harness-planning
+description: Use when the Orchestrator needs to size work, choose planning artifact depth, maintain requirement traceability, and decide whether codebase reading can stay local or must be delegated.
+---
+
+# Harness Planning
+
+This skill owns `SPECIFY`, `DESIGN`, and `TASKS`.
+
+## Planning Contract
+
+- Keep planning as small as possible, but explicit enough for `EXECUTE`, `VERIFY`, `REVIEW`, and resume.
+- Use stable requirement IDs such as `REQ-001`.
+- Keep tasks and evals traceable back to the relevant `REQ-*`.
+- Keep `state.md` and `state.json` aligned when planning changes the current phase, scope, blockers, or next step.
+
+## Artifact Depth By Complexity
+
+### Small
+- Require `spec.md`.
+- `design.md` is optional for clearly local work.
+- `tasks.md` is optional when one short execution loop is enough.
+- `execution-contract.md` is optional when the run is trivial.
+
+### Medium
+- Require `spec.md`, `tasks.md`, and state updates.
+- `design.md` is strongly recommended when interfaces, data flow, or trade-offs matter.
+- `execution-contract.md` is required before real implementation.
+
+### Large / Complex
+- Require `spec.md`, `design.md`, `tasks.md`, `execution-contract.md`, delegation planning, and explicit rollback targets.
+
+## `spec.md`
+
+`spec.md` should define:
+
+- objective
+- in-scope and out-of-scope
+- `REQ-*`
+- acceptance criteria in testable terms
+
+Do not allow `EXECUTE` to start while requirements remain vague or contradictory.
+
+## `design.md` (Conditional)
+
+Create `design.md` when:
+
+- more than one component or interface matters
+- structure or integration decisions affect execution or review
+- design trade-offs need to be recorded
+- review would otherwise rely on guesswork
+
+Skip it only for clearly local work where structure is already obvious.
+
+## `tasks.md`
+
+Create `tasks.md` when work spans multiple files, phases, dependencies, or parallel lanes.
+
+Each task should include:
+
+- scope
+- related `REQ-*`
+- dependencies
+- execution class: `sequential`, `parallelizable`, or `blocked`
+
+## `execution-contract.md`
+
+Create `execution-contract.md` when real implementation work will follow. It locks:
+
+- exact run scope
+- included and excluded tasks
+- parallelism class
+- expected codebase surfaces
+- mandatory run tests
+- done criteria
+- rollback routing by failure class
+
+## Codebase Reading Rule
+
+The Orchestrator may read a small local scope directly. Delegate codebase reading when more than one area matters, more than three files likely matter, boundaries are unclear, impact analysis is needed, or broad reading would pollute main-agent context.
+
+Use the standard delegation contract and keep the returned output filtered.
+
+## Planning Rollback
+
+- Requirement ambiguity or contradiction rolls back to `SPECIFY`.
+- Structural uncertainty rolls back to `DESIGN`.
+- Bad decomposition or unsafe task boundaries roll back to `TASKS`.
+
+## Spec Quality Checklist
+
+Before starting `EXECUTE`, verify:
+
+1. **Objective is concrete**: what exactly will change, not why we want it
+2. **Scope is bounded**: what is explicitly out of scope
+3. **REQ-* are testable**: "SHALL" statements with measurable criteria
+4. **REQ-* are traceable**: each maps to an acceptance criterion
+5. **No conflicting requirements**: REQ-* don't contradict each other
